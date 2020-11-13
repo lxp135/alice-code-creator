@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 短信发送日志表SQL author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.ResourceSmsLogDao" >
+    <!-- 映射关系 -->
+    <resultMap id="resultMap" type="alice.code.creator.common.entity.basic.ResourceSmsLog" >
+        <id column="id" property="id" jdbcType="BIGINT" />       <!-- 自增主键 -->
+        <result column="sms_send_phone" property="smsSendPhone" jdbcType="VARCHAR" />       <!-- 手机号 -->
+        <result column="sms_template_code" property="smsTemplateCode" jdbcType="VARCHAR" />       <!-- 短信模板编码 -->
+        <result column="sms_template_name" property="smsTemplateName" jdbcType="VARCHAR" />       <!-- 短信模板名称 -->
+        <result column="sms_gateway_type" property="smsGatewayType" jdbcType="VARCHAR" />       <!-- 短信网关类型：netease、aliyun -->
+        <result column="sms_send_content" property="smsSendContent" jdbcType="VARCHAR" />       <!-- 短信内容 -->
+        <result column="sms_send_status" property="smsSendStatus" jdbcType="TINYINT" />       <!-- 发送状态 0失败 1成功 -->
+        <result column="sms_send_time" property="smsSendTime" jdbcType="TIMESTAMP" />       <!-- 短信发送时间 -->
+        <result column="sms_send_result" property="smsSendResult" jdbcType="VARCHAR" />       <!-- 接口返回值 -->
+        <result column="sms_send_exception_text" property="smsSendExceptionText" jdbcType="VARCHAR" />       <!-- 发送异常信息 -->
+        <result column="remark" property="remark" jdbcType="VARCHAR" />       <!-- 备注 -->
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />       <!-- 创建时间 -->
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />       <!-- 创建用户 -->
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />       <!-- 更新时间 -->
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />       <!-- 更新用户 -->
+        <result column="ts" property="ts" jdbcType="TIMESTAMP" />       <!-- 时间戳 -->
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />       <!-- 删除标志 0：未删除 1：已删除 -->
+    </resultMap>
+
+    <!-- 查询列 -->
+    <sql id="queryColumns">
+        id,       /* 自增主键 */
+        sms_send_phone,       /* 手机号 */
+        sms_template_code,       /* 短信模板编码 */
+        sms_template_name,       /* 短信模板名称 */
+        sms_gateway_type,       /* 短信网关类型：netease、aliyun */
+        sms_send_content,       /* 短信内容 */
+        sms_send_status,       /* 发送状态 0失败 1成功 */
+        sms_send_time,       /* 短信发送时间 */
+        sms_send_result,       /* 接口返回值 */
+        sms_send_exception_text,       /* 发送异常信息 */
+        remark,       /* 备注 */
+        create_time,       /* 创建时间 */
+        create_user,       /* 创建用户 */
+        update_time,       /* 更新时间 */
+        update_user,       /* 更新用户 */
+        ts,       /* 时间戳 */
+        is_delete       /* 删除标志 0：未删除 1：已删除 */
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="queryClause">
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            <if test="id != null">
+                AND id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+            </if>
+            <if test="idMin != null">
+                <![CDATA[ AND id > #{idMin, jdbcType=BIGINT} ]]>	/* 自增主键大于某值*/
+            </if>
+            <if test="idMax != null">
+                <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 自增主键小于某值 */
+            </if>
+            <if test="smsSendPhone != null and smsSendPhone != ''" >
+                AND sms_send_phone = #{smsSendPhone,jdbcType=VARCHAR}       /* 手机号 */
+            </if>
+            <if test="smsTemplateCode != null and smsTemplateCode != ''" >
+                AND sms_template_code = #{smsTemplateCode,jdbcType=VARCHAR}       /* 短信模板编码 */
+            </if>
+            <if test="smsTemplateName != null and smsTemplateName != ''" >
+                AND sms_template_name = #{smsTemplateName,jdbcType=VARCHAR}       /* 短信模板名称 */
+            </if>
+            <if test="smsGatewayType != null and smsGatewayType != ''" >
+                AND sms_gateway_type = #{smsGatewayType,jdbcType=VARCHAR}       /* 短信网关类型：netease、aliyun */
+            </if>
+            <if test="smsSendContent != null and smsSendContent != ''" >
+                AND sms_send_content = #{smsSendContent,jdbcType=VARCHAR}       /* 短信内容 */
+            </if>
+            <if test="smsSendStatus != null" >
+                AND sms_send_status = #{smsSendStatus,jdbcType=TINYINT}       /* 发送状态 0失败 1成功 */
+            </if>
+            <if test="smsSendTimeBegin != null and smsSendTimeBegin != ''" >
+                <![CDATA[ AND sms_send_time >= #{smsSendTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 短信发送时间/起 */
+            </if>
+            <if test="smsSendTimeEnd != null and smsSendTimeEnd != ''" >
+                <![CDATA[ AND sms_send_time <= #{smsSendTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 短信发送时间/止 */
+            </if>
+            <if test="smsSendResult != null and smsSendResult != ''" >
+                AND sms_send_result = #{smsSendResult,jdbcType=VARCHAR}       /* 接口返回值 */
+            </if>
+            <if test="smsSendExceptionText != null and smsSendExceptionText != ''" >
+                AND sms_send_exception_text = #{smsSendExceptionText,jdbcType=VARCHAR}       /* 发送异常信息 */
+            </if>
+            <if test="remark != null and remark != ''" >
+                AND remark = #{remark,jdbcType=VARCHAR}       /* 备注 */
+            </if>
+            <if test="createTimeBegin != null" >
+                <![CDATA[ AND create_time >= #{createTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 创建时间/起 */
+            </if>
+            <if test="createTimeEnd != null" >
+                <![CDATA[ AND create_time <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 创建时间/止 */
+            </if>
+            <if test="createUser != null and createUser != ''" >
+                AND create_user = #{createUser,jdbcType=VARCHAR}       /* 创建用户 */
+            </if>
+            <if test="updateTimeBegin != null" >
+                <![CDATA[ AND update_time >= #{updateTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 更新时间/起 */
+            </if>
+            <if test="updateTimeEnd != null" >
+                <![CDATA[ AND update_time <= #{updateTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 更新时间/止 */
+            </if>
+            <if test="updateUser != null and updateUser != ''" >
+                AND update_user = #{updateUser,jdbcType=VARCHAR}       /* 更新用户 */
+            </if>
+            <if test="tsBegin != null and tsBegin != ''" >
+                <![CDATA[ AND ts >= #{tsBegin,jdbcType=TIMESTAMP} ]]>       /* 时间戳/起 */
+            </if>
+            <if test="tsEnd != null and tsEnd != ''" >
+                <![CDATA[ AND ts <= #{tsEnd,jdbcType=TIMESTAMP} ]]>       /* 时间戳/止 */
+            </if>
+        </where>
+    </sql>
+
+    <!-- 排序 -->
+    <sql id="sortClause">
+        <if test="_sort != null">
+            ORDER BY
+            <foreach collection="_sort" item="item" index="index" separator=",">
+                <choose>
+                    <when test="item.propertyName != null and item.propertyName == 'id'">
+                        id    /* 自增主键 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsSendPhone'">
+                        sms_send_phone    /* 手机号 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsTemplateCode'">
+                        sms_template_code    /* 短信模板编码 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsTemplateName'">
+                        sms_template_name    /* 短信模板名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsGatewayType'">
+                        sms_gateway_type    /* 短信网关类型：netease、aliyun */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsSendContent'">
+                        sms_send_content    /* 短信内容 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsSendStatus'">
+                        sms_send_status    /* 发送状态 0失败 1成功 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsSendTime'">
+                        sms_send_time    /* 短信发送时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsSendResult'">
+                        sms_send_result    /* 接口返回值 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'smsSendExceptionText'">
+                        sms_send_exception_text    /* 发送异常信息 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'remark'">
+                        remark    /* 备注 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createTime'">
+                        create_time    /* 创建时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createUser'">
+                        create_user    /* 创建用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'updateTime'">
+                        update_time    /* 更新时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'updateUser'">
+                        update_user    /* 更新用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'ts'">
+                        ts    /* 时间戳 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <otherwise>ts DESC</otherwise>
+                </choose>
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 分页 -->
+    <sql id="pageClause">
+        <if test="_page != null">
+            limit #{_page.offset, jdbcType=INTEGER}, #{_page.limit, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="alice.code.creator.common.entity.basic.ResourceSmsLog" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO basic_resource_sms_log (
+            sms_send_phone,                      /* 手机号 */
+            sms_template_code,                      /* 短信模板编码 */
+            sms_template_name,                      /* 短信模板名称 */
+            sms_gateway_type,                      /* 短信网关类型：netease、aliyun */
+            sms_send_content,                      /* 短信内容 */
+            sms_send_status,                      /* 发送状态 0失败 1成功 */
+            sms_send_time,                      /* 短信发送时间 */
+            sms_send_result,                      /* 接口返回值 */
+            sms_send_exception_text,                      /* 发送异常信息 */
+            remark,                      /* 备注 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES(
+            #{smsSendPhone, jdbcType=VARCHAR},                 /* 手机号 */
+            #{smsTemplateCode, jdbcType=VARCHAR},                 /* 短信模板编码 */
+            #{smsTemplateName, jdbcType=VARCHAR},                 /* 短信模板名称 */
+            #{smsGatewayType, jdbcType=VARCHAR},                 /* 短信网关类型：netease、aliyun */
+            #{smsSendContent, jdbcType=VARCHAR},                 /* 短信内容 */
+            #{smsSendStatus, jdbcType=TINYINT},                 /* 发送状态 0失败 1成功 */
+            #{smsSendTime, jdbcType=TIMESTAMP},                 /* 短信发送时间 */
+            #{smsSendResult, jdbcType=VARCHAR},                 /* 接口返回值 */
+            #{smsSendExceptionText, jdbcType=VARCHAR},                 /* 发送异常信息 */
+            #{remark, jdbcType=VARCHAR},                 /* 备注 */
+            #{createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+            #{createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+            #{updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+            #{updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+            #{isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+        )
+    </insert>
+
+    <!-- 批量插入数据 -->
+    <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO basic_resource_sms_log (
+            sms_send_phone,                      /* 手机号 */
+            sms_template_code,                      /* 短信模板编码 */
+            sms_template_name,                      /* 短信模板名称 */
+            sms_gateway_type,                      /* 短信网关类型：netease、aliyun */
+            sms_send_content,                      /* 短信内容 */
+            sms_send_status,                      /* 发送状态 0失败 1成功 */
+            sms_send_time,                      /* 短信发送时间 */
+            sms_send_result,                      /* 接口返回值 */
+            sms_send_exception_text,                      /* 发送异常信息 */
+            remark,                      /* 备注 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.smsSendPhone, jdbcType=VARCHAR},                 /* 手机号 */
+                #{item.smsTemplateCode, jdbcType=VARCHAR},                 /* 短信模板编码 */
+                #{item.smsTemplateName, jdbcType=VARCHAR},                 /* 短信模板名称 */
+                #{item.smsGatewayType, jdbcType=VARCHAR},                 /* 短信网关类型：netease、aliyun */
+                #{item.smsSendContent, jdbcType=VARCHAR},                 /* 短信内容 */
+                #{item.smsSendStatus, jdbcType=TINYINT},                 /* 发送状态 0失败 1成功 */
+                #{item.smsSendTime, jdbcType=TIMESTAMP},                 /* 短信发送时间 */
+                #{item.smsSendResult, jdbcType=VARCHAR},                 /* 接口返回值 */
+                #{item.smsSendExceptionText, jdbcType=VARCHAR},                 /* 发送异常信息 */
+                #{item.remark, jdbcType=VARCHAR},                 /* 备注 */
+                #{item.createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+                #{item.createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+                #{item.updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+                #{item.updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+                #{item.isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+            )
+        </foreach>
+    </insert>
+
+    <!-- 按主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE basic_resource_sms_log
+            <set>
+                <if test="smsSendPhone != null">
+                    sms_send_phone = #{smsSendPhone, jdbcType=VARCHAR},    /* 手机号 */
+                </if>
+                <if test="smsTemplateCode != null">
+                    sms_template_code = #{smsTemplateCode, jdbcType=VARCHAR},    /* 短信模板编码 */
+                </if>
+                <if test="smsTemplateName != null">
+                    sms_template_name = #{smsTemplateName, jdbcType=VARCHAR},    /* 短信模板名称 */
+                </if>
+                <if test="smsGatewayType != null">
+                    sms_gateway_type = #{smsGatewayType, jdbcType=VARCHAR},    /* 短信网关类型：netease、aliyun */
+                </if>
+                <if test="smsSendContent != null">
+                    sms_send_content = #{smsSendContent, jdbcType=VARCHAR},    /* 短信内容 */
+                </if>
+                <if test="smsSendStatus != null">
+                    sms_send_status = #{smsSendStatus, jdbcType=TINYINT},    /* 发送状态 0失败 1成功 */
+                </if>
+                <if test="smsSendTime != null">
+                    sms_send_time = #{smsSendTime, jdbcType=TIMESTAMP},    /* 短信发送时间 */
+                </if>
+                <if test="smsSendResult != null">
+                    sms_send_result = #{smsSendResult, jdbcType=VARCHAR},    /* 接口返回值 */
+                </if>
+                <if test="smsSendExceptionText != null">
+                    sms_send_exception_text = #{smsSendExceptionText, jdbcType=VARCHAR},    /* 发送异常信息 */
+                </if>
+                <if test="remark != null">
+                    remark = #{remark, jdbcType=VARCHAR},    /* 备注 */
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
+                </if>
+                <if test="createUser != null">
+                    create_user = #{createUser, jdbcType=VARCHAR},    /* 创建用户 */
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=TIMESTAMP},    /* 更新时间 */
+                </if>
+                <if test="updateUser != null">
+                    update_user = #{updateUser, jdbcType=VARCHAR},    /* 更新用户 */
+                </if>
+                    is_delete = 0       /* 删除标志 0：未删除 1：已删除 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键删除 -->
+    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.common.entity.basic.ResourceSmsLog">
+        <if test="_parameter != null">
+            UPDATE basic_resource_sms_log
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量删除 -->
+    <update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE basic_resource_sms_log
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id in    /* 自增主键集合 */
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+                AND is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量物理删除，慎用 -->
+    <delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
+        <if test="_parameter != null">
+            DELETE FROM basic_resource_sms_log
+            <where>
+                id in	/* 自增主键集合 */
+                <foreach collection="list" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+            </where>
+        </if>
+    </delete>
+
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="resultMap">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        basic_resource_sms_log
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        basic_resource_sms_log
+        <where>
+            id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+            AND is_delete = 0			/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键集合查询 -->
+    <select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        basic_resource_sms_log
+        <where>
+            id in	/* 自增主键集合 */
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id, jdbcType=BIGINT}
+            </foreach>
+            AND is_delete = 0	/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按条件查询 -->
+    <select id="selectByCondition" resultMap="resultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        basic_resource_sms_log
+        <include refid="queryClause"/>
+        <include refid="sortClause"/>
+        <include refid="pageClause"/>
+    </select>
+
+    <!-- 按条件统计记录数 -->
+    <select id="countByCondition" resultType="java.lang.Long" parameterType="java.util.Map">
+        SELECT
+        COUNT(1)
+        FROM
+        basic_resource_sms_log
+        <include refid="queryClause"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="alice.code.creator.dao.generator.MysqlGeneratorDao" >
+
+    <!-- 映射关系 -->
+    <resultMap id="BaseResultMap" type="alice.code.creator.domain.model.generator.ColumnGenerator" >
+        <result column="TABLE_SCHEMA" property="tableSchema" jdbcType="VARCHAR" />                                          <!-- 数据库名 -->
+        <result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />                                              <!-- 表名 -->
+        <result column="TABLE_COMMENT" property="tableComment" jdbcType="VARCHAR" />                                        <!-- 表注释 -->
+        <result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />                                            <!-- 字段名 -->
+        <result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />                                                <!-- 数据类型 -->
+        <result column="COLUMN_KEY" property="columnKey" jdbcType="VARCHAR" />                                              <!-- 主键 -->
+        <result column="EXTRA" property="extra" jdbcType="VARCHAR" />                                                       <!-- 主键策略 -->
+        <result column="IS_NULLABLE" property="isNullable" jdbcType="VARCHAR" />                                                 <!-- 是否可以为空 YES NO -->
+        <result column="COLUMN_COMMENT" property="columnComment" jdbcType="VARCHAR" />                                      <!-- 字段备注 -->
+    </resultMap>
+
+    <!-- 查询数据库列表 -->
+    <select id="selectDatabase" resultMap="BaseResultMap">
+        SELECT TABLE_SCHEMA FROM information_schema.COLUMNS
+        <where>
+            <![CDATA[ TABLE_SCHEMA <> 'information_schema' ]]>
+        </where>
+        GROUP BY TABLE_SCHEMA
+    </select>
+
+    <!-- 根据数据库名查询所有表 -->
+    <select id="selectTableNames" resultMap="BaseResultMap" parameterType="alice.code.creator.domain.model.generator.ColumnGenerator">
+        SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.TABLES
+        <where>
+            TABLE_SCHEMA = #{tableSchema,jdbcType=VARCHAR}
+        </where>
+        GROUP BY TABLE_NAME
+    </select>
+
+    <!-- 根据数据库名查询所有字段 -->
+    <select id="selectColumnNames" resultMap="BaseResultMap" parameterType="alice.code.creator.domain.model.generator.ColumnGenerator">
+        SELECT
+            TABLE_SCHEMA,
+            TABLE_NAME,
+            COLUMN_NAME,
+            DATA_TYPE,
+            COLUMN_KEY,
+            EXTRA,
+            IS_NULLABLE,
+            COLUMN_COMMENT
+        FROM information_schema.COLUMNS
+        <where>
+            TABLE_NAME = #{tableName,jdbcType=VARCHAR}
+            AND TABLE_SCHEMA = #{tableSchema,jdbcType=VARCHAR}
+        </where>
+    </select>
+</mapper>

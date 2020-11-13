@@ -1,0 +1,32 @@
+
+.card-header-small{
+    padding: 10px 20px 7px !important;
+}
+.card-footer-small{
+    padding: 10px 20px 7px !important;
+}
+.card-body-bottom{
+    margin-bottom:-1.5rem;
+}
+/* 代码编辑器 */
+.code-editor-extend{
+    margin-left: 280px;
+    width: auto;
+    padding:0;
+}
+
+@media (max-width: 767.98px) {
+    .code-editor-extend {
+        margin-left: inherit;
+    }
+}
+
+@media print {
+    .code-editor-extend {
+        margin-left: 0;
+    }
+}
+
+.CodeMirror{
+    height:100% !important;
+}

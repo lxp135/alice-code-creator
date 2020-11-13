@@ -1,0 +1,74 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">一级菜单</li>
+    <li class="breadcrumb-item active">短信发送日志表</li>
+</ol>
+<div class="main-content container-fluid">
+    <div class="col-lg-12">
+        <div class="card card-contrast">
+            <div class="card-header card-header-contrast card-header-featured card-header-small">查询条件</div>
+            <div class="card-body card-body-bottom">
+                <form id="searchForm">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">手机号</span>
+                                </div>
+                                <input class="form-control" type="text" name="smsSendPhone">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">短信模板</span>
+                                </div>
+                                <input class="form-control" type="text" name="smsTemplateCode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">短信网关类型</span>
+                                </div>
+                                <input class="form-control" type="text" name="smsGatewayType">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">发送状态</span>
+                                </div>
+                                <input class="form-control" type="text" name="smsSendStatus">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">短信发送时间</span>
+                                </div>
+                                <input class="form-control" type="text" name="smsSendTime">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer card-footer-contrast text-muted card-footer-small">
+                <button class="btn btn-space btn-primary" id="btnQuery">查 询</button>
+                <button class="btn btn-space btn-secondary" id="btnReset">清 空</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card card-contrast">
+            <div class="card-header card-header-contrast card-header-featured card-header-small">
+                列表
+            </div>
+            <div class="card-body">
+                <table id="gridTable"></table>
+                <div id="gridPager"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="biz/basic/resource/sms/log/resource_sms_log_list.js"></script>

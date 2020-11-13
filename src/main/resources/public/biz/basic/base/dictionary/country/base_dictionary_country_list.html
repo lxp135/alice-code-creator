@@ -1,0 +1,118 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">基础配置</li>
+    <li class="breadcrumb-item">数据字典</li>
+    <li class="breadcrumb-item">国家编码</li>
+</ol>
+<div class="main-content container-fluid">
+    <div class="col-lg-12">
+        <div class="card card-contrast">
+            <div class="card-header card-header-contrast card-header-featured card-header-small">查询条件</div>
+            <div class="card-body card-body-bottom">
+                <form id="searchForm">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">国家编号</span>
+                                </div>
+                                <input class="form-control" type="text" name="countryNo">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">国家编码</span>
+                                </div>
+                                <input class="form-control" type="text" name="countryCode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">国家名称</span>
+                                </div>
+                                <input class="form-control" type="text" name="countryName">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">国家全名</span>
+                                </div>
+                                <input class="form-control" type="text" name="countryNameLong">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">电话号码前缀</span>
+                                </div>
+                                <input class="form-control" type="text" name="phonePrefix">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">货币</span>
+                                </div>
+                                <input class="form-control" type="text" name="currencyUnit">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">时区</span>
+                                </div>
+                                <input class="form-control" type="text" name="countryTimeDifference">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">地区</span>
+                                </div>
+                                <input class="form-control" type="text" name="region">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">收入分组</span>
+                                </div>
+                                <input class="form-control" type="text" name="incomeGroup">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">分类 country,area,other</span>
+                                </div>
+                                <input class="form-control" type="text" name="categoryCode">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer card-footer-contrast text-muted card-footer-small">
+                <button class="btn btn-space btn-primary" id="btnQuery">查 询</button>
+                <button class="btn btn-space btn-secondary" id="btnReset">清 空</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card card-contrast">
+            <div class="card-header card-header-contrast card-header-featured card-header-small">
+                <a class="btn btn-space btn-primary" href="#biz/basic/base/dictionary/country/base_dictionary_country_add">
+                    <i class="fa fa-plus"></i>
+                    <span class="bigger-110">新增</span>
+                </a>
+            </div>
+            <div class="card-body">
+                <table id="gridTable"></table>
+                <div id="gridPager"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="biz/basic/base/dictionary/country/base_dictionary_country_list.js"></script>

@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 文件存储信息表SQL author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.resource.ResourceFileDao" >
+    <!-- 映射关系 -->
+    <resultMap id="resultMap" type="alice.code.creator.domain.model.resource.ResourceFile" >
+        <id column="id" property="id" jdbcType="BIGINT" />       <!-- 主键 -->
+        <result column="file_key" property="fileKey" jdbcType="VARCHAR" />       <!-- 文件KEY -->
+        <result column="file_source_type_code" property="fileSourceTypeCode" jdbcType="VARCHAR" />       <!-- 来源类型编码 -->
+        <result column="file_source_type_name" property="fileSourceTypeName" jdbcType="VARCHAR" />       <!-- 来源类型名称 -->
+        <result column="file_origin_name" property="fileOriginName" jdbcType="VARCHAR" />       <!-- 原文件名 -->
+        <result column="file_current_name" property="fileCurrentName" jdbcType="VARCHAR" />       <!-- 现文件名 -->
+        <result column="file_mime_type" property="fileMimeType" jdbcType="VARCHAR" />       <!-- MIME类型 -->
+        <result column="file_suffix" property="fileSuffix" jdbcType="VARCHAR" />       <!-- 文件后缀 -->
+        <result column="file_size" property="fileSize" jdbcType="BIGINT" />       <!-- 文件大小 -->
+        <result column="file_location" property="fileLocation" jdbcType="VARCHAR" />       <!-- 文件位置（bucket） -->
+        <result column="file_md5" property="fileMd5" jdbcType="VARCHAR" />       <!-- 文件md5 -->
+        <result column="is_finished" property="isFinished" jdbcType="TINYINT" />       <!-- 状态 0:未完成 1:已完成 -->
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />       <!-- 创建时间 -->
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />       <!-- 创建用户 -->
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />       <!-- 更新时间 -->
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />       <!-- 更新用户 -->
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />       <!-- 删除标志 0：未删除 1：已删除 -->
+    </resultMap>
+
+    <!-- 查询列 -->
+    <sql id="queryColumns">
+        id,       /* 主键 */
+        file_key,       /* 文件KEY */
+        file_source_type_code,       /* 来源类型编码 */
+        file_source_type_name,       /* 来源类型名称 */
+        file_origin_name,       /* 原文件名 */
+        file_current_name,       /* 现文件名 */
+        file_mime_type,       /* MIME类型 */
+        file_suffix,       /* 文件后缀 */
+        file_size,       /* 文件大小 */
+        file_location,       /* 文件位置（bucket） */
+        file_md5,       /* 文件md5 */
+        is_finished,       /* 状态 0:未完成 1:已完成 */
+        create_time,       /* 创建时间 */
+        create_user,       /* 创建用户 */
+        update_time,       /* 更新时间 */
+        update_user,       /* 更新用户 */
+        is_delete       /* 删除标志 0：未删除 1：已删除 */
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="queryClause">
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            <if test="id != null">
+                AND id = #{id, jdbcType=BIGINT}	/* 主键 */
+            </if>
+            <if test="idMin != null">
+                <![CDATA[ AND id > #{idMin, jdbcType=BIGINT} ]]>	/* 主键大于某值*/
+            </if>
+            <if test="idMax != null">
+                <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 主键小于某值 */
+            </if>
+            <if test="fileKey != null and fileKey != ''" >
+                AND file_key = #{fileKey,jdbcType=VARCHAR}       /* 文件KEY */
+            </if>
+            <if test="fileSourceTypeCode != null and fileSourceTypeCode != ''" >
+                AND file_source_type_code = #{fileSourceTypeCode,jdbcType=VARCHAR}       /* 来源类型编码 */
+            </if>
+            <if test="fileSourceTypeName != null and fileSourceTypeName != ''" >
+                AND file_source_type_name = #{fileSourceTypeName,jdbcType=VARCHAR}       /* 来源类型名称 */
+            </if>
+            <if test="fileOriginName != null and fileOriginName != ''" >
+                AND file_origin_name = #{fileOriginName,jdbcType=VARCHAR}       /* 原文件名 */
+            </if>
+            <if test="fileCurrentName != null and fileCurrentName != ''" >
+                AND file_current_name = #{fileCurrentName,jdbcType=VARCHAR}       /* 现文件名 */
+            </if>
+            <if test="fileMimeType != null and fileMimeType != ''" >
+                AND file_mime_type = #{fileMimeType,jdbcType=VARCHAR}       /* MIME类型 */
+            </if>
+            <if test="fileSuffix != null and fileSuffix != ''" >
+                AND file_suffix = #{fileSuffix,jdbcType=VARCHAR}       /* 文件后缀 */
+            </if>
+            <if test="fileSize != null" >
+                AND file_size = #{fileSize,jdbcType=BIGINT}       /* 文件大小 */
+            </if>
+            <if test="fileLocation != null and fileLocation != ''" >
+                AND file_location = #{fileLocation,jdbcType=VARCHAR}       /* 文件位置（bucket） */
+            </if>
+            <if test="fileMd5 != null and fileMd5 != ''" >
+                AND file_md5 = #{fileMd5,jdbcType=VARCHAR}       /* 文件md5 */
+            </if>
+            <if test="isFinished != null" >
+                AND is_finished = #{isFinished,jdbcType=TINYINT}       /* 状态 0:未完成 1:已完成 */
+            </if>
+            <if test="createTimeBegin != null" >
+                <![CDATA[ AND create_time >= #{createTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 创建时间/起 */
+            </if>
+            <if test="createTimeEnd != null" >
+                <![CDATA[ AND create_time <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 创建时间/止 */
+            </if>
+            <if test="createUser != null and createUser != ''" >
+                AND create_user = #{createUser,jdbcType=VARCHAR}       /* 创建用户 */
+            </if>
+            <if test="updateTimeBegin != null" >
+                <![CDATA[ AND update_time >= #{updateTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 更新时间/起 */
+            </if>
+            <if test="updateTimeEnd != null" >
+                <![CDATA[ AND update_time <= #{updateTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 更新时间/止 */
+            </if>
+            <if test="updateUser != null and updateUser != ''" >
+                AND update_user = #{updateUser,jdbcType=VARCHAR}       /* 更新用户 */
+            </if>
+        </where>
+    </sql>
+
+    <!-- 排序 -->
+    <sql id="sortClause">
+        <if test="_sort != null">
+            ORDER BY
+            <foreach collection="_sort" item="item" index="index" separator=",">
+                <choose>
+                    <when test="item.propertyName != null and item.propertyName == 'id'">
+                        id    /* 主键 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileKey'">
+                        file_key    /* 文件KEY */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileSourceTypeCode'">
+                        file_source_type_code    /* 来源类型编码 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileSourceTypeName'">
+                        file_source_type_name    /* 来源类型名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileOriginName'">
+                        file_origin_name    /* 原文件名 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileCurrentName'">
+                        file_current_name    /* 现文件名 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileMimeType'">
+                        file_mime_type    /* MIME类型 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileSuffix'">
+                        file_suffix    /* 文件后缀 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileSize'">
+                        file_size    /* 文件大小 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileLocation'">
+                        file_location    /* 文件位置（bucket） */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileMd5'">
+                        file_md5    /* 文件md5 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'isFinished'">
+                        is_finished    /* 状态 0:未完成 1:已完成 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createTime'">
+                        create_time    /* 创建时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createUser'">
+                        create_user    /* 创建用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'updateTime'">
+                        update_time    /* 更新时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'updateUser'">
+                        update_user    /* 更新用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <otherwise>update_time DESC</otherwise>
+                </choose>
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 分页 -->
+    <sql id="pageClause">
+        <if test="_page != null">
+            limit #{_page.offset, jdbcType=INTEGER}, #{_page.limit, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="alice.code.creator.domain.model.resource.ResourceFile" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO resource_file (
+            file_key,                      /* 文件KEY */
+            file_source_type_code,                      /* 来源类型编码 */
+            file_source_type_name,                      /* 来源类型名称 */
+            file_origin_name,                      /* 原文件名 */
+            file_current_name,                      /* 现文件名 */
+            file_mime_type,                      /* MIME类型 */
+            file_suffix,                      /* 文件后缀 */
+            file_size,                      /* 文件大小 */
+            file_location,                      /* 文件位置（bucket） */
+            file_md5,                      /* 文件md5 */
+            is_finished,                      /* 状态 0:未完成 1:已完成 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES(
+            #{fileKey, jdbcType=VARCHAR},                 /* 文件KEY */
+            #{fileSourceTypeCode, jdbcType=VARCHAR},                 /* 来源类型编码 */
+            #{fileSourceTypeName, jdbcType=VARCHAR},                 /* 来源类型名称 */
+            #{fileOriginName, jdbcType=VARCHAR},                 /* 原文件名 */
+            #{fileCurrentName, jdbcType=VARCHAR},                 /* 现文件名 */
+            #{fileMimeType, jdbcType=VARCHAR},                 /* MIME类型 */
+            #{fileSuffix, jdbcType=VARCHAR},                 /* 文件后缀 */
+            #{fileSize, jdbcType=BIGINT},                 /* 文件大小 */
+            #{fileLocation, jdbcType=VARCHAR},                 /* 文件位置（bucket） */
+            #{fileMd5, jdbcType=VARCHAR},                 /* 文件md5 */
+            #{isFinished, jdbcType=TINYINT},                 /* 状态 0:未完成 1:已完成 */
+            #{createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+            #{createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+            #{updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+            #{updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+            #{isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+        )
+    </insert>
+
+    <!-- 批量插入数据 -->
+    <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO resource_file (
+            file_key,                      /* 文件KEY */
+            file_source_type_code,                      /* 来源类型编码 */
+            file_source_type_name,                      /* 来源类型名称 */
+            file_origin_name,                      /* 原文件名 */
+            file_current_name,                      /* 现文件名 */
+            file_mime_type,                      /* MIME类型 */
+            file_suffix,                      /* 文件后缀 */
+            file_size,                      /* 文件大小 */
+            file_location,                      /* 文件位置（bucket） */
+            file_md5,                      /* 文件md5 */
+            is_finished,                      /* 状态 0:未完成 1:已完成 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.fileKey, jdbcType=VARCHAR},                 /* 文件KEY */
+                #{item.fileSourceTypeCode, jdbcType=VARCHAR},                 /* 来源类型编码 */
+                #{item.fileSourceTypeName, jdbcType=VARCHAR},                 /* 来源类型名称 */
+                #{item.fileOriginName, jdbcType=VARCHAR},                 /* 原文件名 */
+                #{item.fileCurrentName, jdbcType=VARCHAR},                 /* 现文件名 */
+                #{item.fileMimeType, jdbcType=VARCHAR},                 /* MIME类型 */
+                #{item.fileSuffix, jdbcType=VARCHAR},                 /* 文件后缀 */
+                #{item.fileSize, jdbcType=BIGINT},                 /* 文件大小 */
+                #{item.fileLocation, jdbcType=VARCHAR},                 /* 文件位置（bucket） */
+                #{item.fileMd5, jdbcType=VARCHAR},                 /* 文件md5 */
+                #{item.isFinished, jdbcType=TINYINT},                 /* 状态 0:未完成 1:已完成 */
+                #{item.createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+                #{item.createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+                #{item.updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+                #{item.updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+                #{item.isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+            )
+        </foreach>
+    </insert>
+
+    <!-- 按主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE resource_file
+            <set>
+                <if test="fileKey != null">
+                    file_key = #{fileKey, jdbcType=VARCHAR},    /* 文件KEY */
+                </if>
+                <if test="fileSourceTypeCode != null">
+                    file_source_type_code = #{fileSourceTypeCode, jdbcType=VARCHAR},    /* 来源类型编码 */
+                </if>
+                <if test="fileSourceTypeName != null">
+                    file_source_type_name = #{fileSourceTypeName, jdbcType=VARCHAR},    /* 来源类型名称 */
+                </if>
+                <if test="fileOriginName != null">
+                    file_origin_name = #{fileOriginName, jdbcType=VARCHAR},    /* 原文件名 */
+                </if>
+                <if test="fileCurrentName != null">
+                    file_current_name = #{fileCurrentName, jdbcType=VARCHAR},    /* 现文件名 */
+                </if>
+                <if test="fileMimeType != null">
+                    file_mime_type = #{fileMimeType, jdbcType=VARCHAR},    /* MIME类型 */
+                </if>
+                <if test="fileSuffix != null">
+                    file_suffix = #{fileSuffix, jdbcType=VARCHAR},    /* 文件后缀 */
+                </if>
+                <if test="fileSize != null">
+                    file_size = #{fileSize, jdbcType=BIGINT},    /* 文件大小 */
+                </if>
+                <if test="fileLocation != null">
+                    file_location = #{fileLocation, jdbcType=VARCHAR},    /* 文件位置（bucket） */
+                </if>
+                <if test="fileMd5 != null">
+                    file_md5 = #{fileMd5, jdbcType=VARCHAR},    /* 文件md5 */
+                </if>
+                <if test="isFinished != null">
+                    is_finished = #{isFinished, jdbcType=TINYINT},    /* 状态 0:未完成 1:已完成 */
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
+                </if>
+                <if test="createUser != null">
+                    create_user = #{createUser, jdbcType=VARCHAR},    /* 创建用户 */
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=TIMESTAMP},    /* 更新时间 */
+                </if>
+                <if test="updateUser != null">
+                    update_user = #{updateUser, jdbcType=VARCHAR},    /* 更新用户 */
+                </if>
+                    is_delete = 0       /* 删除标志 0：未删除 1：已删除 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键删除 -->
+    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.resource.ResourceFile">
+        <if test="_parameter != null">
+            UPDATE resource_file
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量删除 -->
+    <update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE resource_file
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id in    /* 主键集合 */
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+                AND is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量物理删除，慎用 -->
+    <delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
+        <if test="_parameter != null">
+            DELETE FROM resource_file
+            <where>
+                id in	/* 主键集合 */
+                <foreach collection="list" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+            </where>
+        </if>
+    </delete>
+
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="resultMap">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        resource_file
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        resource_file
+        <where>
+            id = #{id, jdbcType=BIGINT}	/* 主键 */
+            AND is_delete = 0			/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键集合查询 -->
+    <select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        resource_file
+        <where>
+            id in	/* 主键集合 */
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id, jdbcType=BIGINT}
+            </foreach>
+            AND is_delete = 0	/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按条件查询 -->
+    <select id="selectByCondition" resultMap="resultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        resource_file
+        <include refid="queryClause"/>
+        <include refid="sortClause"/>
+        <include refid="pageClause"/>
+    </select>
+
+    <!-- 按条件统计记录数 -->
+    <select id="countByCondition" resultType="java.lang.Long" parameterType="java.util.Map">
+        SELECT
+        COUNT(1)
+        FROM
+        resource_file
+        <include refid="queryClause"/>
+    </select>
+
+</mapper>

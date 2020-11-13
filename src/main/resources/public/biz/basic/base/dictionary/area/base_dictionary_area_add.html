@@ -1,0 +1,73 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">基础配置</li>
+    <li class="breadcrumb-item">数据字典</li>
+    <li class="breadcrumb-item">地区编码</li>
+    <li class="breadcrumb-item active">新增</li>
+</ol>
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">中国地区编码表<span class="card-subtitle">新增</span></div>
+                <div class="card-body">
+                    <form id="addForm">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="areaParentId">父级主键</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="areaParentId" name="areaParentId" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="areaCode">地区编号</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="areaCode" name="areaCode" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="areaName">地区名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="areaName" name="areaName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="areaLevel">地区级别 0:国家,1:省,2:市,3:县</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="areaLevel" name="areaLevel" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="areaLatitude">经度</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="areaLatitude" name="areaLatitude" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="areaLongitude">维度</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="areaLongitude" name="areaLongitude" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="remark">备注</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <textarea class="form-control form-control-xs" id="remark" name="remark"></textarea>
+                            </div>
+                        </div>
+                        <hr class="hr hr-32"/>
+                        <p class="text-center">
+                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                <i class="fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                            <button id="btnBack" class="btn btn-space btn-secondary" type="button" onclick="history.back(-1);">
+                                <i class="fa fa-undo bigger-110"></i>
+                                返回
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="biz/basic/base/dictionary/area/base_dictionary_area_add.js"></script>

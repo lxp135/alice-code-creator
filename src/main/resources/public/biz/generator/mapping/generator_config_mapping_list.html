@@ -1,0 +1,61 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">开发工具</li>
+    <li class="breadcrumb-item active">数据类型映射</li>
+</ol>
+<div class="main-content container-fluid">
+    <div class="col-lg-12">
+        <div class="card card-contrast">
+            <div class="card-header card-header-contrast card-header-featured card-header-small">查询条件</div>
+            <div class="card-body card-body-bottom">
+                <form id="searchForm">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">数据库类型</span>
+                                </div>
+                                <input class="form-control" type="text" name="dbType">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">jdbc类型</span>
+                                </div>
+                                <input class="form-control" type="text" name="jdbcType">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">java类型</span>
+                                </div>
+                                <input class="form-control" type="text" name="javaType">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer card-footer-contrast text-muted card-footer-small">
+                <button class="btn btn-space btn-primary" id="btnQuery">查 询</button>
+                <button class="btn btn-space btn-secondary" id="btnReset">清 空</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card card-contrast">
+            <div class="card-header card-header-contrast card-header-featured card-header-small">
+                <a class="btn btn-space btn-primary" href="#biz/generator/mapping/generator_config_mapping_add">
+                    <i class="fa fa-plus"></i>
+                    <span class="bigger-110">新增</span>
+                </a>
+            </div>
+            <div class="card-body">
+                <table id="gridTable"></table>
+                <div id="gridPager"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="biz/generator/mapping/generator_config_mapping_list.js"></script>

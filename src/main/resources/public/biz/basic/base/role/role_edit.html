@@ -1,0 +1,62 @@
+<ol class="breadcrumb" style="margin-bottom: 0;">
+    <li class="breadcrumb-item">基础数据</li>
+    <li class="breadcrumb-item">角色管理</li>
+    <li class="breadcrumb-item active">修改</li>
+</ol>
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">角色管理<span class="card-subtitle">修改</span></div>
+                <div class="card-body">
+                    <form id="editForm">
+                        <input id="id" name="id" style="display:none;"/>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="roleName">角色名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="roleName" name="roleName"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="roleDescription">角色描述</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="roleDescription" name="roleDescription" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="isEnable">状态</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <select class="select2 select2-xs" id="isEnable" name="isEnable">
+                                    <option value="" >请选择</option>
+                                    <option value="0">禁用</option>
+                                    <option value="1">启用</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="remark">备注</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <textarea class="form-control form-control-xs" id="remark" name="remark"></textarea>
+                            </div>
+                        </div>
+                        <hr class="hr hr-32"/>
+                        <p class="text-center">
+                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                <i class="fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                            <button id="btnBack" class="btn btn-space btn-secondary" type="button"
+                                    onclick="history.back(-1);">
+                                <i class="fa fa-undo bigger-110"></i>
+                                返回
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="biz/basic/base/role/role_edit.js"></script>

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 数据字典表 author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.base.BaseDictionaryDao">
+
+	<!-- 映射关系 -->
+	<resultMap id="resultMap" type="alice.code.creator.domain.model.base.BaseDictionary">
+		<result column="id" property="id" jdbcType="BIGINT" />                                           <!-- 主键 -->
+		<result column="group_code" property="groupCode" jdbcType="VARCHAR" />                           <!-- 分组编码 -->
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />                           <!-- 分组名称 -->
+		<result column="dict_code" property="dictCode" jdbcType="VARCHAR" />                             <!-- 字典编码 -->
+		<result column="dict_name" property="dictName" jdbcType="VARCHAR" />                             <!-- 字典名称 -->
+		<result column="is_enable" property="isEnable" jdbcType="TINYINT" />                             <!-- 启停标志 0：正常、1：禁用 -->
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />                       <!-- 创建时间 -->
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />                         <!-- 创建用户 -->
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />                       <!-- 更新时间 -->
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />                         <!-- 更新用户 -->
+		<result column="is_delete" property="isDelete" jdbcType="TINYINT" />                             <!-- 删除标志 0：未删除 1：已删除 -->
+	</resultMap>
+
+	<!-- 查询列 -->
+	<sql id="queryColumns">
+		id,                             /* 主键 */
+		group_code,                     /* 分组编码 */
+		group_name,                     /* 分组名称 */
+		dict_code,                      /* 字典编码 */
+		dict_name,                      /* 字典名称 */
+		is_enable,                      /* 启停标志 0：正常、1：禁用 */
+		create_time,                    /* 创建时间 */
+		create_user,                    /* 创建用户 */
+		update_time,                    /* 更新时间 */
+		update_user,                    /* 更新用户 */
+		is_delete                      /* 删除标志 0：未删除 1：已删除 */
+	</sql>
+
+	<!-- 查询条件 -->
+	<sql id="queryClause">
+		<where>
+			is_delete = 0    /* 是否删除(1:是;0:否) */
+			<if test="id != null">
+				AND id = #{id, jdbcType=BIGINT}	/* 主键 */
+			</if>
+			<if test="idMin != null">
+				<![CDATA[ AND id > #{idMin, jdbcType=BIGINT} ]]>	/* 主键大于某值*/
+			</if>
+			<if test="idMax != null">
+				<![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 主键小于某值 */
+			</if>
+			<if test="groupCode != null and groupCode != ''">
+				AND group_code = #{groupCode, jdbcType=VARCHAR}    /* 分组编码 */
+			</if>
+			<if test="groupName != null and groupName != ''">
+				AND group_name = #{groupName, jdbcType=VARCHAR}    /* 分组名称 */
+			</if>
+			<if test="dictCode != null and dictCode != ''">
+				AND dict_code = #{dictCode, jdbcType=VARCHAR}    /* 字典编码 */
+			</if>
+			<if test="dictName != null and dictName != ''">
+				AND dict_name = #{dictName, jdbcType=VARCHAR}    /* 字典名称 */
+			</if>
+			<if test="isEnable != null ">
+				AND is_enable = #{isEnable, jdbcType=TINYINT}    /* 启停标志 0：正常、1：禁用 */
+			</if>
+			<if test="createUser != null and createUser != ''">
+				AND create_user = #{createUser, jdbcType=VARCHAR}    /* 创建人 */
+			</if>
+			<if test="createTimeBegin != null">
+				<![CDATA[ AND create_time >= #{createTimeBegin, jdbcType=TIMESTAMP} ]]>    /* 创建时间开始 */
+			</if>
+			<if test="createTimeEnd != null">
+				<![CDATA[ AND create_time <= #{createTimeEnd, jdbcType=TIMESTAMP} ]]>    /* 创建时间截止 */
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				AND update_user = #{updateUser, jdbcType=VARCHAR}    /* 更新人 */
+			</if>
+			<if test="updateTimeBegin != null">
+				<![CDATA[ AND update_time >= #{updateTimeBegin, jdbcType=TIMESTAMP} ]]>    /* 更新时间开始 */
+			</if>
+			<if test="updateTimeEnd != null">
+				<![CDATA[ AND update_time <= #{updateTimeEnd, jdbcType=TIMESTAMP} ]]>    /* 更新时间截止 */
+			</if>
+		</where>
+	</sql>
+
+	<!-- 排序 -->
+	<sql id="sortClause">
+		<if test="_sort != null">
+			ORDER BY
+			<foreach collection="_sort" item="item" index="index" separator=",">
+				<choose>
+					<when test="item.propertyName != null and item.propertyName == 'id'">
+						id    /* 主键 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'groupCode'">
+						group_code    /* 分组编码 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'groupName'">
+						group_name    /* 分组名称 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'dictCode'">
+						dict_code    /* 字典编码 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'dictName'">
+						dict_name    /* 字典名称 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'isEnable'">
+						is_enable    /* 启停标志 0：正常、1：禁用 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'createTime'">
+						create_time    /* 创建时间 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'createUser'">
+						create_user    /* 创建用户 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'updateTime'">
+						update_time    /* 更新时间 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'updateUser'">
+						update_user    /* 更新用户 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'isDelete'">
+						is_delete    /* 删除标志 0：未删除 1：已删除 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<otherwise>update_time DESC</otherwise>
+				</choose>
+			</foreach>
+		</if>
+	</sql>
+
+	<!-- 分页 -->
+	<sql id="pageClause">
+		<if test="_page != null">
+			limit #{_page.offset, jdbcType=INTEGER}, #{_page.limit, jdbcType=INTEGER}
+		</if>
+	</sql>
+
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="alice.code.creator.domain.model.base.BaseDictionary" keyProperty="id" useGeneratedKeys="true">
+	INSERT INTO base_dictionary (
+		group_code,                      /* 分组编码 */
+		group_name,                      /* 分组名称 */
+		dict_code,                       /* 字典编码 */
+		dict_name,                       /* 字典名称 */
+		is_enable,                       /* 启停标志 0：正常、1：禁用 */
+		create_time,                     /* 创建时间 */
+		create_user,                     /* 创建用户 */
+		update_time,                     /* 更新时间 */
+		update_user,                     /* 更新用户 */
+		is_delete                       /* 删除标志 0：未删除 1：已删除 */
+	)VALUES(
+		#{groupCode, jdbcType=VARCHAR},                 /* 分组编码 */
+		#{groupName, jdbcType=VARCHAR},                 /* 分组名称 */
+		#{dictCode, jdbcType=VARCHAR},                  /* 字典编码 */
+		#{dictName, jdbcType=VARCHAR},                  /* 字典名称 */
+		#{isEnable, jdbcType=TINYINT},                  /* 启停标志 0：正常、1：禁用 */
+		#{createTime, jdbcType=TIMESTAMP},              /* 创建时间 */
+		#{createUser, jdbcType=VARCHAR},                /* 创建用户 */
+		#{updateTime, jdbcType=TIMESTAMP},              /* 更新时间 */
+		#{updateUser, jdbcType=VARCHAR},                /* 更新用户 */
+		#{isDelete, jdbcType=TINYINT}                  /* 删除标志 0：未删除 1：已删除 */
+	)
+	</insert>
+
+	<!-- 批量插入数据 -->
+	<insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO base_dictionary (
+			group_code,                     /* 分组编码 */
+			group_name,                     /* 分组名称 */
+			dict_code,                      /* 字典编码 */
+			dict_name,                      /* 字典名称 */
+			is_enable,                      /* 启停标志 0：正常、1：禁用 */
+			create_time,                    /* 创建时间 */
+			create_user,                    /* 创建用户 */
+			update_time,                    /* 更新时间 */
+			update_user,                    /* 更新用户 */
+			is_delete                      /* 删除标志 0：未删除 1：已删除 */
+		)VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.groupCode, jdbcType=VARCHAR},               /* 分组编码 */
+			#{item.groupName, jdbcType=VARCHAR},               /* 分组名称 */
+			#{item.dictCode, jdbcType=VARCHAR},                /* 字典编码 */
+			#{item.dictName, jdbcType=VARCHAR},                /* 字典名称 */
+			#{item.isEnable, jdbcType=TINYINT},                /* 启停标志 0：正常、1：禁用 */
+			#{item.createTime, jdbcType=TIMESTAMP},            /* 创建时间 */
+			#{item.createUser, jdbcType=VARCHAR},              /* 创建用户 */
+			#{item.updateTime, jdbcType=TIMESTAMP},            /* 更新时间 */
+			#{item.updateUser, jdbcType=VARCHAR},              /* 更新用户 */
+			#{item.isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+		)
+		</foreach>
+	</insert>
+
+	<!-- 按主键更新 -->
+	<update id="updateByPrimaryKey" parameterType="java.util.Map">
+		<if test="_parameter != null">
+			UPDATE base_dictionary
+			<set>
+				<if test="groupCode != null">
+					group_code = #{groupCode, jdbcType=VARCHAR},    /* 分组编码 */
+				</if>
+				<if test="groupName != null">
+					group_name = #{groupName, jdbcType=VARCHAR},    /* 分组名称 */
+				</if>
+				<if test="dictCode != null">
+					dict_code = #{dictCode, jdbcType=VARCHAR},    /* 字典编码 */
+				</if>
+				<if test="dictName != null">
+					dict_name = #{dictName, jdbcType=VARCHAR},    /* 字典名称 */
+				</if>
+				<if test="isEnable != null">
+					is_enable = #{isEnable, jdbcType=TINYINT},    /* 启停标志 0：正常、1：禁用 */
+				</if>
+				<if test="createTime != null">
+					create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
+				</if>
+				<if test="createUser != null">
+					create_user = #{createUser, jdbcType=VARCHAR},    /* 创建用户 */
+				</if>
+				<if test="updateTime != null">
+					update_time = #{updateTime, jdbcType=TIMESTAMP},    /* 更新时间 */
+				</if>
+				<if test="updateUser != null">
+					update_user = #{updateUser, jdbcType=VARCHAR},    /* 更新者姓名 */
+				</if>
+				is_delete = 0       /* 是否删除 0:否 1:是 */
+			</set>
+			<where>
+				id = #{id, jdbcType=BIGINT}	/* 主键 */
+				AND is_delete = 0		/* 是否删除(1:是;0:否) */
+			</where>
+		</if>
+	</update>
+
+	<!-- 按主键删除 -->
+	<update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.base.BaseDictionary">
+		<if test="_parameter != null">
+			UPDATE base_dictionary
+		<set>
+			is_delete = 1,    /* 是否删除(1:是;0:否) */
+			update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+			update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+		</set>
+		<where>
+			id = #{id, jdbcType=BIGINT}	/* 主键 */
+			AND is_delete = 0		/* 是否删除(1:是;0:否) */
+		</where>
+		</if>
+	</update>
+
+	<!-- 按主键批量删除 -->
+	<update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
+		<if test="_parameter != null">
+			UPDATE base_dictionary
+		<set>
+			is_delete = 1,    /* 是否删除(1:是;0:否) */
+			update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+			update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+		</set>
+		<where>
+			id in    /* 主键集合 */
+			<foreach collection="ids" item="id" open="(" separator="," close=")">
+				#{id, jdbcType=BIGINT}
+			</foreach>
+			AND is_delete = 0    /* 是否删除(1:是;0:否) */
+		</where>
+		</if>
+	</update>
+
+	<!-- 按主键批量物理删除，慎用 -->
+	<delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
+		<if test="_parameter != null">
+			DELETE FROM base_dictionary
+			<where>
+				id in	/* 主键集合 */
+				<foreach collection="list" item="id" open="(" separator="," close=")">
+					#{id, jdbcType=BIGINT}
+				</foreach>
+			</where>
+		</if>
+	</delete>
+
+	<!-- 查询所有记录 -->
+	<select id="selectAll" resultMap="resultMap">
+		SELECT
+		<include refid="queryColumns"/>
+		FROM
+		base_dictionary
+		<where>
+		is_delete = 0    /* 是否删除(1:是;0:否) */
+		</where>
+	</select>
+
+	<!-- 按主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="queryColumns"/>
+		FROM
+		base_dictionary
+		<where>
+		id = #{id, jdbcType=BIGINT}	/* 主键 */
+		AND is_delete = 0			/* 是否删除(1:是;0:否) */
+		</where>
+	</select>
+
+	<!-- 按主键集合查询 -->
+	<select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.util.List">
+		SELECT
+			<include refid="queryColumns"/>
+		FROM
+			base_dictionary
+		<where>
+			id in	/* 主键集合 */
+			<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id, jdbcType=BIGINT}
+			</foreach>
+			AND is_delete = 0	/* 是否删除(1:是;0:否) */
+		</where>
+	</select>
+
+	<!-- 按条件查询 -->
+	<select id="selectByCondition" resultMap="resultMap" parameterType="java.util.Map">
+		SELECT
+			<include refid="queryColumns"/>
+		FROM
+			base_dictionary
+		<include refid="queryClause"/>
+		<include refid="sortClause"/>
+		<include refid="pageClause"/>
+	</select>
+
+	<!-- 按条件统计记录数 -->
+	<select id="countByCondition" resultType="java.lang.Long" parameterType="java.util.Map">
+		SELECT
+			COUNT(1)
+		FROM
+			base_dictionary
+		<include refid="queryClause"/>
+	</select>
+</mapper>

@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 登录日志 author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.monitor.MonitorLoginLogDao">
+
+	<!-- 映射关系 -->
+	<resultMap id="resultMap" type="alice.code.creator.domain.model.monitor.MonitorLoginLog">
+		<result column="id" property="id" jdbcType="BIGINT" />                                           <!-- 主键ID -->
+		<result column="user_id" property="userId" jdbcType="BIGINT" />                                  <!-- 用户唯一标识 -->
+		<result column="user_account" property="userAccount" jdbcType="VARCHAR" />                       <!-- 用户账号 -->
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />                             <!-- 用户名称 -->
+		<result column="login_ip" property="loginIp" jdbcType="VARCHAR" />                               <!-- 登录IP -->
+		<result column="login_app" property="loginApp" jdbcType="VARCHAR" />                             <!-- 登录应用 -->
+		<result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />                         <!-- 登录时间 -->
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />                         <!-- 创建人名称 -->
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />                       <!-- 创建时间 -->
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />                         <!-- 修改人名称 -->
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />                       <!-- 修改时间 -->
+		<result column="is_delete" property="isDelete" jdbcType="TINYINT" />                             <!-- 删除标志 0：未删除 1：已删除 -->
+	</resultMap>
+
+	<!-- 查询列 -->
+	<sql id="queryColumns">
+		id,                             /* 主键ID */
+		user_id,                        /* 用户唯一标识 */
+		user_account,                   /* 用户账号 */
+		user_name,                      /* 用户名称 */
+		login_ip,                       /* 登录IP */
+		login_app,                      /* 登录应用 */
+		login_time,                     /* 登录时间 */
+		create_user,                    /* 创建人名称 */
+		create_time,                    /* 创建时间 */
+		update_user,                    /* 修改人名称 */
+		update_time,                    /* 修改时间 */
+		is_delete                      /* 删除标志 0：未删除 1：已删除 */
+	</sql>
+
+	<!-- 查询条件 -->
+	<sql id="queryClause">
+		<where>
+			is_delete = 0    /* 是否删除(1:是;0:否) */
+			<if test="id != null">
+				<![CDATA[ AND id = #{id, jdbcType=BIGINT} ]]>	/* 主键 */
+			</if>
+			<if test="idMin != null">
+				<![CDATA[ AND id > #{idMin, jdbcType=BIGINT} ]]>	/* 主键大于某值*/
+			</if>
+			<if test="idMax != null">
+				<![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 主键小于某值 */
+			</if>
+			<if test="userId != null ">
+				AND user_id = #{userId, jdbcType=BIGINT}    /* 用户唯一标识 */
+			</if>
+			<if test="userAccount != null and userAccount != ''">
+				AND user_account = #{userAccount, jdbcType=VARCHAR}    /* 用户账号 */
+			</if>
+			<if test="userName != null and userName != ''">
+				AND user_name = #{userName, jdbcType=VARCHAR}    /* 用户名称 */
+			</if>
+			<if test="loginIp != null and loginIp != ''">
+				AND login_ip = #{loginIp, jdbcType=VARCHAR}    /* 登录IP */
+			</if>
+			<if test="loginApp != null and loginApp != ''">
+				AND login_app = #{loginApp, jdbcType=VARCHAR}    /* 登录应用 */
+			</if>
+			<if test="loginTime != null ">
+				AND login_time = #{loginTime, jdbcType=TIMESTAMP}    /* 登录时间 */
+			</if>
+			<if test="createUser != null and createUser != ''">
+				AND create_user = #{createUser, jdbcType=VARCHAR}    /* 创建人 */
+			</if>
+			<if test="createTimeBegin != null">
+				<![CDATA[ AND create_time >= #{createTimeBegin, jdbcType=TIMESTAMP} ]]>    /* 创建时间开始 */
+			</if>
+			<if test="createTimeEnd != null">
+				<![CDATA[ AND create_time <= #{createTimeEnd, jdbcType=TIMESTAMP} ]]>    /* 创建时间截止 */
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				AND update_user = #{updateUser, jdbcType=VARCHAR}    /* 更新人 */
+			</if>
+			<if test="updateTimeBegin != null">
+				<![CDATA[ AND update_time >= #{updateTimeBegin, jdbcType=TIMESTAMP} ]]>    /* 更新时间开始 */
+			</if>
+			<if test="updateTimeEnd != null">
+				<![CDATA[ AND update_time <= #{updateTimeEnd, jdbcType=TIMESTAMP} ]]>    /* 更新时间截止 */
+			</if>
+		</where>
+	</sql>
+
+	<!-- 排序 -->
+	<sql id="sortClause">
+		<if test="_sort != null">
+			ORDER BY
+			<foreach collection="_sort" item="item" index="index" separator=",">
+				<choose>
+					<when test="item.propertyName != null and item.propertyName == 'id'">
+						id    /* 主键ID */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'userId'">
+						user_id    /* 用户唯一标识 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'userAccount'">
+						user_account    /* 用户账号 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'userName'">
+						user_name    /* 用户名称 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'loginIp'">
+						login_ip    /* 登录IP */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'loginApp'">
+						login_app    /* 登录应用 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'loginTime'">
+						login_time    /* 登录时间 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'createUser'">
+						create_user    /* 创建人名称 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'createTime'">
+						create_time    /* 创建时间 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'updateUser'">
+						update_user    /* 修改人名称 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'updateTime'">
+						update_time    /* 修改时间 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<when test="item.propertyName != null and item.propertyName == 'isDelete'">
+						is_delete    /* 删除标志 0：未删除 1：已删除 */
+						<choose>
+							<when test="item.ascending">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					</when>
+					<otherwise>update_time DESC</otherwise>
+				</choose>
+			</foreach>
+		</if>
+	</sql>
+
+	<!-- 分页 -->
+	<sql id="pageClause">
+		<if test="_page != null">
+			limit #{_page.offset, jdbcType=INTEGER}, #{_page.limit, jdbcType=INTEGER}
+		</if>
+	</sql>
+
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="alice.code.creator.domain.model.monitor.MonitorLoginLog" keyProperty="id" useGeneratedKeys="true">
+	INSERT INTO monitor_login_log (
+		user_id,                         /* 用户唯一标识 */
+		user_account,                    /* 用户账号 */
+		user_name,                       /* 用户名称 */
+		login_ip,                        /* 登录IP */
+		login_app,                       /* 登录应用 */
+		login_time,                      /* 登录时间 */
+		create_user,                     /* 创建人名称 */
+		create_time,                     /* 创建时间 */
+		update_user,                     /* 修改人名称 */
+		update_time,                     /* 修改时间 */
+		is_delete                       /* 删除标志 0：未删除 1：已删除 */
+	)VALUES(
+		#{userId, jdbcType=BIGINT},                     /* 用户唯一标识 */
+		#{userAccount, jdbcType=VARCHAR},               /* 用户账号 */
+		#{userName, jdbcType=VARCHAR},                  /* 用户名称 */
+		#{loginIp, jdbcType=VARCHAR},                   /* 登录IP */
+		#{loginApp, jdbcType=VARCHAR},                  /* 登录应用 */
+		#{loginTime, jdbcType=TIMESTAMP},               /* 登录时间 */
+		#{createUser, jdbcType=VARCHAR},                /* 创建人名称 */
+		#{createTime, jdbcType=TIMESTAMP},              /* 创建时间 */
+		#{updateUser, jdbcType=VARCHAR},                /* 修改人名称 */
+		#{updateTime, jdbcType=TIMESTAMP},              /* 修改时间 */
+		#{isDelete, jdbcType=TINYINT}                  /* 删除标志 0：未删除 1：已删除 */
+	)
+	</insert>
+
+	<!-- 批量插入数据 -->
+	<insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO monitor_login_log (
+			user_id,                        /* 用户唯一标识 */
+			user_account,                   /* 用户账号 */
+			user_name,                      /* 用户名称 */
+			login_ip,                       /* 登录IP */
+			login_app,                      /* 登录应用 */
+			login_time,                     /* 登录时间 */
+			create_user,                    /* 创建人名称 */
+			create_time,                    /* 创建时间 */
+			update_user,                    /* 修改人名称 */
+			update_time,                    /* 修改时间 */
+			is_delete                      /* 删除标志 0：未删除 1：已删除 */
+		)VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.userId, jdbcType=BIGINT},                   /* 用户唯一标识 */
+			#{item.userAccount, jdbcType=VARCHAR},             /* 用户账号 */
+			#{item.userName, jdbcType=VARCHAR},                /* 用户名称 */
+			#{item.loginIp, jdbcType=VARCHAR},                 /* 登录IP */
+			#{item.loginApp, jdbcType=VARCHAR},                /* 登录应用 */
+			#{item.loginTime, jdbcType=TIMESTAMP},             /* 登录时间 */
+			#{item.createUser, jdbcType=VARCHAR},              /* 创建人名称 */
+			#{item.createTime, jdbcType=TIMESTAMP},            /* 创建时间 */
+			#{item.updateUser, jdbcType=VARCHAR},              /* 修改人名称 */
+			#{item.updateTime, jdbcType=TIMESTAMP},            /* 修改时间 */
+			#{item.isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+		)
+		</foreach>
+	</insert>
+
+	<!-- 按主键更新 -->
+	<update id="updateByPrimaryKey" parameterType="java.util.Map">
+		<if test="_parameter != null">
+			UPDATE monitor_login_log
+			<set>
+				<if test="userId != null">
+					user_id = #{userId, jdbcType=BIGINT},    /* 用户唯一标识 */
+				</if>
+				<if test="userAccount != null">
+					user_account = #{userAccount, jdbcType=VARCHAR},    /* 用户账号 */
+				</if>
+				<if test="userName != null">
+					user_name = #{userName, jdbcType=VARCHAR},    /* 用户名称 */
+				</if>
+				<if test="loginIp != null">
+					login_ip = #{loginIp, jdbcType=VARCHAR},    /* 登录IP */
+				</if>
+				<if test="loginApp != null">
+					login_app = #{loginApp, jdbcType=VARCHAR},    /* 登录应用 */
+				</if>
+				<if test="loginTime != null">
+					login_time = #{loginTime, jdbcType=TIMESTAMP},    /* 登录时间 */
+				</if>
+				<if test="createUser != null">
+					create_user = #{createUser, jdbcType=VARCHAR},    /* 创建人名称 */
+				</if>
+				<if test="createTime != null">
+					create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
+				</if>
+				<if test="updateTime != null">
+					update_time = #{updateTime, jdbcType=TIMESTAMP},    /* 修改时间 */
+				</if>
+				<if test="updateUser != null">
+					update_user = #{updateUser, jdbcType=VARCHAR},    /* 更新者姓名 */
+				</if>
+				is_delete = 0       /* 是否删除 0:否 1:是 */
+			</set>
+			<where>
+				id = #{id, jdbcType=BIGINT}	/* 主键 */
+				AND is_delete = 0		/* 是否删除(1:是;0:否) */
+			</where>
+		</if>
+	</update>
+
+	<!-- 按主键删除 -->
+	<update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.monitor.MonitorLoginLog">
+		<if test="_parameter != null">
+			UPDATE monitor_login_log
+		<set>
+			is_delete = 1,    /* 是否删除(1:是;0:否) */
+			update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+			update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+		</set>
+		<where>
+			id = #{id, jdbcType=BIGINT}	/* 主键 */
+			AND is_delete = 0		/* 是否删除(1:是;0:否) */
+		</where>
+		</if>
+	</update>
+
+	<!-- 按主键批量删除 -->
+	<update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
+		<if test="_parameter != null">
+			UPDATE monitor_login_log
+		<set>
+			is_delete = 1,    /* 是否删除(1:是;0:否) */
+			update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+			update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+		</set>
+		<where>
+			id in    /* 主键集合 */
+			<foreach collection="ids" item="id" open="(" separator="," close=")">
+				#{id, jdbcType=BIGINT}
+			</foreach>
+			AND is_delete = 0    /* 是否删除(1:是;0:否) */
+		</where>
+		</if>
+	</update>
+
+	<!-- 按主键批量物理删除，慎用 -->
+	<delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
+		<if test="_parameter != null">
+			DELETE FROM monitor_login_log
+			<where>
+				id in	/* 主键集合 */
+				<foreach collection="list" item="id" open="(" separator="," close=")">
+					#{id, jdbcType=BIGINT}
+				</foreach>
+			</where>
+		</if>
+	</delete>
+
+	<!-- 查询所有记录 -->
+	<select id="selectAll" resultMap="resultMap">
+		SELECT
+		<include refid="queryColumns"/>
+		FROM
+		monitor_login_log
+		<where>
+		is_delete = 0    /* 是否删除(1:是;0:否) */
+		</where>
+	</select>
+
+	<!-- 按主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="queryColumns"/>
+		FROM
+		monitor_login_log
+		<where>
+		id = #{id, jdbcType=BIGINT}	/* 主键 */
+		AND is_delete = 0			/* 是否删除(1:是;0:否) */
+		</where>
+	</select>
+
+	<!-- 按主键集合查询 -->
+	<select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.util.List">
+		SELECT
+			<include refid="queryColumns"/>
+		FROM
+			monitor_login_log
+		<where>
+			id in	/* 主键集合 */
+			<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id, jdbcType=BIGINT}
+			</foreach>
+			AND is_delete = 0	/* 是否删除(1:是;0:否) */
+		</where>
+	</select>
+
+	<!-- 按条件查询 -->
+	<select id="selectByCondition" resultMap="resultMap" parameterType="java.util.Map">
+		SELECT
+			<include refid="queryColumns"/>
+		FROM
+			monitor_login_log
+		<include refid="queryClause"/>
+		<include refid="sortClause"/>
+		<include refid="pageClause"/>
+	</select>
+
+	<!-- 按条件统计记录数 -->
+	<select id="countByCondition" resultType="java.lang.Long" parameterType="java.util.Map">
+		SELECT
+			COUNT(1)
+		FROM
+			monitor_login_log
+		<include refid="queryClause"/>
+	</select>
+</mapper>

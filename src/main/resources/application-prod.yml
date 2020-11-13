@@ -1,0 +1,48 @@
+##################################################################
+# 服务器
+##################################################################
+server:
+    port: 9090
+    tomcat:
+        uri-encoding: UTF-8
+    compression:
+        enabled: true
+        mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+
+##################################################################
+# 日志引擎
+##################################################################
+logging:
+    config: classpath:log/log4j2-prod.xml
+##################################################################
+### 本地存储配置
+##################################################################
+local:
+    path: D:/uploadFiles
+#####################################
+## Spring配置
+#####################################
+spring:
+    #数据源配置
+    datasource:
+        #驱动名称
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        #链接地址
+        url: jdbc:mysql://localhost:3306/alice_code_creator?characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai
+        #用户名
+        username: root
+        #密码
+        password: root
+
+#####################################
+## MyBatis配置
+#####################################
+mybatis:
+    # 加载全局的配置文件
+    configLocation: classpath:mybatis/mybatis-config.xml
+#####################################
+## 短信网关
+#####################################
+sms:
+    # Netease, Aliyun
+    gateway: Aliyun

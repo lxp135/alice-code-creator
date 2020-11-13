@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 用户基本信息表SQL author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.base.BaseUserDao" >
+    <!-- 映射关系 -->
+    <resultMap id="resultMap" type="alice.code.creator.domain.model.base.BaseUser" >
+        <id column="id" property="id" jdbcType="BIGINT" />       <!-- 主键 -->
+        <result column="user_account" property="userAccount" jdbcType="VARCHAR" />       <!-- 用户账号 -->
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />       <!-- 用户名称 -->
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR" />       <!-- 用户密码 -->
+        <result column="user_sex" property="userSex" jdbcType="TINYINT" />       <!-- 性别 0:未填写 1:男 2:女 -->
+        <result column="user_face" property="userFace" jdbcType="VARCHAR" />       <!-- 用户头像 -->
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR" />       <!-- 电子邮件 -->
+        <result column="user_wechat" property="userWechat" jdbcType="VARCHAR" />       <!-- 微信号 -->
+        <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />       <!-- 手机号 -->
+        <result column="user_birthday" property="userBirthday" jdbcType="TIMESTAMP" />       <!-- 出生日期 -->
+        <result column="user_signature" property="userSignature" jdbcType="VARCHAR" />       <!-- 签名 -->
+        <result column="is_enable" property="isEnable" jdbcType="TINYINT" />       <!-- 用户状态 0:禁用 1:正常 -->
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />       <!-- 创建时间 -->
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />       <!-- 创建用户 -->
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />       <!-- 更新时间 -->
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />       <!-- 更新用户 -->
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />       <!-- 删除标志 0：未删除 1：已删除 -->
+    </resultMap>
+
+    <!-- 查询列 -->
+    <sql id="queryColumns">
+        id,       /* 主键 */
+        user_account,       /* 用户账号 */
+        user_name,       /* 用户名称 */
+        user_password,       /* 用户密码 */
+        user_sex,       /* 性别 0:未填写 1:男 2:女 */
+        user_face,       /* 用户头像 */
+        user_email,       /* 电子邮件 */
+        user_wechat,       /* 微信号 */
+        user_phone,       /* 手机号 */
+        user_birthday,       /* 出生日期 */
+        user_signature,       /* 签名 */
+        is_enable,       /* 用户状态 0:禁用 1:正常 */
+        create_time,       /* 创建时间 */
+        create_user,       /* 创建用户 */
+        update_time,       /* 更新时间 */
+        update_user,       /* 更新用户 */
+        is_delete       /* 删除标志 0：未删除 1：已删除 */
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="queryClause">
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            <if test="id != null">
+                AND id = #{id, jdbcType=BIGINT}	/* 主键 */
+            </if>
+            <if test="idMin != null">
+                <![CDATA[ AND id > #{idMin, jdbcType=BIGINT} ]]>	/* 主键大于某值*/
+            </if>
+            <if test="idMax != null">
+                <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 主键小于某值 */
+            </if>
+            <if test="userAccount != null and userAccount != ''" >
+                AND user_account = #{userAccount,jdbcType=VARCHAR}       /* 用户账号 */
+            </if>
+            <if test="userName != null and userName != ''" >
+                AND user_name = #{userName,jdbcType=VARCHAR}       /* 用户名称 */
+            </if>
+            <if test="userNameLike != null and userNameLike != ''" >
+                AND user_name LIKE concat('%', #{userNameLike,jdbcType=VARCHAR},'%')       /* 用户名称 */
+            </if>
+            <if test="userPassword != null and userPassword != ''" >
+                AND user_password = #{userPassword,jdbcType=VARCHAR}       /* 用户密码 */
+            </if>
+            <if test="userSex != null" >
+                AND user_sex = #{userSex,jdbcType=TINYINT}       /* 性别 0:未填写 1:男 2:女 */
+            </if>
+            <if test="userFace != null and userFace != ''" >
+                AND user_face = #{userFace,jdbcType=VARCHAR}       /* 用户头像 */
+            </if>
+            <if test="userEmail != null and userEmail != ''" >
+                AND user_email = #{userEmail,jdbcType=VARCHAR}       /* 电子邮件 */
+            </if>
+            <if test="userWechat != null and userWechat != ''" >
+                AND user_wechat = #{userWechat,jdbcType=VARCHAR}       /* 微信号 */
+            </if>
+            <if test="userPhone != null and userPhone != ''" >
+                AND user_phone = #{userPhone,jdbcType=VARCHAR}       /* 手机号 */
+            </if>
+            <if test="userBirthdayBegin != null and userBirthdayBegin != ''" >
+                <![CDATA[ AND user_birthday >= #{userBirthdayBegin,jdbcType=TIMESTAMP} ]]>       /* 出生日期/起 */
+            </if>
+            <if test="userBirthdayEnd != null and userBirthdayEnd != ''" >
+                <![CDATA[ AND user_birthday <= #{userBirthdayEnd,jdbcType=TIMESTAMP} ]]>       /* 出生日期/止 */
+            </if>
+            <if test="userSignature != null and userSignature != ''" >
+                AND user_signature = #{userSignature,jdbcType=VARCHAR}       /* 签名 */
+            </if>
+            <if test="isEnable != null" >
+                AND is_enable = #{isEnable,jdbcType=TINYINT}       /* 用户状态 0:禁用 1:正常 */
+            </if>
+            <if test="createTimeBegin != null" >
+                <![CDATA[ AND create_time >= #{createTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 创建时间/起 */
+            </if>
+            <if test="createTimeEnd != null" >
+                <![CDATA[ AND create_time <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 创建时间/止 */
+            </if>
+            <if test="createUser != null and createUser != ''" >
+                AND create_user = #{createUser,jdbcType=VARCHAR}       /* 创建用户 */
+            </if>
+            <if test="updateTimeBegin != null" >
+                <![CDATA[ AND update_time >= #{updateTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 更新时间/起 */
+            </if>
+            <if test="updateTimeEnd != null" >
+                <![CDATA[ AND update_time <= #{updateTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 更新时间/止 */
+            </if>
+            <if test="updateUser != null and updateUser != ''" >
+                AND update_user = #{updateUser,jdbcType=VARCHAR}       /* 更新用户 */
+            </if>
+        </where>
+    </sql>
+
+    <!-- 排序 -->
+    <sql id="sortClause">
+        <if test="_sort != null">
+            ORDER BY
+            <foreach collection="_sort" item="item" index="index" separator=",">
+                <choose>
+                    <when test="item.propertyName != null and item.propertyName == 'id'">
+                        id    /* 主键 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'userAccount'">
+                        user_account    /* 用户账号 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'userName'">
+                        user_name    /* 用户名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'userPassword'">
+                        user_password    /* 用户密码 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'userSex'">
+                        user_sex    /* 性别 0:未填写 1:男 2:女 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'userFace'">
+                        user_face    /* 用户头像 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'userEmail'">
+                        user_email    /* 电子邮件 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'userWechat'">
+                        user_wechat    /* 微信号 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'userPhone'">
+                        user_phone    /* 手机号 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'userBirthday'">
+                        user_birthday    /* 出生日期 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'userSignature'">
+                        user_signature    /* 签名 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'isEnable'">
+                        is_enable    /* 用户状态 0:禁用 1:正常 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'createTime'">
+                        create_time    /* 创建时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'createUser'">
+                        create_user    /* 创建用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'updateTime'">
+                        update_time    /* 更新时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'updateUser'">
+                        update_user    /* 更新用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <otherwise>update_time DESC</otherwise>
+                </choose>
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 分页 -->
+    <sql id="pageClause">
+        <if test="_page != null">
+            limit #{_page.offset, jdbcType=INTEGER}, #{_page.limit, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="alice.code.creator.domain.model.base.BaseUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO base_user (
+            user_account,                      /* 用户账号 */
+            user_name,                      /* 用户名称 */
+            user_password,                      /* 用户密码 */
+            user_sex,                      /* 性别 0:未填写 1:男 2:女 */
+            user_face,                      /* 用户头像 */
+            user_email,                      /* 电子邮件 */
+            user_wechat,                      /* 微信号 */
+            user_phone,                      /* 手机号 */
+            user_birthday,                      /* 出生日期 */
+            user_signature,                      /* 签名 */
+            is_enable,                      /* 用户状态 0:禁用 1:正常 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES(
+            #{userAccount, jdbcType=VARCHAR},                 /* 用户账号 */
+            #{userName, jdbcType=VARCHAR},                 /* 用户名称 */
+            #{userPassword, jdbcType=VARCHAR},                 /* 用户密码 */
+            #{userSex, jdbcType=TINYINT},                 /* 性别 0:未填写 1:男 2:女 */
+            #{userFace, jdbcType=VARCHAR},                 /* 用户头像 */
+            #{userEmail, jdbcType=VARCHAR},                 /* 电子邮件 */
+            #{userWechat, jdbcType=VARCHAR},                 /* 微信号 */
+            #{userPhone, jdbcType=VARCHAR},                 /* 手机号 */
+            #{userBirthday, jdbcType=TIMESTAMP},                 /* 出生日期 */
+            #{userSignature, jdbcType=VARCHAR},                 /* 签名 */
+            #{isEnable, jdbcType=TINYINT},                 /* 用户状态 0:禁用 1:正常 */
+            #{createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+            #{createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+            #{updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+            #{updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+            #{isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+        )
+    </insert>
+
+    <!-- 批量插入数据 -->
+    <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO base_user (
+            user_account,                      /* 用户账号 */
+            user_name,                      /* 用户名称 */
+            user_password,                      /* 用户密码 */
+            user_sex,                      /* 性别 0:未填写 1:男 2:女 */
+            user_face,                      /* 用户头像 */
+            user_email,                      /* 电子邮件 */
+            user_wechat,                      /* 微信号 */
+            user_phone,                      /* 手机号 */
+            user_birthday,                      /* 出生日期 */
+            user_signature,                      /* 签名 */
+            is_enable,                      /* 用户状态 0:禁用 1:正常 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.userAccount, jdbcType=VARCHAR},                 /* 用户账号 */
+                #{item.userName, jdbcType=VARCHAR},                 /* 用户名称 */
+                #{item.userPassword, jdbcType=VARCHAR},                 /* 用户密码 */
+                #{item.userSex, jdbcType=TINYINT},                 /* 性别 0:未填写 1:男 2:女 */
+                #{item.userFace, jdbcType=VARCHAR},                 /* 用户头像 */
+                #{item.userEmail, jdbcType=VARCHAR},                 /* 电子邮件 */
+                #{item.userWechat, jdbcType=VARCHAR},                 /* 微信号 */
+                #{item.userPhone, jdbcType=VARCHAR},                 /* 手机号 */
+                #{item.userBirthday, jdbcType=TIMESTAMP},                 /* 出生日期 */
+                #{item.userSignature, jdbcType=VARCHAR},                 /* 签名 */
+                #{item.isEnable, jdbcType=TINYINT},                 /* 用户状态 0:禁用 1:正常 */
+                #{item.createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+                #{item.createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+                #{item.updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+                #{item.updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+                #{item.isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+            )
+        </foreach>
+    </insert>
+
+    <!-- 按主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE base_user
+            <set>
+                <if test="userAccount != null">
+                    user_account = #{userAccount, jdbcType=VARCHAR},    /* 用户账号 */
+                </if>
+                <if test="userName != null">
+                    user_name = #{userName, jdbcType=VARCHAR},    /* 用户名称 */
+                </if>
+                <if test="userPassword != null">
+                    user_password = #{userPassword, jdbcType=VARCHAR},    /* 用户密码 */
+                </if>
+                <if test="userSex != null">
+                    user_sex = #{userSex, jdbcType=TINYINT},    /* 性别 0:未填写 1:男 2:女 */
+                </if>
+                <if test="userFace != null">
+                    user_face = #{userFace, jdbcType=VARCHAR},    /* 用户头像 */
+                </if>
+                <if test="userEmail != null">
+                    user_email = #{userEmail, jdbcType=VARCHAR},    /* 电子邮件 */
+                </if>
+                <if test="userWechat != null">
+                    user_wechat = #{userWechat, jdbcType=VARCHAR},    /* 微信号 */
+                </if>
+                <if test="userPhone != null">
+                    user_phone = #{userPhone, jdbcType=VARCHAR},    /* 手机号 */
+                </if>
+                <if test="userBirthday != null">
+                    user_birthday = #{userBirthday, jdbcType=TIMESTAMP},    /* 出生日期 */
+                </if>
+                <if test="userSignature != null">
+                    user_signature = #{userSignature, jdbcType=VARCHAR},    /* 签名 */
+                </if>
+                <if test="isEnable != null">
+                    is_enable = #{isEnable, jdbcType=TINYINT},    /* 用户状态 0:禁用 1:正常 */
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
+                </if>
+                <if test="createUser != null">
+                    create_user = #{createUser, jdbcType=VARCHAR},    /* 创建用户 */
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=TIMESTAMP},    /* 更新时间 */
+                </if>
+                <if test="updateUser != null">
+                    update_user = #{updateUser, jdbcType=VARCHAR},    /* 更新用户 */
+                </if>
+                is_delete = 0       /* 是否删除 0:否 1:是 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键删除 -->
+    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.base.BaseUser">
+        <if test="_parameter != null">
+            UPDATE base_user
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量删除 -->
+    <update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE base_user
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id in    /* 主键集合 */
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+                AND is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量物理删除，慎用 -->
+    <delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
+        <if test="_parameter != null">
+            DELETE FROM base_user
+            <where>
+                id in	/* 主键集合 */
+                <foreach collection="list" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+            </where>
+        </if>
+    </delete>
+
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="resultMap">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        base_user
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        base_user
+        <where>
+            id = #{id, jdbcType=BIGINT}	/* 主键 */
+            AND is_delete = 0			/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键集合查询 -->
+    <select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        base_user
+        <where>
+            id in	/* 主键集合 */
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id, jdbcType=BIGINT}
+            </foreach>
+            AND is_delete = 0	/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按条件查询 -->
+    <select id="selectByCondition" resultMap="resultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        base_user
+        <include refid="queryClause"/>
+        <include refid="sortClause"/>
+        <include refid="pageClause"/>
+    </select>
+
+    <!-- 按条件统计记录数 -->
+    <select id="countByCondition" resultType="java.lang.Long" parameterType="java.util.Map">
+        SELECT
+        COUNT(1)
+        FROM
+        base_user
+        <include refid="queryClause"/>
+    </select>
+
+</mapper>

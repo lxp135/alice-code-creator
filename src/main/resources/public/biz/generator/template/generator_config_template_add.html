@@ -1,0 +1,85 @@
+<link rel="stylesheet" type="text/css" href="assets/lib/jquery.codemirror/lib/codemirror.css"/>
+<link rel="stylesheet" type="text/css" href="assets/lib/jquery.codemirror/theme/monokai.css"/>
+<aside class="page-aside codeditor">
+    <div class="be-scroller-aside">
+        <div class="aside-content">
+            <div class="content">
+                <div class="aside-header">
+                    <button class="navbar-toggle" data-target=".aside-nav" data-toggle="collapse" type="button"><span class="icon mdi mdi-caret-down"></span></button><span class="title">模板编辑器</span>
+                    <p class="description">新增 - 您可以自定义任意格式模板</p>
+                </div>
+                <div class="aside-nav collapse">
+                    <form id="addForm">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="templateCode">英文名</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="templateCode" name="templateCode" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="templateName">中文名</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="templateName" name="templateName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="filePath">路径</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="filePath" name="filePath" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="fileName">后缀</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="fileName" name="fileName" type="text">
+                            </div>
+                        </div>
+                        <hr class="hr hr-32"/>
+                        <p class="text-center">
+                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                <i class="fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                            <button id="btnBack" class="btn btn-space btn-secondary" type="button" onclick="history.back(-1);">
+                                <i class="fa fa-undo bigger-110"></i>
+                                返回
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<div class="main-content container-fluid code-editor-extend">
+    <div class="content" style="height: 100%">
+        <div class="code-editor">
+
+            <!-- begin code -->
+            <textarea id="console" name="console"></textarea>
+            <!-- end code-->
+
+
+            <!--<div id="console"></div>-->
+        </div>
+    </div>
+</div>
+
+<script src="assets/lib/jquery.codemirror/lib/codemirror.js" type="text/javascript"></script>
+<!--text/x-csrc (C),
+text/x-c++src (C++),
+text/x-java (Java),
+text/x-csharp (C#),
+text/x-objectivec (Objective-C),
+text/x-scala (Scala),
+text/x-vertex x-shader/x-fragment (shader programs),
+text/x-squirrel (Squirrel) and
+text/x-ceylon (Ceylon)-->
+<script src="assets/lib/jquery.codemirror/mode/clike/clike.js" type="text/javascript"></script>
+<script src="assets/lib/jquery.codemirror/mode/xml/xml.js" type="text/javascript"></script>
+<script src="assets/lib/jquery.codemirror/mode/css/css.js" type="text/javascript"></script>
+<script src="assets/lib/jquery.codemirror/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
+<!--text/javascript, application/json, application/ld+json, text/typescript, application/typescript.-->
+<script src="assets/lib/jquery.codemirror/mode/javascript/javascript.js" type="text/javascript"></script>
+<script src="assets/lib/jquery.codemirror/addon/edit/matchbrackets.js" type="text/javascript"></script>
+<script src="biz/generator/template/generator_config_template_add.js"></script>

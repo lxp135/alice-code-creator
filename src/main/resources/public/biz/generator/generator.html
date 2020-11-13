@@ -1,0 +1,97 @@
+<ol class="breadcrumb" style="margin-bottom: 0;">
+    <li class="breadcrumb-item">开发工具</li>
+    <li class="breadcrumb-item active">代码生成</li>
+</ol>
+
+<div class="main-content container-fluid">
+    <form id="generatorForm">
+        <div class="col-lg-12">
+            <input type="hidden" id="columnJson" name="columnJson">
+            <div class="card card-contrast">
+                <div class="card-header card-header-contrast card-header-featured card-header-small">数据查询</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="tableSchema">数据库名称</label>
+                                </div>
+                                <select class="form-select2 form-control" id="tableSchema" name="tableSchema">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="tableName">表名称</label>
+                                </div>
+                                <select class="form-select2 form-control" id="tableName" name="tableName">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="tableComment">表描述信息</label>
+                                </div>
+                                <input class="form-control" type="text" id="tableComment" name="tableComment">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card card-contrast">
+                <div class="card-header card-header-contrast card-header-featured card-header-small">字段列表</div>
+                <div class="card-body">
+                    <table id="gridTable"></table>
+                    <div id="gridPager"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card card-contrast">
+                <div class="card-header card-header-contrast card-header-featured card-header-small">
+                    代码生成
+                </div>
+                <div class="card-body card-body-bottom">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="tablePrefix">表前缀</label>
+                                </div>
+                                <input class="form-control" type="text" id="tablePrefix" name="tablePrefix">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="author">创建人</label>
+                                </div>
+                                <input class="form-control" type="text" id="author" name="author"
+                                       placeholder="contact@liuxp.me" value="contact@liuxp.me">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="packagePath">包路径</label>
+                                </div>
+                                <input class="form-control" type="text" id="packagePath" name="packagePath"
+                                       placeholder="com.vh.gov.cloud.finance" value="com.vh.gov.cloud.finance">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer card-footer-contrast text-muted card-footer-small">
+                    <button class="btn btn-space btn-primary" id="generator">代码生成</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="biz/generator/generator.js"></script>

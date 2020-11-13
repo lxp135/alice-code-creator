@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 代码生成器模板配置SQL author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.generator.GeneratorConfigTemplateDao" >
+    <!-- 映射关系 -->
+    <resultMap id="resultMap" type="alice.code.creator.domain.model.generator.GeneratorConfigTemplate" >
+        <id column="id" property="id" jdbcType="BIGINT" />       <!-- 自增主键 -->
+        <result column="template_code" property="templateCode" jdbcType="VARCHAR" />       <!-- 模板英文名 -->
+        <result column="template_name" property="templateName" jdbcType="VARCHAR" />       <!-- 模板中文名 -->
+        <result column="template_content" property="templateContent" jdbcType="VARCHAR" />       <!-- 模板内容 -->
+        <result column="file_path" property="filePath" jdbcType="VARCHAR" />       <!-- 生成地址相对路径 -->
+        <result column="file_name" property="fileName" jdbcType="VARCHAR" />       <!-- 文件后缀与扩展名 -->
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />       <!-- 创建时间 -->
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />       <!-- 创建用户 -->
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />       <!-- 更新时间 -->
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />       <!-- 更新用户 -->
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />       <!-- 删除标志 0：未删除 1：已删除 -->
+    </resultMap>
+
+    <!-- 查询列 -->
+    <sql id="queryColumns">
+        id,       /* 自增主键 */
+        template_code,       /* 模板英文名 */
+        template_name,       /* 模板中文名 */
+        template_content,       /* 模板内容 */
+        file_path,       /* 生成地址相对路径 */
+        file_name,       /* 文件后缀与扩展名 */
+        create_time,       /* 创建时间 */
+        create_user,       /* 创建用户 */
+        update_time,       /* 更新时间 */
+        update_user,       /* 更新用户 */
+        is_delete       /* 删除标志 0：未删除 1：已删除 */
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="queryClause">
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            <if test="id != null">
+                AND id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+            </if>
+            <if test="idMin != null">
+                <![CDATA[ AND id > #{idMin, jdbcType=BIGINT} ]]>	/* 自增主键大于某值*/
+            </if>
+            <if test="idMax != null">
+                <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 自增主键小于某值 */
+            </if>
+            <if test="templateCode != null and templateCode != ''" >
+                AND template_code = #{templateCode,jdbcType=VARCHAR}       /* 模板英文名 */
+            </if>
+            <if test="templateName != null and templateName != ''" >
+                AND template_name = #{templateName,jdbcType=VARCHAR}       /* 模板中文名 */
+            </if>
+            <if test="templateContent != null and templateContent != ''" >
+                AND template_content = #{templateContent,jdbcType=VARCHAR}       /* 模板内容 */
+            </if>
+            <if test="filePath != null and filePath != ''" >
+                AND file_path = #{filePath,jdbcType=VARCHAR}       /* 生成地址相对路径 */
+            </if>
+            <if test="fileName != null and fileName != ''" >
+                AND file_name = #{fileName,jdbcType=VARCHAR}       /* 文件后缀与扩展名 */
+            </if>
+            <if test="createTimeBegin != null" >
+                <![CDATA[ AND create_time >= #{createTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 创建时间/起 */
+            </if>
+            <if test="createTimeEnd != null" >
+                <![CDATA[ AND create_time <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 创建时间/止 */
+            </if>
+            <if test="createUser != null and createUser != ''" >
+                AND create_user = #{createUser,jdbcType=VARCHAR}       /* 创建用户 */
+            </if>
+            <if test="updateTimeBegin != null" >
+                <![CDATA[ AND update_time >= #{updateTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 更新时间/起 */
+            </if>
+            <if test="updateTimeEnd != null" >
+                <![CDATA[ AND update_time <= #{updateTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 更新时间/止 */
+            </if>
+            <if test="updateUser != null and updateUser != ''" >
+                AND update_user = #{updateUser,jdbcType=VARCHAR}       /* 更新用户 */
+            </if>
+        </where>
+    </sql>
+
+    <!-- 排序 -->
+    <sql id="sortClause">
+        <if test="_sort != null">
+            ORDER BY
+            <foreach collection="_sort" item="item" index="index" separator=",">
+                <choose>
+                    <when test="item.propertyName != null and item.propertyName == 'id'">
+                        id    /* 自增主键 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'templateCode'">
+                        template_code    /* 模板英文名 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'templateName'">
+                        template_name    /* 模板中文名 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'templateContent'">
+                        template_content    /* 模板内容 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'filePath'">
+                        file_path    /* 生成地址相对路径 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'fileName'">
+                        file_name    /* 文件后缀与扩展名 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createTime'">
+                        create_time    /* 创建时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createUser'">
+                        create_user    /* 创建用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'updateTime'">
+                        update_time    /* 更新时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'updateUser'">
+                        update_user    /* 更新用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <otherwise>update_time DESC</otherwise>
+                </choose>
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 分页 -->
+    <sql id="pageClause">
+        <if test="_page != null">
+            limit #{_page.offset, jdbcType=INTEGER}, #{_page.limit, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigTemplate" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO generator_config_template (
+            template_code,                      /* 模板英文名 */
+            template_name,                      /* 模板中文名 */
+            template_content,                      /* 模板内容 */
+            file_path,                      /* 生成地址相对路径 */
+            file_name,                      /* 文件后缀与扩展名 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES(
+            #{templateCode, jdbcType=VARCHAR},                 /* 模板英文名 */
+            #{templateName, jdbcType=VARCHAR},                 /* 模板中文名 */
+            #{templateContent, jdbcType=VARCHAR},                 /* 模板内容 */
+            #{filePath, jdbcType=VARCHAR},                 /* 生成地址相对路径 */
+            #{fileName, jdbcType=VARCHAR},                 /* 文件后缀与扩展名 */
+            #{createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+            #{createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+            #{updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+            #{updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+            #{isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+        )
+    </insert>
+
+    <!-- 批量插入数据 -->
+    <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO generator_config_template (
+            template_code,                      /* 模板英文名 */
+            template_name,                      /* 模板中文名 */
+            template_content,                      /* 模板内容 */
+            file_path,                      /* 生成地址相对路径 */
+            file_name,                      /* 文件后缀与扩展名 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.templateCode, jdbcType=VARCHAR},                 /* 模板英文名 */
+                #{item.templateName, jdbcType=VARCHAR},                 /* 模板中文名 */
+                #{item.templateContent, jdbcType=VARCHAR},                 /* 模板内容 */
+                #{item.filePath, jdbcType=VARCHAR},                 /* 生成地址相对路径 */
+                #{item.fileName, jdbcType=VARCHAR},                 /* 文件后缀与扩展名 */
+                #{item.createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+                #{item.createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+                #{item.updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+                #{item.updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+                #{item.isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+            )
+        </foreach>
+    </insert>
+
+    <!-- 按主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE generator_config_template
+            <set>
+                <if test="templateCode != null">
+                    template_code = #{templateCode, jdbcType=VARCHAR},    /* 模板英文名 */
+                </if>
+                <if test="templateName != null">
+                    template_name = #{templateName, jdbcType=VARCHAR},    /* 模板中文名 */
+                </if>
+                <if test="templateContent != null">
+                    template_content = #{templateContent, jdbcType=VARCHAR},    /* 模板内容 */
+                </if>
+                <if test="filePath != null">
+                    file_path = #{filePath, jdbcType=VARCHAR},    /* 生成地址相对路径 */
+                </if>
+                <if test="fileName != null">
+                    file_name = #{fileName, jdbcType=VARCHAR},    /* 文件后缀与扩展名 */
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
+                </if>
+                <if test="createUser != null">
+                    create_user = #{createUser, jdbcType=VARCHAR},    /* 创建用户 */
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=TIMESTAMP},    /* 更新时间 */
+                </if>
+                <if test="updateUser != null">
+                    update_user = #{updateUser, jdbcType=VARCHAR},    /* 更新用户 */
+                </if>
+                    is_delete = 0       /* 删除标志 0：未删除 1：已删除 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键删除 -->
+    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigTemplate">
+        <if test="_parameter != null">
+            UPDATE generator_config_template
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量删除 -->
+    <update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE generator_config_template
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id in    /* 自增主键集合 */
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+                AND is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量物理删除，慎用 -->
+    <delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
+        <if test="_parameter != null">
+            DELETE FROM generator_config_template
+            <where>
+                id in	/* 自增主键集合 */
+                <foreach collection="list" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+            </where>
+        </if>
+    </delete>
+
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="resultMap">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        generator_config_template
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        generator_config_template
+        <where>
+            id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+            AND is_delete = 0			/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键集合查询 -->
+    <select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        generator_config_template
+        <where>
+            id in	/* 自增主键集合 */
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id, jdbcType=BIGINT}
+            </foreach>
+            AND is_delete = 0	/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按条件查询 -->
+    <select id="selectByCondition" resultMap="resultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        generator_config_template
+        <include refid="queryClause"/>
+        <include refid="sortClause"/>
+        <include refid="pageClause"/>
+    </select>
+
+    <!-- 按条件统计记录数 -->
+    <select id="countByCondition" resultType="java.lang.Long" parameterType="java.util.Map">
+        SELECT
+        COUNT(1)
+        FROM
+        generator_config_template
+        <include refid="queryClause"/>
+    </select>
+
+</mapper>

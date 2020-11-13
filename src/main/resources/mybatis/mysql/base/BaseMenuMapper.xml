@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 菜单基本信息表SQL author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.base.BaseMenuDao" >
+    <!-- 映射关系 -->
+    <resultMap id="resultMap" type="alice.code.creator.domain.model.base.BaseMenu" >
+        <id column="id" property="id" jdbcType="BIGINT" />       <!-- 主键 -->
+        <result column="menu_key" property="menuKey" jdbcType="VARCHAR" />       <!-- 菜单英文名称 -->
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR" />       <!-- 菜单中文名称 -->
+        <result column="menu_description" property="menuDescription" jdbcType="VARCHAR" />       <!-- 菜单描述 -->
+        <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />       <!-- 菜单地址 -->
+        <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />       <!-- 菜单图标 -->
+        <result column="menu_type" property="menuType" jdbcType="TINYINT" />       <!-- 菜单类型 -->
+        <result column="menu_level" property="menuLevel" jdbcType="TINYINT" />       <!-- 菜单级别 -->
+        <result column="menu_order" property="menuOrder" jdbcType="INTEGER" />       <!-- 菜单顺序 -->
+        <result column="menu_parent_id" property="menuParentId" jdbcType="BIGINT" />       <!-- 父级主键 -->
+        <result column="menu_parent_name" property="menuParentName" jdbcType="VARCHAR" />       <!-- 父级菜单名称 -->
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />       <!-- 创建时间 -->
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />       <!-- 创建用户 -->
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />       <!-- 更新时间 -->
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />       <!-- 更新用户 -->
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />       <!-- 删除标志 0：未删除 1：已删除 -->
+    </resultMap>
+
+    <!-- 查询列 -->
+    <sql id="queryColumns">
+        id,       /* 主键 */
+        menu_key,       /* 菜单英文名称 */
+        menu_name,       /* 菜单中文名称 */
+        menu_description,       /* 菜单描述 */
+        menu_url,       /* 菜单地址 */
+        menu_icon,       /* 菜单图标 */
+        menu_type,       /* 菜单类型 */
+        menu_level,       /* 菜单级别 */
+        menu_order,       /* 菜单顺序 */
+        menu_parent_id,       /* 父级主键 */
+        menu_parent_name,       /* 父级菜单名称 */
+        create_time,       /* 创建时间 */
+        create_user,       /* 创建用户 */
+        update_time,       /* 更新时间 */
+        update_user,       /* 更新用户 */
+        is_delete       /* 删除标志 0：未删除 1：已删除 */
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="queryClause">
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            <if test="id != null">
+                AND id = #{id, jdbcType=BIGINT}	/* 主键 */
+            </if>
+            <if test="idMin != null">
+                <![CDATA[ AND id > #{idMin, jdbcType=BIGINT} ]]>	/* 主键大于某值*/
+            </if>
+            <if test="idMax != null">
+                <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 主键小于某值 */
+            </if>
+            <if test="menuKey != null and menuKey != ''" >
+                AND menu_key = #{menuKey,jdbcType=VARCHAR}       /* 菜单英文名称 */
+            </if>
+            <if test="menuName != null and menuName != ''" >
+                AND menu_name = #{menuName,jdbcType=VARCHAR}       /* 菜单中文名称 */
+            </if>
+            <if test="menuDescription != null and menuDescription != ''" >
+                AND menu_description = #{menuDescription,jdbcType=VARCHAR}       /* 菜单描述 */
+            </if>
+            <if test="menuUrl != null and menuUrl != ''" >
+                AND menu_url = #{menuUrl,jdbcType=VARCHAR}       /* 菜单地址 */
+            </if>
+            <if test="menuIcon != null and menuIcon != ''" >
+                AND menu_icon = #{menuIcon,jdbcType=VARCHAR}       /* 菜单图标 */
+            </if>
+            <if test="menuType != null" >
+                AND menu_type = #{menuType,jdbcType=TINYINT}       /* 菜单类型 */
+            </if>
+            <if test="menuLevel != null" >
+                AND menu_level = #{menuLevel,jdbcType=TINYINT}       /* 菜单级别 */
+            </if>
+            <if test="menuOrder != null" >
+                AND menu_order = #{menuOrder,jdbcType=INTEGER}       /* 菜单顺序 */
+            </if>
+            <if test="menuParentId != null" >
+                AND menu_parent_id = #{menuParentId,jdbcType=BIGINT}       /* 父级主键 */
+            </if>
+            <if test="menuParentName != null and menuParentName != ''" >
+                AND menu_parent_name = #{menuParentName,jdbcType=VARCHAR}       /* 父级菜单名称 */
+            </if>
+            <if test="createTimeBegin != null" >
+                <![CDATA[ AND create_time >= #{createTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 创建时间/起 */
+            </if>
+            <if test="createTimeEnd != null" >
+                <![CDATA[ AND create_time <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 创建时间/止 */
+            </if>
+            <if test="createUser != null and createUser != ''" >
+                AND create_user = #{createUser,jdbcType=VARCHAR}       /* 创建用户 */
+            </if>
+            <if test="updateTimeBegin != null" >
+                <![CDATA[ AND update_time >= #{updateTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 更新时间/起 */
+            </if>
+            <if test="updateTimeEnd != null" >
+                <![CDATA[ AND update_time <= #{updateTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 更新时间/止 */
+            </if>
+            <if test="updateUser != null and updateUser != ''" >
+                AND update_user = #{updateUser,jdbcType=VARCHAR}       /* 更新用户 */
+            </if>
+        </where>
+    </sql>
+
+    <!-- 排序 -->
+    <sql id="sortClause">
+        <if test="_sort != null">
+            ORDER BY
+            <foreach collection="_sort" item="item" index="index" separator=",">
+                <choose>
+                    <when test="item.propertyName != null and item.propertyName == 'id'">
+                        id    /* 主键 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuKey'">
+                        menu_key    /* 菜单英文名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuName'">
+                        menu_name    /* 菜单中文名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuDescription'">
+                        menu_description    /* 菜单描述 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuUrl'">
+                        menu_url    /* 菜单地址 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuIcon'">
+                        menu_icon    /* 菜单图标 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuType'">
+                        menu_type    /* 菜单类型 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuLevel'">
+                        menu_level    /* 菜单级别 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuOrder'">
+                        menu_order    /* 菜单顺序 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuParentId'">
+                        menu_parent_id    /* 父级主键 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'menuParentName'">
+                        menu_parent_name    /* 父级菜单名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createTime'">
+                        create_time    /* 创建时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'createUser'">
+                        create_user    /* 创建用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'updateTime'">
+                        update_time    /* 更新时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                                    <when test="item.propertyName != null and item.propertyName == 'updateUser'">
+                        update_user    /* 更新用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <otherwise>update_time DESC</otherwise>
+                </choose>
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 分页 -->
+    <sql id="pageClause">
+        <if test="_page != null">
+            limit #{_page.offset, jdbcType=INTEGER}, #{_page.limit, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="alice.code.creator.domain.model.base.BaseMenu" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO base_menu (
+            menu_key,                      /* 菜单英文名称 */
+            menu_name,                      /* 菜单中文名称 */
+            menu_description,                      /* 菜单描述 */
+            menu_url,                      /* 菜单地址 */
+            menu_icon,                      /* 菜单图标 */
+            menu_type,                      /* 菜单类型 */
+            menu_level,                      /* 菜单级别 */
+            menu_order,                      /* 菜单顺序 */
+            menu_parent_id,                      /* 父级主键 */
+            menu_parent_name,                      /* 父级菜单名称 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES(
+            #{menuKey, jdbcType=VARCHAR},                 /* 菜单英文名称 */
+            #{menuName, jdbcType=VARCHAR},                 /* 菜单中文名称 */
+            #{menuDescription, jdbcType=VARCHAR},                 /* 菜单描述 */
+            #{menuUrl, jdbcType=VARCHAR},                 /* 菜单地址 */
+            #{menuIcon, jdbcType=VARCHAR},                 /* 菜单图标 */
+            #{menuType, jdbcType=TINYINT},                 /* 菜单类型 */
+            #{menuLevel, jdbcType=TINYINT},                 /* 菜单级别 */
+            #{menuOrder, jdbcType=INTEGER},                 /* 菜单顺序 */
+            #{menuParentId, jdbcType=BIGINT},                 /* 父级主键 */
+            #{menuParentName, jdbcType=VARCHAR},                 /* 父级菜单名称 */
+            #{createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+            #{createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+            #{updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+            #{updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+            #{isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+        )
+    </insert>
+
+    <!-- 批量插入数据 -->
+    <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO base_menu (
+            menu_key,                      /* 菜单英文名称 */
+                menu_name,                      /* 菜单中文名称 */
+                menu_description,                      /* 菜单描述 */
+                menu_url,                      /* 菜单地址 */
+                menu_icon,                      /* 菜单图标 */
+                menu_type,                      /* 菜单类型 */
+                menu_level,                      /* 菜单级别 */
+                menu_order,                      /* 菜单顺序 */
+                menu_parent_id,                      /* 父级主键 */
+                menu_parent_name,                      /* 父级菜单名称 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.menuKey, jdbcType=VARCHAR},                 /* 菜单英文名称 */
+                #{item.menuName, jdbcType=VARCHAR},                 /* 菜单中文名称 */
+                #{item.menuDescription, jdbcType=VARCHAR},                 /* 菜单描述 */
+                #{item.menuUrl, jdbcType=VARCHAR},                 /* 菜单地址 */
+                #{item.menuIcon, jdbcType=VARCHAR},                 /* 菜单图标 */
+                #{item.menuType, jdbcType=TINYINT},                 /* 菜单类型 */
+                #{item.menuLevel, jdbcType=TINYINT},                 /* 菜单级别 */
+                #{item.menuOrder, jdbcType=INTEGER},                 /* 菜单顺序 */
+                #{item.menuParentId, jdbcType=BIGINT},                 /* 父级主键 */
+                #{item.menuParentName, jdbcType=VARCHAR},                 /* 父级菜单名称 */
+                #{item.createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+                #{item.createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+                #{item.updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+                #{item.updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+                #{item.isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+            )
+        </foreach>
+    </insert>
+
+    <!-- 按主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE base_menu
+            <set>
+                <if test="menuKey != null">
+                    menu_key = #{menuKey, jdbcType=VARCHAR},    /* 菜单英文名称 */
+                </if>
+                <if test="menuName != null">
+                    menu_name = #{menuName, jdbcType=VARCHAR},    /* 菜单中文名称 */
+                </if>
+                <if test="menuDescription != null">
+                    menu_description = #{menuDescription, jdbcType=VARCHAR},    /* 菜单描述 */
+                </if>
+                <if test="menuUrl != null">
+                    menu_url = #{menuUrl, jdbcType=VARCHAR},    /* 菜单地址 */
+                </if>
+                <if test="menuIcon != null">
+                    menu_icon = #{menuIcon, jdbcType=VARCHAR},    /* 菜单图标 */
+                </if>
+                <if test="menuType != null">
+                    menu_type = #{menuType, jdbcType=TINYINT},    /* 菜单类型 */
+                </if>
+                <if test="menuLevel != null">
+                    menu_level = #{menuLevel, jdbcType=TINYINT},    /* 菜单级别 */
+                </if>
+                <if test="menuOrder != null">
+                    menu_order = #{menuOrder, jdbcType=INTEGER},    /* 菜单顺序 */
+                </if>
+                <if test="menuParentId != null">
+                    menu_parent_id = #{menuParentId, jdbcType=BIGINT},    /* 父级主键 */
+                </if>
+                <if test="menuParentName != null">
+                    menu_parent_name = #{menuParentName, jdbcType=VARCHAR},    /* 父级菜单名称 */
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
+                </if>
+                <if test="createUser != null">
+                    create_user = #{createUser, jdbcType=VARCHAR},    /* 创建用户 */
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=TIMESTAMP},    /* 更新时间 */
+                </if>
+                <if test="updateUser != null">
+                    update_user = #{updateUser, jdbcType=VARCHAR},    /* 更新用户 */
+                </if>
+                is_delete = 0       /* 是否删除 0:否 1:是 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键删除 -->
+    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.base.BaseMenu">
+        <if test="_parameter != null">
+            UPDATE base_menu
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量删除 -->
+    <update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE base_menu
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id in    /* 主键集合 */
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+                AND is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量物理删除，慎用 -->
+    <delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
+        <if test="_parameter != null">
+            DELETE FROM base_menu
+            <where>
+                id in	/* 主键集合 */
+                <foreach collection="list" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+            </where>
+        </if>
+    </delete>
+
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="resultMap">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        base_menu
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        base_menu
+        <where>
+            id = #{id, jdbcType=BIGINT}	/* 主键 */
+            AND is_delete = 0			/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键集合查询 -->
+    <select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        base_menu
+        <where>
+            id in	/* 主键集合 */
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id, jdbcType=BIGINT}
+            </foreach>
+            AND is_delete = 0	/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按条件查询 -->
+    <select id="selectByCondition" resultMap="resultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        base_menu
+        <include refid="queryClause"/>
+        <include refid="sortClause"/>
+        <include refid="pageClause"/>
+    </select>
+
+    <!-- 按条件统计记录数 -->
+    <select id="countByCondition" resultType="java.lang.Long" parameterType="java.util.Map">
+        SELECT
+        COUNT(1)
+        FROM
+        base_menu
+        <include refid="queryClause"/>
+    </select>
+
+</mapper>

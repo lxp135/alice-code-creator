@@ -1,0 +1,48 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">开发工具</li>
+    <li class="breadcrumb-item">数据类型映射</li>
+    <li class="breadcrumb-item active">新增</li>
+</ol>
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">数据类型映射<span class="card-subtitle">新增</span></div>
+                <div class="card-body">
+                    <form id="addForm">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="dbType">数据库类型</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="dbType" name="dbType" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="jdbcType">jdbc类型</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="jdbcType" name="jdbcType" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="javaType">java类型</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="javaType" name="javaType" type="text">
+                            </div>
+                        </div>
+                        <hr class="hr hr-32"/>
+                        <p class="text-center">
+                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                <i class="fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                            <button id="btnBack" class="btn btn-space btn-secondary" type="button" onclick="history.back(-1);">
+                                <i class="fa fa-undo bigger-110"></i>
+                                返回
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="biz/generator/mapping/generator_config_mapping_add.js"></script>

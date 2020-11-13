@@ -1,0 +1,73 @@
+<ol class="breadcrumb" style="margin-bottom: 0;">
+    <li class="breadcrumb-item">基础数据</li>
+    <li class="breadcrumb-item">数据字典</li>
+    <li class="breadcrumb-item">标准字典</li>
+    <li class="breadcrumb-item active">新增</li>
+</ol>
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">标准字典<span class="card-subtitle">新增</span></div>
+                <div class="card-body">
+                    <form id="addForm">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="groupCode">组编码</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="groupCode" name="groupCode" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="groupName">组名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="groupName" name="groupName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="dictCode">KEY</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="dictCode" name="dictCode" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="dictName">NAME</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="dictName" name="dictName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="isEnable">是否启用</label>
+                            <div class="col-12 col-sm-8 col-lg-6 pt-1">
+                                <div class="switch-button switch-button-success">
+                                    <input type="checkbox" checked="" id="isEnable" name="isEnable">
+                                    <span>
+                                        <label for="isEnable"></label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="remark">备注</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <textarea class="form-control form-control-xs" id="remark" name="remark"></textarea>
+                            </div>
+                        </div>
+                        <hr class="hr hr-32"/>
+                        <p class="text-center">
+                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                <i class="fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                            <button id="btnBack" class="btn btn-space btn-secondary" type="button" onclick="history.back(-1);">
+                                <i class="fa fa-undo bigger-110"></i>
+                                返回
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="biz/basic/base/dictionary/dictionary_add.js"></script>
