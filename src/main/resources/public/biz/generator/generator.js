@@ -112,7 +112,7 @@ var lastSelectId;
 function loadGrid(gridTable){
     gridTable.jqGrid({
         mtype:"POST",
-        datatype: "json",
+        datatype: "local",
         autowidth: true,
         height: "300",
         colModel:[
@@ -124,6 +124,7 @@ function loadGrid(gridTable){
             {name:'columnName',label:'字段名称', width:100, fixed:false, sortable: false},
             {name:'columnComment',label:'字段描述', width:100, fixed:false, sortable: false,  editable : true},
             {name:'dataType',label:'数据类型', width:100, fixed:false, sortable: false},
+            {name:'maxLength',label:'字段长度', width:100, fixed:false, sortable: false},
             {name:'uniqueFlag',label:'唯一标识', width:80, fixed:false, sortable: false, 
                 editable : true,
                 edittype: "checkbox",
@@ -230,6 +231,7 @@ function loadGrid(gridTable){
  */
 function query(){
     var gridParam = {
+        datatype:'json',
         url:"/generator/selectColumnNames",
         postData:{
             tableSchema : $("#tableSchema").val(),
