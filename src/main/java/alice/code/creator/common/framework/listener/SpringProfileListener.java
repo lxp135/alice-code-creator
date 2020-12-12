@@ -2,8 +2,11 @@ package alice.code.creator.common.framework.listener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.lang.management.ManagementFactory;
@@ -18,7 +21,19 @@ import java.util.List;
 @Component
 public class SpringProfileListener implements ServletContextListener {
 
-	private Log logger = LogFactory.getLog(SpringProfileListener.class);
+	private final Log logger = LogFactory.getLog(SpringProfileListener.class);
+
+	/**
+	 * 服务名称
+	 */
+	@Value("${spring.application.name}")
+	private String applicationName;
+
+	/**
+	 * spring上下文
+	 */
+	@Resource
+	WebApplicationContext applicationContext;
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
@@ -28,20 +43,7 @@ public class SpringProfileListener implements ServletContextListener {
 		logger.info("*********************************************************************");
 		logger.info("应用堆内存使用情况: " + mb.getHeapMemoryUsage());
 		logger.info("应用非堆内存使用情况: " + mb.getNonHeapMemoryUsage());
-		// 执行参数
-		RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
-		List<String> vmArgs = rb.getInputArguments();
-		String profile = "";
-		String prefix = "-Dspring.profiles.active=";
-		int len = prefix.length();
-		if (vmArgs != null) {
-			for (String arg : vmArgs) {
-				if (arg.startsWith(prefix)) {
-					profile = arg.substring(len);
-				}
-			}
-		}
-		logger.info("应用当前剖面为【"+profile+"】");
+		logger.info("应用"+applicationName+"当前剖面为【"+applicationContext.getEnvironment().getActiveProfiles()[0]+"】");
 		logger.info("*********************************************************************");
 	}
 

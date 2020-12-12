@@ -1,6 +1,7 @@
 # alice-code-creator
 
-> 爱丽丝 - 代码生成器
+> 爱丽丝
+> 通用代码生成辅助工具
 
 ## 1.Structure
 
@@ -24,7 +25,7 @@
 - jTemplates 0.8.4 前端模板引擎
 - Bootstrap v4.2.1 前端UI基础库
 - Beagle 1.7.0 Bootstrap4主题
-- ECharts 4.1.0 百度出品图表组件
+- ECharts 4.1.0 图表组件
 - jqGrid 5.3.1 表格组件
 - layer 3.1.1 Web弹层组件
 - select2 4.0.5 下拉框组件
