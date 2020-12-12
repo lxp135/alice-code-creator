@@ -27,7 +27,7 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <AsyncLogger name="org.springframework" level="INFO" additivity="true" />
+        <AsyncLogger name="org.springframework" level="WARN" additivity="true" />
         <AsyncLogger name="org.mybatis" level="INFO" additivity="true" />
         <AsyncLogger name="com.netflix.discovery" level="WARN" additivity="false" />
         <AsyncLogger name="org.apache.commons.beanutils" level="WARN" additivity="false" />
