@@ -155,7 +155,7 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
             hashMap.put("tablePrefix","");          // 表名前缀（带下划线）
         }
 
-        hashMap.put("htmlPath",StringFormatUtils.htmlPath(mysqlGenerator.getTableName(),"_")); // 前台页面路径
+        hashMap.put("htmlPath",StringFormatUtils.htmlPath(tableNameEN,"_")); // 前台页面路径
         hashMap.put("htmlFileName",StringFormatUtils.htmlFileName(mysqlGenerator.getTableName(),"_")); // 前台页面名称
         hashMap.put("packagePath", mysqlGenerator.getPackagePath());            // 包路径
         hashMap.put("tableNameCH", mysqlGenerator.getTableComment());           // 中文表名
