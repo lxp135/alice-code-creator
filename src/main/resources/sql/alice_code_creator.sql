@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MySQL本机
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50722
+ Source Server Version : 50729
  Source Host           : localhost:3306
  Source Schema         : alice_code_creator
 
  Target Server Type    : MySQL
- Target Server Version : 50722
+ Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 13/11/2020 14:53:00
+ Date: 12/12/2020 11:25:26
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `base_dictionary`  (
   `update_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据字典表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of base_dictionary
@@ -49,66 +49,6 @@ INSERT INTO `base_dictionary` VALUES (9, 'MENU_LEVEL', '菜单级别', '2', '三
 INSERT INTO `base_dictionary` VALUES (10, 'USER_SEX', '性别', '0', '未填写', 1, '2018-06-27 15:59:29', '系统用户', '2018-06-27 15:59:29', '系统用户', 0);
 INSERT INTO `base_dictionary` VALUES (11, 'USER_SEX', '性别', '1', '男', 1, '2018-06-27 15:59:42', '系统用户', '2018-06-27 15:59:42', '系统用户', 0);
 INSERT INTO `base_dictionary` VALUES (12, 'USER_SEX', '性别', '2', '女', 1, '2018-06-27 15:59:52', '系统用户', '2018-06-27 15:59:52', '系统用户', 0);
-INSERT INTO `base_dictionary` VALUES (13, 'NATION_TYPE', '民族类型', '1', '汉族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (14, 'NATION_TYPE', '民族类型', '2', '蒙古族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (15, 'NATION_TYPE', '民族类型', '3', '回族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (16, 'NATION_TYPE', '民族类型', '4', '藏族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (17, 'NATION_TYPE', '民族类型', '5', '维吾尔族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (18, 'NATION_TYPE', '民族类型', '6', '苗族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (19, 'NATION_TYPE', '民族类型', '7', '彝族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (20, 'NATION_TYPE', '民族类型', '8', '壮族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (21, 'NATION_TYPE', '民族类型', '9', '布依族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (22, 'NATION_TYPE', '民族类型', '10', '朝鲜族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (23, 'NATION_TYPE', '民族类型', '11', '满族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (24, 'NATION_TYPE', '民族类型', '12', '侗族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (25, 'NATION_TYPE', '民族类型', '13', '瑶族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (26, 'NATION_TYPE', '民族类型', '14', '白族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (27, 'NATION_TYPE', '民族类型', '15', '土家族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (28, 'NATION_TYPE', '民族类型', '16', '哈尼族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (29, 'NATION_TYPE', '民族类型', '17', '哈萨克族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (30, 'NATION_TYPE', '民族类型', '18', '傣族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (31, 'NATION_TYPE', '民族类型', '19', '黎族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (32, 'NATION_TYPE', '民族类型', '20', '傈僳族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (33, 'NATION_TYPE', '民族类型', '21', '佤族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (34, 'NATION_TYPE', '民族类型', '22', '畲族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (35, 'NATION_TYPE', '民族类型', '23', '高山族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (36, 'NATION_TYPE', '民族类型', '24', '拉祜族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (37, 'NATION_TYPE', '民族类型', '25', '水族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (38, 'NATION_TYPE', '民族类型', '26', '东乡族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (39, 'NATION_TYPE', '民族类型', '27', '纳西族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (40, 'NATION_TYPE', '民族类型', '28', '景颇族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (41, 'NATION_TYPE', '民族类型', '29', '柯尔克孜族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (42, 'NATION_TYPE', '民族类型', '30', '土族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (43, 'NATION_TYPE', '民族类型', '31', '达斡尔族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (44, 'NATION_TYPE', '民族类型', '32', '仫佬族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (45, 'NATION_TYPE', '民族类型', '33', '羌族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (46, 'NATION_TYPE', '民族类型', '34', ' 布朗族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (47, 'NATION_TYPE', '民族类型', '35', ' 撒拉族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (48, 'NATION_TYPE', '民族类型', '36', ' 毛难族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (49, 'NATION_TYPE', '民族类型', '37', ' 仡佬族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (50, 'NATION_TYPE', '民族类型', '38', ' 锡伯族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (51, 'NATION_TYPE', '民族类型', '39', ' 阿昌族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (52, 'NATION_TYPE', '民族类型', '40', ' 普米族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (53, 'NATION_TYPE', '民族类型', '41', ' 塔吉克族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (54, 'NATION_TYPE', '民族类型', '42', ' 怒族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (55, 'NATION_TYPE', '民族类型', '43', ' 乌孜别克族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (56, 'NATION_TYPE', '民族类型', '44', ' 俄罗斯族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (57, 'NATION_TYPE', '民族类型', '45', ' 鄂温克族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (58, 'NATION_TYPE', '民族类型', '46', ' 崩龙族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (59, 'NATION_TYPE', '民族类型', '47', ' 保安族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (60, 'NATION_TYPE', '民族类型', '48', ' 裕固族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (61, 'NATION_TYPE', '民族类型', '49', ' 京族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (62, 'NATION_TYPE', '民族类型', '50', ' 塔塔尔族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (63, 'NATION_TYPE', '民族类型', '51', ' 独龙族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (64, 'NATION_TYPE', '民族类型', '52', ' 鄂伦春族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (65, 'NATION_TYPE', '民族类型', '53', ' 赫哲族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (66, 'NATION_TYPE', '民族类型', '54', ' 门巴族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (67, 'NATION_TYPE', '民族类型', '55', ' 珞巴族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (68, 'NATION_TYPE', '民族类型', '56', ' 基诺族', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (69, 'NATION_TYPE', '民族类型', '57', ' 其他', 1, '2017-11-14 16:05:41', '管理员', '2017-11-14 16:05:41', '管理员', 0);
-INSERT INTO `base_dictionary` VALUES (70, 'IS_FINISH', '是否完结', '0', '连载中', 1, '2020-05-11 16:16:43', '刘小平', '2020-05-11 16:16:43', '刘小平', 0);
-INSERT INTO `base_dictionary` VALUES (71, 'IS_FINISH', '是否完结', '1', '完结', 1, '2020-05-11 16:16:58', '刘小平', '2020-05-11 16:16:58', '刘小平', 0);
-INSERT INTO `base_dictionary` VALUES (72, 'IS_FINISH', '是否完结', '2', '太监', 1, '2020-05-11 16:17:12', '刘小平', '2020-05-11 16:17:12', '刘小平', 0);
 
 -- ----------------------------
 -- Table structure for base_menu
@@ -132,7 +72,7 @@ CREATE TABLE `base_menu`  (
   `update_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单基本信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单基本信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of base_menu
@@ -146,11 +86,7 @@ INSERT INTO `base_menu` VALUES (6, 'BASIC_DICTIONARY_NORMAL', '数据字典', NU
 INSERT INTO `base_menu` VALUES (7, 'BASIC_USER', '用户管理', NULL, '#biz/basic/base/user/user_list', 'icon mdi fa fa-user', 1, 1, NULL, 5, NULL, '2018-06-28 10:31:14', '系统用户', '2018-06-28 10:31:14', '系统用户', 0);
 INSERT INTO `base_menu` VALUES (8, 'BASIC_ROLE', '角色管理', NULL, '#biz/basic/base/role/role_list', 'icon mdi fa fa-user-secret', 1, 1, NULL, 5, NULL, '2018-06-28 10:32:29', '系统用户', '2018-06-28 10:32:29', '系统用户', 0);
 INSERT INTO `base_menu` VALUES (9, 'BASIC_MENU', '菜单管理', NULL, '#biz/basic/base/menu/menu_list', 'icon mdi fa fa-bars', 1, 1, NULL, 5, NULL, '2018-06-28 10:33:00', '系统用户', '2018-06-28 10:33:00', '系统用户', 0);
-INSERT INTO `base_menu` VALUES (45, 'BASIC_RESOURCE', '资源管理', NULL, '', 'icon mdi fa fa-server', 0, 1, NULL, 5, NULL, '2018-12-12 15:07:00', '刘小平', '2019-03-12 17:34:00', '刘小平', 0);
-INSERT INTO `base_menu` VALUES (46, 'BASIC_RESOURCE_FILE', '文件管理', NULL, '#biz/basic/resource/file/resource_file_list', 'icon mdi fa fa-file', 1, 2, NULL, 45, NULL, '2018-12-12 15:08:41', '刘小平', '2019-01-11 16:19:06', '刘小平', 0);
-INSERT INTO `base_menu` VALUES (47, 'BASIC_RESOURCE_SMS', '短信管理', NULL, '#biz/basic/resource/sms/log/resource_sms_log_list', 'icon mdi fa fa-commenting-o', 1, 2, NULL, 45, NULL, '2018-12-12 15:09:22', '刘小平', '2019-01-11 16:19:38', '刘小平', 0);
-INSERT INTO `base_menu` VALUES (62, 'MONITOR', '平台监控', NULL, '', 'icon mdi fa fa-thermometer-three-quarters', 0, 0, NULL, 0, NULL, '2019-03-07 16:55:44', '刘小平', '2019-03-12 17:33:37', '刘小平', 0);
-INSERT INTO `base_menu` VALUES (63, 'MONITOR_SYSTEM', '系统信息', NULL, '#biz/monitor/monitor_system', '', 1, 1, NULL, 62, NULL, '2019-03-07 16:56:15', '刘小平', '2019-03-08 14:55:18', '刘小平', 0);
+INSERT INTO `base_menu` VALUES (46, 'BASIC_RESOURCE_FILE', '文件管理', NULL, '#biz/basic/resource/file/resource_file_list', 'icon mdi fa fa-file', 1, 1, NULL, 5, NULL, '2018-12-12 15:08:41', '刘小平', '2020-12-12 11:14:30', '刘小平', 0);
 
 -- ----------------------------
 -- Table structure for base_role
@@ -167,14 +103,13 @@ CREATE TABLE `base_role`  (
   `update_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色基本信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色基本信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of base_role
 -- ----------------------------
 INSERT INTO `base_role` VALUES (1, '超级管理员', '拥有全部菜单', 1, '2018-06-27 15:01:06', '系统用户', '2018-11-14 14:23:03', '刘小平', 0);
-INSERT INTO `base_role` VALUES (2, '运营人员', '除系统级别配置菜单外', 1, '2018-06-28 09:43:02', '系统用户', '2018-06-28 09:43:02', '系统用户', 0);
-INSERT INTO `base_role` VALUES (3, '注册用户', '自助注册用户拥有的有限菜单', 1, '2018-06-28 09:43:33', '系统用户', '2018-06-28 09:43:33', '系统用户', 0);
+INSERT INTO `base_role` VALUES (3, '注册用户', '代码生成功能', 1, '2018-06-28 09:43:33', '系统用户', '2020-12-12 11:23:21', '刘小平', 0);
 
 -- ----------------------------
 -- Table structure for base_role_menu_rel
@@ -190,7 +125,7 @@ CREATE TABLE `base_role_menu_rel`  (
   `update_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色与菜单关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 152 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色与菜单关系表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of base_role_menu_rel
@@ -204,21 +139,11 @@ INSERT INTO `base_role_menu_rel` VALUES (6, 1, 6, '2018-06-28 15:37:57', '系统
 INSERT INTO `base_role_menu_rel` VALUES (7, 1, 7, '2018-06-28 15:37:57', '系统用户', '2018-06-28 15:37:57', '系统用户', 0);
 INSERT INTO `base_role_menu_rel` VALUES (8, 1, 8, '2018-06-28 15:37:57', '系统用户', '2018-06-28 15:37:57', '系统用户', 0);
 INSERT INTO `base_role_menu_rel` VALUES (9, 1, 9, '2018-06-28 15:37:57', '系统用户', '2018-06-28 15:37:57', '系统用户', 0);
-INSERT INTO `base_role_menu_rel` VALUES (74, 1, 45, '2018-12-12 15:09:37', '刘小平', '2018-12-12 15:09:37', '刘小平', 0);
 INSERT INTO `base_role_menu_rel` VALUES (75, 1, 46, '2018-12-12 15:09:37', '刘小平', '2018-12-12 15:09:37', '刘小平', 0);
-INSERT INTO `base_role_menu_rel` VALUES (76, 1, 47, '2018-12-12 15:09:37', '刘小平', '2018-12-12 15:09:37', '刘小平', 0);
-INSERT INTO `base_role_menu_rel` VALUES (107, 1, 62, '2019-03-07 17:06:05', '刘小平', '2019-03-07 17:06:05', '刘小平', 0);
-INSERT INTO `base_role_menu_rel` VALUES (108, 1, 63, '2019-03-07 17:06:05', '刘小平', '2019-03-07 17:06:05', '刘小平', 0);
-INSERT INTO `base_role_menu_rel` VALUES (128, 2, 5, '2020-01-30 12:08:09', '刘小平', '2020-01-30 12:08:09', '刘小平', 0);
-INSERT INTO `base_role_menu_rel` VALUES (129, 2, 6, '2020-01-30 12:08:09', '刘小平', '2020-01-30 12:08:09', '刘小平', 0);
-INSERT INTO `base_role_menu_rel` VALUES (130, 2, 7, '2020-01-30 12:08:09', '刘小平', '2020-01-30 12:08:09', '刘小平', 0);
-INSERT INTO `base_role_menu_rel` VALUES (131, 2, 8, '2020-01-30 12:08:09', '刘小平', '2020-02-04 11:38:42', '刘小平', 1);
-INSERT INTO `base_role_menu_rel` VALUES (132, 2, 9, '2020-01-30 12:08:09', '刘小平', '2020-01-31 13:46:30', '刘小平', 1);
-INSERT INTO `base_role_menu_rel` VALUES (133, 2, 45, '2020-01-30 12:08:09', '刘小平', '2020-01-31 13:46:30', '刘小平', 1);
-INSERT INTO `base_role_menu_rel` VALUES (134, 2, 46, '2020-01-30 12:08:09', '刘小平', '2020-01-31 13:46:30', '刘小平', 1);
-INSERT INTO `base_role_menu_rel` VALUES (135, 2, 47, '2020-01-30 12:08:09', '刘小平', '2020-01-31 13:46:30', '刘小平', 1);
-INSERT INTO `base_role_menu_rel` VALUES (140, 2, 62, '2020-01-31 15:18:56', '刘小平', '2020-01-31 15:18:56', '刘小平', 0);
-INSERT INTO `base_role_menu_rel` VALUES (141, 2, 63, '2020-01-31 15:18:56', '刘小平', '2020-01-31 15:18:56', '刘小平', 0);
+INSERT INTO `base_role_menu_rel` VALUES (148, 3, 1, '2020-12-12 11:23:37', '刘小平', '2020-12-12 11:23:37', '刘小平', 0);
+INSERT INTO `base_role_menu_rel` VALUES (149, 3, 2, '2020-12-12 11:23:37', '刘小平', '2020-12-12 11:23:37', '刘小平', 0);
+INSERT INTO `base_role_menu_rel` VALUES (150, 3, 3, '2020-12-12 11:23:37', '刘小平', '2020-12-12 11:23:37', '刘小平', 0);
+INSERT INTO `base_role_menu_rel` VALUES (151, 3, 4, '2020-12-12 11:23:37', '刘小平', '2020-12-12 11:23:37', '刘小平', 0);
 
 -- ----------------------------
 -- Table structure for base_role_user_rel
@@ -234,15 +159,13 @@ CREATE TABLE `base_role_user_rel`  (
   `update_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色与用户关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色与用户关系表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of base_role_user_rel
 -- ----------------------------
 INSERT INTO `base_role_user_rel` VALUES (3, 3, 3, '2018-06-28 09:52:16', '系统用户', '2018-06-28 09:52:16', '系统用户', 0);
 INSERT INTO `base_role_user_rel` VALUES (4, 1, 3, '2018-06-28 09:52:57', '系统用户', '2018-06-28 09:52:57', '系统用户', 0);
-INSERT INTO `base_role_user_rel` VALUES (7, 2, 3, '2018-06-28 09:57:10', '系统用户', '2018-06-28 09:57:10', '系统用户', 0);
-INSERT INTO `base_role_user_rel` VALUES (26, 6, 3, '2019-04-18 17:34:56', '刘小平', '2019-04-18 17:34:56', '刘小平', 0);
 
 -- ----------------------------
 -- Table structure for base_user
@@ -267,7 +190,7 @@ CREATE TABLE `base_user`  (
   `update_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户基本信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户基本信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of base_user
@@ -289,7 +212,7 @@ CREATE TABLE `generator_config_mapping`  (
   `update_user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据类型映射表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据类型映射表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of generator_config_mapping
@@ -328,7 +251,7 @@ CREATE TABLE `generator_config_template`  (
   `update_user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成器模板表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成器模板表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of generator_config_template
@@ -342,52 +265,6 @@ INSERT INTO `generator_config_template` VALUES (6, 'domainTemplate', '实体类�
 INSERT INTO `generator_config_template` VALUES (7, 'controllerTemplate', 'controller模板', 'package $!{packagePath}.controller.$!{tablePrefixLowerCase};\n\nimport $!{packagePath}.controller.BaseController;\nimport $!{packagePath}.domain.model.Page;\nimport $!{packagePath}.domain.model.$!{tablePrefixLowerCase}.$!{tableClassNameEN};\nimport org.springframework.stereotype.Controller;\nimport org.springframework.web.bind.annotation.RequestMapping;\nimport org.springframework.web.bind.annotation.RequestMethod;\nimport org.springframework.web.bind.annotation.RequestParam;\nimport org.springframework.web.bind.annotation.ResponseBody;\nimport $!{packagePath}.service.$!{tablePrefixLowerCase}.$!{tableClassNameEN}Service;\n\nimport javax.annotation.Resource;\nimport java.util.List;\n\n/**\n * $!{tableNameCH}Controller\n * User: $!{author}\n * DateTime: $!{dateTime}\n */\n@Controller\n@RequestMapping(\"/web$!{htmlPath}\")\npublic class $!{tableClassNameEN}Controller extends BaseController{\n\n    /**\n     * $!{tableNameCH}Service接口\n     */\n    @Resource\n    private $!{tableClassNameEN}Service $!{tablePropertyNameEN}Service;\n\n    /**\n     * 根据条件分页查询\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\n     * @param pageNum 当前页码\n     * @param pageSize 每页显示条数\n     * @param sortName 排序字段\n     * @param sortOrder 排序方式\n     * @return Page<$!{tableClassNameEN}> 分页列表\n     */\n    @RequestMapping(value = \"/selectPage\", method = RequestMethod.POST)\n    @ResponseBody\n    public Page<$!{tableClassNameEN}> selectPage($!{tableClassNameEN} $!{tablePropertyNameEN},\n            @RequestParam(value = \"page\", required = false, defaultValue = \"1\") int pageNum,\n            @RequestParam(value = \"rows\", required = false, defaultValue = \"20\") int pageSize,\n            @RequestParam(value = \"sidx\", required = false, defaultValue = \"ts\") String sortName,\n            @RequestParam(value = \"sord\", required = false, defaultValue = \"desc\") String sortOrder) {\n\n        Page<$!{tableClassNameEN}> page = buildPage($!{tablePropertyNameEN}, pageNum,pageSize,sortName,sortOrder);\n        // 执行查询\n        return $!{tablePropertyNameEN}Service.selectPage(page);\n    }\n\n    /**\n     * 根据条件查询\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\n     * @return $!{tableNameCH}列表\n    */\n    @RequestMapping(value = \"/selectList\", method = RequestMethod.POST)\n    @ResponseBody\n    public List<$!{tableClassNameEN}> selectList($!{tableClassNameEN} $!{tablePropertyNameEN}) {\n\n        return $!{tablePropertyNameEN}Service.selectList($!{tablePropertyNameEN});\n    }\n\n    /**\n     * 根据主键查询\n     * @param $!{pkColumn.columnPropertyName} $!{pkColumn.columnNameCH}\n     * @return $!{tableNameCH}\n    */\n    @RequestMapping(value = \"/selectOne\", method = RequestMethod.POST)\n    @ResponseBody\n    public $!{tableClassNameEN} selectOne($!{pkColumn.javaType} $!{pkColumn.columnPropertyName}) {\n\n        return $!{tablePropertyNameEN}Service.selectOne($!{pkColumn.columnPropertyName});\n    }\n\n    /**\n     * 保存数据\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\n     * @return 执行结果\n     */\n    @RequestMapping(value = \"/insert\", method = RequestMethod.POST)\n    @ResponseBody\n    public $!{tableClassNameEN} insert($!{tableClassNameEN} $!{tablePropertyNameEN}) {\n\n        // 执行插入，返回已设置主键的数据实体\n        return $!{tablePropertyNameEN}Service.insert($!{tablePropertyNameEN},getAccount().getUserName());\n    }\n\n    /**\n     * 修改数据\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\n     * @return 执行结果\n     */\n    @RequestMapping(value = \"/update\", method = RequestMethod.POST)\n    @ResponseBody\n    public Boolean update($!{tableClassNameEN} $!{tablePropertyNameEN}) {\n        // 执行更新\n        int rows = $!{tablePropertyNameEN}Service.update($!{tablePropertyNameEN},getAccount().getUserName());\n				return rows > 0;\n    }\n\n    /**\n     * 逻辑删除数据\n     * @param $!{pkColumn.columnPropertyName} $!{pkColumn.columnNameCH}\n     * @return 执行结果\n     */\n    @RequestMapping(value = \"/delete\", method = RequestMethod.POST)\n    @ResponseBody\n    public Boolean delete($!{pkColumn.javaType} $!{pkColumn.columnPropertyName}) {\n        // 执行逻辑删除\n        int rows = $!{tablePropertyNameEN}Service.delete($!{pkColumn.columnPropertyName},getAccount().getUserName());\n				return rows > 0;\n    }\n\n}', 'controller', 'Controller.java', '2018-12-27 14:09:33', '刘小平', '2020-05-08 17:38:26', '刘小平', 0);
 INSERT INTO `generator_config_template` VALUES (8, 'restControllerTemplate', 'restController模板', 'package $!{packagePath}.$!{tablePrefixLowerCase}.controller;\r\n\r\nimport $!{packagePath}.api.$!{tablePrefixLowerCase}.$!{tableClassNameEN}RemoteService;\r\nimport $!{packagePath}.$!{tablePrefixLowerCase}.service.$!{tableClassNameEN}Service;\r\nimport $!{packagePath}.common.controller.BaseRestController;\r\nimport $!{packagePath}.domain.model.Page;\r\nimport $!{packagePath}.domain.model.Result;\r\nimport $!{packagePath}.domain.model.$!{tablePrefixLowerCase}.$!{tableClassNameEN};\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport javax.annotation.Resource;\r\nimport java.util.List;\r\n\r\n/**\r\n * $!{tableNameCH}RestController\r\n * @author $!{author}\r\n * DateTime: $!{dateTime}\r\n */\r\n@RestController\r\npublic class $!{tableClassNameEN}RestController extends BaseRestController implements $!{tableClassNameEN}RemoteService {\r\n\r\n    // $!{tableNameCH}Service\r\n    @Resource\r\n    private $!{tableClassNameEN}Service $!{tablePropertyNameEN}Service;\r\n\r\n    /**\r\n     * 分页查询\r\n     * @param page 分页与查询条件对象\r\n     * @return Result<Page<$!{tableClassNameEN}>> 结果集\r\n     */\r\n    public Result<Page<$!{tableClassNameEN}>> selectPage(@RequestBody Page<$!{tableClassNameEN}> page) {\r\n        // 执行查询\r\n        page = $!{tablePropertyNameEN}Service.selectPage(page);\r\n        // 返回查询结果\r\n        return new Result<>(page);\r\n    }\r\n\r\n    /**\r\n     * 列表查询\r\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\r\n     * @return Result<List<$!{tableClassNameEN}>> 结果集\r\n     */\r\n    public Result<List<$!{tableClassNameEN}>> selectList(@RequestBody $!{tableClassNameEN} $!{tablePropertyNameEN}) {\r\n        // 执行查询\r\n        List<$!{tableClassNameEN}> content = $!{tablePropertyNameEN}Service.selectList($!{tablePropertyNameEN});\r\n        // 返回结果\r\n        return new Result<>(content);\r\n    }\r\n\r\n    /**\r\n     * 单条查询\r\n     * @param id 主键\r\n     * @return Result<$!{tableClassNameEN}> 数据实体\r\n     */\r\n    public Result<$!{tableClassNameEN}> selectOne(Long id) {\r\n        // 执行查询\r\n        $!{tableClassNameEN} content = $!{tablePropertyNameEN}Service.selectOne(id);\r\n        // 返回结果\r\n        return new Result<>(content);\r\n    }\r\n\r\n    /**\r\n    * 新增\r\n    * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\r\n    * @return Result<$!{tableClassNameEN}> 已设置主键的数据实体\r\n    */\r\n    public Result<$!{tableClassNameEN}> insert(@RequestBody $!{tableClassNameEN} $!{tablePropertyNameEN}) {\r\n        // 执行插入\r\n        $!{tablePropertyNameEN} = $!{tablePropertyNameEN}Service.insert($!{tablePropertyNameEN},getAccount().getUserName());\r\n        // 返回已设置主键的数据实体\r\n        return new Result<>($!{tablePropertyNameEN});\r\n    }\r\n\r\n    /**\r\n     * 批量新增\r\n     * @param $!{tablePropertyNameEN}List $!{tableNameCH}数据实体\r\n     * @return Result<List<$!{tableClassNameEN}>> 已设置主键的数据实体结果集\r\n     */\r\n    @Override\r\n    public Result<List<$!{tableClassNameEN}>> batchInsert(@RequestBody List<$!{tableClassNameEN}> $!{tablePropertyNameEN}List) {\r\n        return new Result<>((List<$!{tableClassNameEN}>)$!{tablePropertyNameEN}Service.insert($!{tablePropertyNameEN}List,getAccount().getUserName()));\r\n    }\r\n\r\n    /**\r\n     * 修改\r\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\r\n     * @return Result<Boolean> 是否成功\r\n     */\r\n    public Result<Boolean> update(@RequestBody $!{tableClassNameEN} $!{tablePropertyNameEN}) {\r\n        // 执行更新\r\n        int rows = $!{tablePropertyNameEN}Service.update($!{tablePropertyNameEN}, getAccount().getUserName());\r\n        if (rows == 1) {\r\n            // 返回\r\n            return new Result<>(true);\r\n        }\r\n        // 返回\r\n        return new Result<>(false);\r\n    }\r\n\r\n    /**\r\n     * 逻辑删除\r\n     * @param id 数据主键\r\n     * @return Result<Boolean> 是否成功\r\n     */\r\n    public Result<Boolean> delete(Long id) {\r\n        // 执行逻辑删除\r\n        int rows = $!{tablePropertyNameEN}Service.delete(id, getAccount().getUserName());\r\n        if (rows == 1) {\r\n            // 返回\r\n            return new Result<>(true);\r\n        }\r\n        // 返回\r\n        return new Result<>(false);\r\n    }\r\n\r\n}', 'controller', 'RestController.java', '2018-12-27 14:10:01', '刘小平', '2020-01-30 14:27:15', '刘小平', 1);
 INSERT INTO `generator_config_template` VALUES (9, 'remoteServiceTemplate', 'remoteService层服务接口', 'package $!{packagePath}.api.$!{tablePrefixLowerCase};\r\n\r\nimport org.liuxp.cloud.platform.api.ApiConfig;\r\nimport $!{packagePath}.domain.model.$!{tablePrefixLowerCase}.$!{tableClassNameEN};\r\nimport org.liuxp.cloud.platform.domain.model.Page;\r\nimport org.liuxp.cloud.platform.domain.model.Result;\r\nimport org.springframework.cloud.openfeign.FeignClient;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.List;\r\n\r\n/**\r\n * $!{tableNameCH}RemoteService层接口类\r\n * User: $!{author}\r\n * DateTime: $!{dateTime}\r\n **/\r\n@FeignClient(name= ApiConfig.$!{tablePrefixUpperCase}_SERVICE_NAME)\r\n@RequestMapping(\"/api/$!{tablePrefixLowerCase}/$!{tablePropertyNameEN}\")\r\npublic interface $!{tableClassNameEN}RemoteService{\r\n\r\n    /**\r\n     * 分页查询\r\n     * @param page 分页与查询条件对象\r\n     * @return Result<Page<$!{tableClassNameEN}>> 结果集\r\n     */\r\n    @RequestMapping(value = \"/selectPage\", method = RequestMethod.POST)\r\n    Result<Page<$!{tableClassNameEN}>> selectPage(@RequestBody Page<$!{tableClassNameEN}> page);\r\n\r\n    /**\r\n     * 列表查询\r\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\r\n     * @return Result<List<$!{tableClassNameEN}>> 结果集\r\n     */\r\n    @RequestMapping(value = \"/selectList\", method = RequestMethod.POST)\r\n    Result<List<$!{tableClassNameEN}>> selectList(@RequestBody $!{tableClassNameEN} $!{tablePropertyNameEN});\r\n\r\n    /**\r\n     * 单条查询\r\n     * @param id 主键\r\n     * @return Result<$!{tableClassNameEN}> 数据实体\r\n     */\r\n    @RequestMapping(value = \"/selectOne\", method = RequestMethod.POST)\r\n    Result<$!{tableClassNameEN}> selectOne(@RequestParam(\"id\") Long id);\r\n\r\n    /**\r\n     * 新增数据\r\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\r\n     * @return Result<$!{tableClassNameEN}> 已设置主键的数据实体\r\n     */\r\n    @RequestMapping(value = \"/insert\", method = RequestMethod.POST)\r\n    Result<$!{tableClassNameEN}> insert(@RequestBody $!{tableClassNameEN} $!{tablePropertyNameEN});\r\n\r\n    /**\r\n     * 批量新增\r\n     * @param $!{tablePropertyNameEN}List $!{tableNameCH}数据实体\r\n     * @return Result<List<$!{tableClassNameEN}>> 已设置主键的数据实体结果集\r\n     */\r\n    @RequestMapping(value = \"/batchInsert\", method = RequestMethod.POST)\r\n    Result<List<$!{tableClassNameEN}>> batchInsert(@RequestBody List<$!{tableClassNameEN}> $!{tablePropertyNameEN}List);\r\n\r\n    /**\r\n     * 修改数据\r\n     * @param $!{tablePropertyNameEN} $!{tableNameCH}数据实体\r\n     * @return Result<Boolean> 是否成功\r\n     */\r\n    @RequestMapping(value = \"/update\", method = RequestMethod.POST)\r\n    Result<Boolean> update(@RequestBody $!{tableClassNameEN} $!{tablePropertyNameEN});\r\n\r\n    /**\r\n     * 逻辑删除数据\r\n     * @param id 数据主键\r\n     * @return Result<Boolean> 是否成功\r\n     */\r\n    @RequestMapping(value = \"/delete\", method = RequestMethod.POST)\r\n    Result<Boolean> delete(@RequestParam(\"id\") Long id);\r\n\r\n}', 'api', 'RemoteService.java', '2018-12-27 14:10:33', '刘小平', '2020-01-30 14:13:28', '刘小平', 1);
-
--- ----------------------------
--- Table structure for monitor_login_log
--- ----------------------------
-DROP TABLE IF EXISTS `monitor_login_log`;
-CREATE TABLE `monitor_login_log`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `user_id` bigint(20) NOT NULL COMMENT '用户唯一标识',
-  `user_account` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户账号',
-  `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名称',
-  `login_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录IP',
-  `login_app` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录应用',
-  `login_time` datetime(0) NOT NULL COMMENT '登录时间',
-  `create_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人名称',
-  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-  `update_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '修改人名称',
-  `update_time` datetime(0) NOT NULL COMMENT '修改时间',
-  `is_delete` tinyint(1) UNSIGNED ZEROFILL NOT NULL COMMENT '删除标志 0：未删除 1：已删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of monitor_login_log
--- ----------------------------
-INSERT INTO `monitor_login_log` VALUES (1, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-08 13:14:50', '刘小平', '2020-05-08 13:14:50', '刘小平', '2020-05-08 13:14:50', 0);
-INSERT INTO `monitor_login_log` VALUES (2, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-08 14:36:18', '刘小平', '2020-05-08 14:36:18', '刘小平', '2020-05-08 14:36:18', 0);
-INSERT INTO `monitor_login_log` VALUES (3, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-08 14:41:26', '刘小平', '2020-05-08 14:41:26', '刘小平', '2020-05-08 14:41:26', 0);
-INSERT INTO `monitor_login_log` VALUES (4, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-08 16:50:56', '刘小平', '2020-05-08 16:50:56', '刘小平', '2020-05-08 16:50:56', 0);
-INSERT INTO `monitor_login_log` VALUES (5, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-08 17:12:22', '刘小平', '2020-05-08 17:12:22', '刘小平', '2020-05-08 17:12:22', 0);
-INSERT INTO `monitor_login_log` VALUES (6, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-09 17:38:58', '刘小平', '2020-05-09 17:38:58', '刘小平', '2020-05-09 17:38:58', 0);
-INSERT INTO `monitor_login_log` VALUES (7, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-11 11:02:17', '刘小平', '2020-05-11 11:02:17', '刘小平', '2020-05-11 11:02:17', 0);
-INSERT INTO `monitor_login_log` VALUES (8, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-11 12:13:28', '刘小平', '2020-05-11 12:13:28', '刘小平', '2020-05-11 12:13:28', 0);
-INSERT INTO `monitor_login_log` VALUES (9, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-11 12:20:06', '刘小平', '2020-05-11 12:20:06', '刘小平', '2020-05-11 12:20:06', 0);
-INSERT INTO `monitor_login_log` VALUES (10, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-11 16:14:19', '刘小平', '2020-05-11 16:14:19', '刘小平', '2020-05-11 16:14:19', 0);
-INSERT INTO `monitor_login_log` VALUES (11, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-11 17:58:04', '刘小平', '2020-05-11 17:58:04', '刘小平', '2020-05-11 17:58:04', 0);
-INSERT INTO `monitor_login_log` VALUES (12, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-12 10:43:14', '刘小平', '2020-05-12 10:43:14', '刘小平', '2020-05-12 10:43:14', 0);
-INSERT INTO `monitor_login_log` VALUES (13, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-12 17:52:03', '刘小平', '2020-05-12 17:52:03', '刘小平', '2020-05-12 17:52:03', 0);
-INSERT INTO `monitor_login_log` VALUES (14, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-13 10:29:51', '刘小平', '2020-05-13 10:29:51', '刘小平', '2020-05-13 10:29:51', 0);
-INSERT INTO `monitor_login_log` VALUES (15, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', '2020-05-22 17:00:20', '刘小平', '2020-05-22 17:00:20', '刘小平', '2020-05-22 17:00:20', 0);
-INSERT INTO `monitor_login_log` VALUES (16, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36', '2020-05-27 15:14:10', '刘小平', '2020-05-27 15:14:10', '刘小平', '2020-05-27 15:14:10', 0);
-INSERT INTO `monitor_login_log` VALUES (17, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36', '2020-05-27 15:14:29', '刘小平', '2020-05-27 15:14:29', '刘小平', '2020-05-27 15:14:29', 0);
-INSERT INTO `monitor_login_log` VALUES (18, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36', '2020-05-27 15:30:15', '刘小平', '2020-05-27 15:30:15', '刘小平', '2020-05-27 15:30:15', 0);
-INSERT INTO `monitor_login_log` VALUES (19, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36', '2020-05-28 11:20:08', '刘小平', '2020-05-28 11:20:08', '刘小平', '2020-05-28 11:20:08', 0);
-INSERT INTO `monitor_login_log` VALUES (20, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36', '2020-05-28 15:02:53', '刘小平', '2020-05-28 15:02:53', '刘小平', '2020-05-28 15:02:53', 0);
-INSERT INTO `monitor_login_log` VALUES (21, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', '2020-11-13 14:44:51', '刘小平', '2020-11-13 14:44:51', '刘小平', '2020-11-13 14:44:51', 0);
-INSERT INTO `monitor_login_log` VALUES (22, 3, 'liuxp', '刘小平', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', '2020-11-13 14:51:49', '刘小平', '2020-11-13 14:51:49', '刘小平', '2020-11-13 14:51:49', 0);
 
 -- ----------------------------
 -- Table structure for monitor_sms_log
@@ -410,7 +287,7 @@ CREATE TABLE `monitor_sms_log`  (
   `update_user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '短信发送日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '短信发送日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of monitor_sms_log
@@ -439,7 +316,7 @@ CREATE TABLE `resource_file`  (
   `update_user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文件存储信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文件存储信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of resource_file

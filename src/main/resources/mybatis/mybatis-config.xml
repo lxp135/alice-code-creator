@@ -19,9 +19,6 @@
         <mapper resource="mybatis/mysql/generator/GeneratorConfigTemplateMapper.xml" /> <!-- 代码生成器模板配置表 -->
         <mapper resource="mybatis/mysql/generator/MysqlGeneratorMapper.xml" />          <!-- 代码生成器 -->
 
-        <mapper resource="mybatis/mysql/monitor/MonitorLoginLogMapper.xml" />           <!-- 登录日志表 -->
-<!--        <mapper resource="mybatis/mysql/monitor/ResourceSmsLogMapper.xml" />            &lt;!&ndash; 短信发送日志表 &ndash;&gt;-->
-
         <mapper resource="mybatis/mysql/resource/ResourceFileMapper.xml" />             <!-- 文件 -->
 
     </mappers>

@@ -1,18 +1,17 @@
 package alice.code.creator.controller;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import alice.code.creator.common.framework.account.Account;
 import alice.code.creator.common.framework.account.AccountUtils;
 import alice.code.creator.domain.model.Result;
 import alice.code.creator.domain.model.base.BaseMenu;
 import alice.code.creator.domain.model.base.BaseUser;
 import alice.code.creator.service.base.BaseUserService;
-import alice.code.creator.service.resource.ResourceSmsService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -30,10 +29,6 @@ public class DefaultController {
 	// 用户信息表Service
 	@Resource
 	private BaseUserService baseUserService;
-
-	// 短信发送Service接口
-	@Resource(name = "ResourceSms${sms.gateway}ServiceImpl")
-	private ResourceSmsService resourceSmsService;
 
 	/**
 	 * 首页
@@ -65,7 +60,7 @@ public class DefaultController {
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
-	public Result register(BaseUser baseUser){
+	public Result<BaseUser> register(BaseUser baseUser){
 
 		if(null==baseUser.getUserAccount()||"".equals(baseUser.getUserAccount())){
 			throw new IllegalArgumentException("用户名不能为空！");
@@ -73,18 +68,6 @@ public class DefaultController {
 
 		if(null==baseUser.getUserPassword()||"".equals(baseUser.getUserPassword())){
 			throw new IllegalArgumentException("密码不能为空！");
-		}
-
-		if(null==baseUser.getUserPhone()||"".equals(baseUser.getUserPhone())){
-			throw new IllegalArgumentException("手机号不能为空！");
-		}
-
-		if(null==baseUser.getSmsCaptcha()||"".equals(baseUser.getSmsCaptcha())){
-			throw new IllegalArgumentException("短信验证码不能为空！");
-		}
-
-		if(!resourceSmsService.checkCaptcha(baseUser.getUserPhone(),baseUser.getSmsCaptcha()).isSuccess()){
-			throw new IllegalArgumentException("短信验证码错误！");
 		}
 
 		BaseUser baseUserQuery = new BaseUser();
@@ -101,62 +84,6 @@ public class DefaultController {
 
 		return baseUserService.register(baseUser);
 
-	}
-
-	/**
-	 * 发送手机验证码 - 注册
-	 * @param phone 手机号
-	 */
-	@RequestMapping(value = "/sendRegisterCaptcha", method = RequestMethod.POST)
-	@ResponseBody
-	public Result sendRegisterCaptcha(String phone){
-		if(null==phone||"".equals(phone)){
-			throw new IllegalArgumentException("手机号不能为空！");
-		}
-
-        BaseUser baseUserQuery = new BaseUser();
-		baseUserQuery.setUserPhone(phone);
-		List<BaseUser> baseUserList = baseUserService.selectList(baseUserQuery);
-		if(null!=baseUserList&&baseUserList.size()>0){
-            throw new IllegalArgumentException("该手机号已经存在，请使用其他手机号注册！");
-        }
-
-		return resourceSmsService.sendRegisterCaptcha(phone);
-	}
-
-	/**
-	 * 发送手机验证码 - 密码找回
-	 * @param phone 手机号
-	 */
-	@RequestMapping(value = "/sendForgotPasswordCaptcha", method = RequestMethod.POST)
-	@ResponseBody
-	public Result sendForgotPasswordCaptcha(String phone){
-		if(null==phone||"".equals(phone)){
-			throw new IllegalArgumentException("手机号不能为空！");
-		}
-
-        BaseUser baseUserQuery = new BaseUser();
-        baseUserQuery.setUserPhone(phone);
-        List<BaseUser> baseUserList = baseUserService.selectList(baseUserQuery);
-        if(null==baseUserList||baseUserList.size()==0){
-            throw new IllegalArgumentException("该手机号不存在，请重新输入手机号！");
-        }
-
-		return resourceSmsService.sendForgotPasswordCaptcha(phone);
-	}
-
-	/**
-	 * 密码找回
-	 * @param baseUser 用户信息
-	 */
-	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
-	@ResponseBody
-	public Result forgotPassword(BaseUser baseUser){
-//		if(null==phone||"".equals(phone)){
-//			throw new RuntimeException("手机号不能为空！");
-//		}
-//		resourceSmsRemoteService.sendForgotPasswordCaptcha(phone);
-		return new Result();
 	}
 
 	/**

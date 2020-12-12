@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/web/monitor/system")
-@Secured("MONITOR_SYSTEM")
+@Secured("PUBLIC")
 public class MonitorSystemController extends BaseController {
 
     Logger logger = LoggerFactory.getLogger(getClass());

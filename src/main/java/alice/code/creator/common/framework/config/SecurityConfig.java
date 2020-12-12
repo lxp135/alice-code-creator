@@ -1,5 +1,7 @@
 package alice.code.creator.common.framework.config;
 
+import alice.code.creator.common.framework.security.DbAuthenticationProvider;
+import alice.code.creator.common.framework.security.DbUserDetailsService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,23 +13,14 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
-import alice.code.creator.common.framework.account.Account;
-import alice.code.creator.common.framework.security.DbAuthenticationProvider;
-import alice.code.creator.common.framework.security.DbUserDetailsService;
-import alice.code.creator.domain.model.monitor.MonitorLoginLog;
-import alice.code.creator.service.monitor.MonitorLoginLogService;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
 /**
- * 描述：Spring Security 配置类
- * 创建时间：2018/5/22 16:55
- *
+ * Spring Security 配置类
  * @author contact@liuxp.me
  */
 @Configuration
@@ -35,9 +28,6 @@ import java.util.Date;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final static String KEY = "WEBAPP";
-
-    @Resource
-    private MonitorLoginLogService monitorLoginLogService;
 
     @Resource
     private DbUserDetailsService userDetailService;
@@ -51,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests()
                 .antMatchers("/login" // 登录
                         ,"/register" // 注册
-                        ,"/sendRegisterCaptcha" // 发送注册验证码
                         ,"/sendForgotPasswordCaptcha" // 发送找回密码验证码
                         ,"/forgotPassword" // 找回密码
                         ,"/framework/**" // 框架接口
@@ -109,23 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                            Authentication authentication) throws IOException, ServletException {
-            try {
-                // 记录登录日志
-                Account account = (Account) authentication.getPrincipal();
-                Date now = new Date();
-                MonitorLoginLog loginLog = new MonitorLoginLog();
-                loginLog.setLoginApp(request.getHeader("User-agent")); // 登录设备信息
-                loginLog.setLoginIp(request.getRemoteAddr()); // 登录IP
-                loginLog.setLoginTime(now); // 登录时间
-                loginLog.setUserId(account.getId()); // 登录用户编号
-                loginLog.setUserName(account.getUserName()); // 登录用户名称
-                loginLog.setUserAccount(account.getUserAccount()); // 登录用户账号
-                monitorLoginLogService.insert(loginLog,account.getUserName());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+                                            Authentication authentication) throws IOException {
             // 登录成功默认进入首页
             response.sendRedirect("/");
         }

@@ -82,6 +82,7 @@ public class BaseUserServiceImpl extends AbstractService implements BaseUserServ
 
 		// 默认启用
 		baseUser.setIsEnable(1);
+		baseUser.setCreateUser(baseUser.getUserAccount());
 
 		// 插入用户数据
 		baseUser = iDao.insert(baseUser);
