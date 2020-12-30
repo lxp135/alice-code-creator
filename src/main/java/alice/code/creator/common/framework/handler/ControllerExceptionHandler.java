@@ -22,27 +22,15 @@ public class ControllerExceptionHandler {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
-     * 运行时异常
-     * @param e 被捕获的异常
-     * @return 异常信息
-     */
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseBody
-    public Result handleRuntimeException(Exception e){
-        e.printStackTrace();
-        return new Result(ResultCodeConstant.RUNTIME_EXCEPTION,e.getMessage());
-    }
-
-    /**
      * 参数异常
      * @param e 被捕获的异常
      * @return 异常信息
      */
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseBody
-    public Result handleIllegalArgumentException(Exception e){
+    public Result<Boolean> handleIllegalArgumentException(IllegalArgumentException e){
         e.printStackTrace();
-        return new Result(ResultCodeConstant.ILLEGAL_ARGUMENT_EXCEPTION,e.getMessage());
+        return new Result<>(ResultCodeConstant.ILLEGAL_ARGUMENT_EXCEPTION,e.getMessage());
     }
 
     /**
@@ -52,9 +40,21 @@ public class ControllerExceptionHandler {
      */
     @ExceptionHandler(SQLException.class)
     @ResponseBody
-    public Result handleSQLException(Exception e){
+    public Result<Boolean> handleSQLException(SQLException e){
         e.printStackTrace();
-        return new Result(ResultCodeConstant.SQL_EXCEPTION,"数据库异常！");
+        return new Result<>(ResultCodeConstant.SQL_EXCEPTION,"数据库异常！");
+    }
+
+    /**
+     * 运行时异常
+     * @param e 被捕获的异常
+     * @return 异常信息
+     */
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseBody
+    public Result<Boolean> handleRuntimeException(RuntimeException e){
+        e.printStackTrace();
+        return new Result<>(ResultCodeConstant.RUNTIME_EXCEPTION,e.getMessage());
     }
 
     /**
@@ -64,8 +64,8 @@ public class ControllerExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public Result handleException(Exception e){
+    public Result<Boolean> handleException(Exception e){
         e.printStackTrace();
-        return new Result(ResultCodeConstant.EXCEPTION,e.getMessage());
+        return new Result<>(ResultCodeConstant.EXCEPTION,e.getMessage());
     }
 }

@@ -1,0 +1,82 @@
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">用户个性化配置</div>
+                <div class="card-body">
+                    <form id="editForm">
+                        <input id="id" name="id" style="display:none;"/>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultSign"><span style="color:red;">* </span>默认签名</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultSign" name="defaultSign" placeholder="建议输入姓名、邮箱等联系方式" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultPackage"><span style="color:red;">* </span>默认包路径</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultPackage" name="defaultPackage" placeholder="com.example" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultTablePrefix">默认表前缀</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultTablePrefix" name="defaultTablePrefix" placeholder="该字段存在值时，生成的代码和路径会将表前缀忽略" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultGroupId">默认分组编号</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultGroupId" name="defaultGroupId" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultGroupName">默认分组名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultGroupName" name="defaultGroupName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultDatasourceId">默认数据源编号</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultDatasourceId" name="defaultDatasourceId" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultDatasourceName">默认数据源名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultDatasourceName" name="defaultDatasourceName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultFieldUnique">唯一标识字段</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultFieldUnique" name="defaultFieldUnique" placeholder="主键字段名称" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultFieldExt">扩展标识字段（可以存多个，按逗号分割）</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultFieldExt" name="defaultFieldExt" type="text" placeholder="生成代码时，在扩展标识字段列表中获取，不在常规字段列表出现">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="defaultFieldEffective">逻辑删除标识字段名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="defaultFieldEffective" name="defaultFieldEffective" placeholder="生成代码时，在逻辑删除标识字段列表中获取，不在常规字段列表出现" type="text">
+                            </div>
+                        </div>
+                        <hr class="hr hr-32"/>
+                        <p class="text-center">
+                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                <i class="fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="biz/generator/config/individual/generator_config_individual_edit.js"></script>

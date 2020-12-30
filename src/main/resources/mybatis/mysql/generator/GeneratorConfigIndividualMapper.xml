@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 用户个性化配置SQL author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.generator.GeneratorConfigIndividualDao" >
+    <!-- 映射关系 -->
+    <resultMap id="resultMap" type="alice.code.creator.domain.model.generator.GeneratorConfigIndividual" >
+        <id column="id" property="id" jdbcType="BIGINT" />       <!-- 自增主键 -->
+        <result column="default_sign" property="defaultSign" jdbcType="VARCHAR" />       <!-- 默认签名 -->
+        <result column="default_package" property="defaultPackage" jdbcType="VARCHAR" />       <!-- 默认包路径 -->
+        <result column="default_table_prefix" property="defaultTablePrefix" jdbcType="VARCHAR" />       <!-- 默认表前缀 -->
+        <result column="default_group_id" property="defaultGroupId" jdbcType="BIGINT" />       <!-- 默认分组编号 -->
+        <result column="default_group_name" property="defaultGroupName" jdbcType="VARCHAR" />       <!-- 默认分组名称 -->
+        <result column="default_datasource_id" property="defaultDatasourceId" jdbcType="BIGINT" />       <!-- 默认数据源编号 -->
+        <result column="default_datasource_name" property="defaultDatasourceName" jdbcType="VARCHAR" />       <!-- 默认数据源名称 -->
+        <result column="default_field_unique" property="defaultFieldUnique" jdbcType="VARCHAR" />       <!-- 唯一标识字段 -->
+        <result column="default_field_ext" property="defaultFieldExt" jdbcType="VARCHAR" />       <!-- 扩展标识字段（可以存多个，按照都好分割） -->
+        <result column="default_field_effective" property="defaultFieldEffective" jdbcType="VARCHAR" />       <!-- 逻辑删除标识字段名称 -->
+        <result column="owner_user_id" property="ownerUserId" jdbcType="BIGINT" />       <!-- 所有者用户编号 -->
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />       <!-- 创建时间 -->
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />       <!-- 创建用户 -->
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />       <!-- 更新时间 -->
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />       <!-- 更新用户 -->
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />       <!-- 删除标志 0：未删除 1：已删除 -->
+    </resultMap>
+
+    <!-- 查询列 -->
+    <sql id="queryColumns">
+        id,       /* 自增主键 */
+        default_sign,       /* 默认签名 */
+        default_package,       /* 默认包路径 */
+        default_table_prefix,       /* 默认表前缀 */
+        default_group_id,       /* 默认分组编号 */
+        default_group_name,       /* 默认分组名称 */
+        default_datasource_id,       /* 默认数据源编号 */
+        default_datasource_name,       /* 默认数据源名称 */
+        default_field_unique,       /* 唯一标识字段 */
+        default_field_ext,       /* 扩展标识字段（可以存多个，按照都好分割） */
+        default_field_effective,       /* 逻辑删除标识字段名称 */
+        owner_user_id,       /* 所有者用户编号 */
+        create_time,       /* 创建时间 */
+        create_user,       /* 创建用户 */
+        update_time,       /* 更新时间 */
+        update_user,       /* 更新用户 */
+        is_delete       /* 删除标志 0：未删除 1：已删除 */
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="queryClause">
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            <if test="id != null">
+                AND id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+            </if>
+            <if test="idMin != null">
+                <![CDATA[ AND id > #{idMin, jdbcType=BIGINT} ]]>	/* 自增主键大于某值*/
+            </if>
+            <if test="idMax != null">
+                <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 自增主键小于某值 */
+            </if>
+            <if test="defaultSign != null and defaultSign != ''" >
+                AND default_sign = #{defaultSign,jdbcType=VARCHAR}       /* 默认签名 */
+            </if>
+            <if test="defaultPackage != null and defaultPackage != ''" >
+                AND default_package = #{defaultPackage,jdbcType=VARCHAR}       /* 默认包路径 */
+            </if>
+            <if test="defaultTablePrefix != null and defaultTablePrefix != ''" >
+                AND default_table_prefix = #{defaultTablePrefix,jdbcType=VARCHAR}       /* 默认表前缀 */
+            </if>
+            <if test="defaultGroupId != null" >
+                AND default_group_id = #{defaultGroupId,jdbcType=BIGINT}       /* 默认分组编号 */
+            </if>
+            <if test="defaultGroupName != null and defaultGroupName != ''" >
+                AND default_group_name = #{defaultGroupName,jdbcType=VARCHAR}       /* 默认分组名称 */
+            </if>
+            <if test="defaultDatasourceId != null" >
+                AND default_datasource_id = #{defaultDatasourceId,jdbcType=BIGINT}       /* 默认数据源编号 */
+            </if>
+            <if test="defaultDatasourceName != null and defaultDatasourceName != ''" >
+                AND default_datasource_name = #{defaultDatasourceName,jdbcType=VARCHAR}       /* 默认数据源名称 */
+            </if>
+            <if test="defaultFieldUnique != null and defaultFieldUnique != ''" >
+                AND default_field_unique = #{defaultFieldUnique,jdbcType=VARCHAR}       /* 唯一标识字段 */
+            </if>
+            <if test="defaultFieldExt != null and defaultFieldExt != ''" >
+                AND default_field_ext = #{defaultFieldExt,jdbcType=VARCHAR}       /* 扩展标识字段（可以存多个，按照都好分割） */
+            </if>
+            <if test="defaultFieldEffective != null and defaultFieldEffective != ''" >
+                AND default_field_effective = #{defaultFieldEffective,jdbcType=VARCHAR}       /* 逻辑删除标识字段名称 */
+            </if>
+            <if test="ownerUserId != null" >
+                AND owner_user_id = #{ownerUserId,jdbcType=BIGINT}       /* 所有者用户编号 */
+            </if>
+            <if test="createTimeBegin != null" >
+                <![CDATA[ AND create_time >= #{createTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 创建时间/起 */
+            </if>
+            <if test="createTimeEnd != null" >
+                <![CDATA[ AND create_time <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 创建时间/止 */
+            </if>
+            <if test="createUser != null and createUser != ''" >
+                AND create_user = #{createUser,jdbcType=VARCHAR}       /* 创建用户 */
+            </if>
+            <if test="updateTimeBegin != null" >
+                <![CDATA[ AND update_time >= #{updateTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 更新时间/起 */
+            </if>
+            <if test="updateTimeEnd != null" >
+                <![CDATA[ AND update_time <= #{updateTimeEnd,jdbcType=TIMESTAMP} ]]>       /* 更新时间/止 */
+            </if>
+            <if test="updateUser != null and updateUser != ''" >
+                AND update_user = #{updateUser,jdbcType=VARCHAR}       /* 更新用户 */
+            </if>
+        </where>
+    </sql>
+
+    <!-- 排序 -->
+    <sql id="sortClause">
+        <if test="_sort != null">
+            ORDER BY
+            <foreach collection="_sort" item="item" index="index" separator=",">
+                <choose>
+                    <when test="item.propertyName != null and item.propertyName == 'id'">
+                        id    /* 自增主键 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultSign'">
+                        default_sign    /* 默认签名 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultPackage'">
+                        default_package    /* 默认包路径 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultTablePrefix'">
+                        default_table_prefix    /* 默认表前缀 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultGroupId'">
+                        default_group_id    /* 默认分组编号 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultGroupName'">
+                        default_group_name    /* 默认分组名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultDatasourceId'">
+                        default_datasource_id    /* 默认数据源编号 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultDatasourceName'">
+                        default_datasource_name    /* 默认数据源名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultFieldUnique'">
+                        default_field_unique    /* 唯一标识字段 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultFieldExt'">
+                        default_field_ext    /* 扩展标识字段（可以存多个，按照都好分割） */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'defaultFieldEffective'">
+                        default_field_effective    /* 逻辑删除标识字段名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'ownerUserId'">
+                        owner_user_id    /* 所有者用户编号 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createTime'">
+                        create_time    /* 创建时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'createUser'">
+                        create_user    /* 创建用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'updateTime'">
+                        update_time    /* 更新时间 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'updateUser'">
+                        update_user    /* 更新用户 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <otherwise>update_time DESC</otherwise>
+                </choose>
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 分页 -->
+    <sql id="pageClause">
+        <if test="_page != null">
+            limit #{_page.offset, jdbcType=INTEGER}, #{_page.limit, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigIndividual" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO generator_config_individual (
+            default_sign,                      /* 默认签名 */
+            default_package,                      /* 默认包路径 */
+            default_table_prefix,                      /* 默认表前缀 */
+            default_group_id,                      /* 默认分组编号 */
+            default_group_name,                      /* 默认分组名称 */
+            default_datasource_id,                      /* 默认数据源编号 */
+            default_datasource_name,                      /* 默认数据源名称 */
+            default_field_unique,                      /* 唯一标识字段 */
+            default_field_ext,                      /* 扩展标识字段（可以存多个，按照都好分割） */
+            default_field_effective,                      /* 逻辑删除标识字段名称 */
+            owner_user_id,                      /* 所有者用户编号 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES(
+            #{defaultSign, jdbcType=VARCHAR},                 /* 默认签名 */
+            #{defaultPackage, jdbcType=VARCHAR},                 /* 默认包路径 */
+            #{defaultTablePrefix, jdbcType=VARCHAR},                 /* 默认表前缀 */
+            #{defaultGroupId, jdbcType=BIGINT},                 /* 默认分组编号 */
+            #{defaultGroupName, jdbcType=VARCHAR},                 /* 默认分组名称 */
+            #{defaultDatasourceId, jdbcType=BIGINT},                 /* 默认数据源编号 */
+            #{defaultDatasourceName, jdbcType=VARCHAR},                 /* 默认数据源名称 */
+            #{defaultFieldUnique, jdbcType=VARCHAR},                 /* 唯一标识字段 */
+            #{defaultFieldExt, jdbcType=VARCHAR},                 /* 扩展标识字段（可以存多个，按照都好分割） */
+            #{defaultFieldEffective, jdbcType=VARCHAR},                 /* 逻辑删除标识字段名称 */
+            #{ownerUserId, jdbcType=BIGINT},                 /* 所有者用户编号 */
+            #{createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+            #{createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+            #{updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+            #{updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+            #{isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+        )
+    </insert>
+
+    <!-- 批量插入数据 -->
+    <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO generator_config_individual (
+            default_sign,                      /* 默认签名 */
+            default_package,                      /* 默认包路径 */
+            default_table_prefix,                      /* 默认表前缀 */
+            default_group_id,                      /* 默认分组编号 */
+            default_group_name,                      /* 默认分组名称 */
+            default_datasource_id,                      /* 默认数据源编号 */
+            default_datasource_name,                      /* 默认数据源名称 */
+            default_field_unique,                      /* 唯一标识字段 */
+            default_field_ext,                      /* 扩展标识字段（可以存多个，按照都好分割） */
+            default_field_effective,                      /* 逻辑删除标识字段名称 */
+            owner_user_id,                      /* 所有者用户编号 */
+            create_time,                      /* 创建时间 */
+            create_user,                      /* 创建用户 */
+            update_time,                      /* 更新时间 */
+            update_user,                      /* 更新用户 */
+            is_delete       /* 删除标志 0：未删除 1：已删除 */
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.defaultSign, jdbcType=VARCHAR},                 /* 默认签名 */
+                #{item.defaultPackage, jdbcType=VARCHAR},                 /* 默认包路径 */
+                #{item.defaultTablePrefix, jdbcType=VARCHAR},                 /* 默认表前缀 */
+                #{item.defaultGroupId, jdbcType=BIGINT},                 /* 默认分组编号 */
+                #{item.defaultGroupName, jdbcType=VARCHAR},                 /* 默认分组名称 */
+                #{item.defaultDatasourceId, jdbcType=BIGINT},                 /* 默认数据源编号 */
+                #{item.defaultDatasourceName, jdbcType=VARCHAR},                 /* 默认数据源名称 */
+                #{item.defaultFieldUnique, jdbcType=VARCHAR},                 /* 唯一标识字段 */
+                #{item.defaultFieldExt, jdbcType=VARCHAR},                 /* 扩展标识字段（可以存多个，按照都好分割） */
+                #{item.defaultFieldEffective, jdbcType=VARCHAR},                 /* 逻辑删除标识字段名称 */
+                #{item.ownerUserId, jdbcType=BIGINT},                 /* 所有者用户编号 */
+                #{item.createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
+                #{item.createUser, jdbcType=VARCHAR},                 /* 创建用户 */
+                #{item.updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
+                #{item.updateUser, jdbcType=VARCHAR},                 /* 更新用户 */
+                #{item.isDelete, jdbcType=TINYINT}                 /* 删除标志 0：未删除 1：已删除 */
+            )
+        </foreach>
+    </insert>
+
+    <!-- 按主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE generator_config_individual
+            <set>
+                <if test="defaultSign != null">
+                    default_sign = #{defaultSign, jdbcType=VARCHAR},    /* 默认签名 */
+                </if>
+                <if test="defaultPackage != null">
+                    default_package = #{defaultPackage, jdbcType=VARCHAR},    /* 默认包路径 */
+                </if>
+                <if test="defaultTablePrefix != null">
+                    default_table_prefix = #{defaultTablePrefix, jdbcType=VARCHAR},    /* 默认表前缀 */
+                </if>
+                <if test="defaultGroupId != null">
+                    default_group_id = #{defaultGroupId, jdbcType=BIGINT},    /* 默认分组编号 */
+                </if>
+                <if test="defaultGroupName != null">
+                    default_group_name = #{defaultGroupName, jdbcType=VARCHAR},    /* 默认分组名称 */
+                </if>
+                <if test="defaultDatasourceId != null">
+                    default_datasource_id = #{defaultDatasourceId, jdbcType=BIGINT},    /* 默认数据源编号 */
+                </if>
+                <if test="defaultDatasourceName != null">
+                    default_datasource_name = #{defaultDatasourceName, jdbcType=VARCHAR},    /* 默认数据源名称 */
+                </if>
+                <if test="defaultFieldUnique != null">
+                    default_field_unique = #{defaultFieldUnique, jdbcType=VARCHAR},    /* 唯一标识字段 */
+                </if>
+                <if test="defaultFieldExt != null">
+                    default_field_ext = #{defaultFieldExt, jdbcType=VARCHAR},    /* 扩展标识字段（可以存多个，按照都好分割） */
+                </if>
+                <if test="defaultFieldEffective != null">
+                    default_field_effective = #{defaultFieldEffective, jdbcType=VARCHAR},    /* 逻辑删除标识字段名称 */
+                </if>
+                <if test="ownerUserId != null">
+                    owner_user_id = #{ownerUserId, jdbcType=BIGINT},    /* 所有者用户编号 */
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
+                </if>
+                <if test="createUser != null">
+                    create_user = #{createUser, jdbcType=VARCHAR},    /* 创建用户 */
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=TIMESTAMP},    /* 更新时间 */
+                </if>
+                <if test="updateUser != null">
+                    update_user = #{updateUser, jdbcType=VARCHAR},    /* 更新用户 */
+                </if>
+                    is_delete = 0       /* 删除标志 0：未删除 1：已删除 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键删除 -->
+    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigIndividual">
+        <if test="_parameter != null">
+            UPDATE generator_config_individual
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+                AND is_delete = 0		/* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量删除 -->
+    <update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
+        <if test="_parameter != null">
+            UPDATE generator_config_individual
+            <set>
+                is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
+                update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
+                update_time = #{updateTime, jdbcType=TIMESTAMP}	/* 修改时间 */
+            </set>
+            <where>
+                id in    /* 自增主键集合 */
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+                AND is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            </where>
+        </if>
+    </update>
+
+    <!-- 按主键批量物理删除，慎用 -->
+    <delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
+        <if test="_parameter != null">
+            DELETE FROM generator_config_individual
+            <where>
+                id in	/* 自增主键集合 */
+                <foreach collection="list" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+            </where>
+        </if>
+    </delete>
+
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="resultMap">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        generator_config_individual
+        <where>
+            is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        generator_config_individual
+        <where>
+            id = #{id, jdbcType=BIGINT}	/* 自增主键 */
+            AND is_delete = 0			/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按主键集合查询 -->
+    <select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        generator_config_individual
+        <where>
+            id in	/* 自增主键集合 */
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id, jdbcType=BIGINT}
+            </foreach>
+            AND is_delete = 0	/* 删除标志 0：未删除 1：已删除 */
+        </where>
+    </select>
+
+    <!-- 按条件查询 -->
+    <select id="selectByCondition" resultMap="resultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM
+        generator_config_individual
+        <include refid="queryClause"/>
+        <include refid="sortClause"/>
+        <include refid="pageClause"/>
+    </select>
+
+    <!-- 按条件统计记录数 -->
+    <select id="countByCondition" resultType="java.lang.Long" parameterType="java.util.Map">
+        SELECT
+        COUNT(1)
+        FROM
+        generator_config_individual
+        <include refid="queryClause"/>
+    </select>
+
+</mapper>

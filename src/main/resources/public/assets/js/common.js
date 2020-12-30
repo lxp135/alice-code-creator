@@ -369,7 +369,7 @@
 					ops.data = {'params': AliceJ.json.encode(params)};
 				}
 
-				ops.type = (opts.type==undefined)?'post':opts.type;
+				ops.type = (opts.type===undefined)?'post':opts.type;
 				ops.async = opts.async;
 				ops.success = opts.success;
 
@@ -377,11 +377,11 @@
 					ops.dataType = opts.dataType;
 				}
 
-				if(ops.async==false){
+				if(ops.async===false){
 					// 同步请求
 					try{
 						rsp = $.ajax(ops);
-                        if(rsp.success == false){
+                        if(rsp.success === false){
                             AliceJ.util.safe.handleError(null,AliceJ.util.safe.resultCode[rsp.code]+'，'+rsp.message);
                             return null;
                         }
@@ -399,8 +399,7 @@
 					};
 
 					ops.success = function(rsp){
-						var obj = AliceJ.json.decode(rsp.responseText);
-						if(rsp.success == false){
+						if(rsp.success === false){
                             AliceJ.util.safe.handleError(null,AliceJ.util.safe.resultCode[rsp.code]+'，'+rsp.message);
                             return null;
 						}

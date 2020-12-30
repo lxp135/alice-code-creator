@@ -26,6 +26,8 @@ public class ColumnGenerator extends AbstractEntity {
     private String isNullable;
     // 字段备注
     private String columnComment;
+    // 字段最大长度
+    private String maxLength;
     //
     private String uniqueFlag;
     //
@@ -157,5 +159,13 @@ public class ColumnGenerator extends AbstractEntity {
 
     public void setIsNullable(String isNullable) {
         this.isNullable = isNullable;
+    }
+
+    public String getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(String maxLength) {
+        this.maxLength = maxLength;
     }
 }

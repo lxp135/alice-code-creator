@@ -3,10 +3,10 @@ package alice.code.creator.service.generator;
 import alice.code.creator.common.service.IService;
 
 /**
- * 代码生成器模板Service层接口类
+ * 模板分组Service层接口类
  * User: contact@liuxp.me
  * DateTime: 2020-12-12
  **/
-public interface GeneratorConfigTemplateService extends IService{
+public interface GeneratorConfigGroupService extends IService{
 
 }

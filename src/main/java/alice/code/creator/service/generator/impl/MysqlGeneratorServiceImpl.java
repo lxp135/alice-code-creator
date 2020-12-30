@@ -206,6 +206,7 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
                     effectiveFlagColumn.setColumnMethodName(StringFormatUtils.humpToUpperCaseFirstOne(column.getColumnName(), "_"));
                     effectiveFlagColumn.setJdbcType(StringUtils.upperCase(generatorConfigMapping.getJdbcType()));
                     effectiveFlagColumn.setJavaType(generatorConfigMapping.getJavaType());
+                    effectiveFlagColumn.setMaxLength(column.getMaxLength());
                 }else if(StringUtils.isNotBlank(column.getExtFlag())){
                     // 扩展字段
                     Column extColumn = new Column();
@@ -216,6 +217,7 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
                     extColumn.setJdbcType(StringUtils.upperCase(generatorConfigMapping.getJdbcType()));
                     extColumn.setJavaType(generatorConfigMapping.getJavaType());
                     extColumn.setAutoFill(column.getAutoFill());
+                    extColumn.setMaxLength(column.getMaxLength());
                     extFlagColumns.add(extColumn);
                 }else if(StringUtils.isBlank(column.getColumnKey()) || !column.getColumnKey().equals("PRI")){
                     // 普通字段
@@ -228,6 +230,7 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
                     commonColumn.setJavaType(generatorConfigMapping.getJavaType());
                     commonColumn.setLikeFlag(StringUtils.isNotBlank(column.getLikeFlag()));
                     commonColumn.setIsNullable("YES".equals(column.getIsNullable()));
+                    commonColumn.setMaxLength(column.getMaxLength());
                     columns.add(commonColumn);
                 }else{
                     // 主键
@@ -237,6 +240,7 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
                     pkColumn.setColumnMethodName(StringFormatUtils.humpToUpperCaseFirstOne(column.getColumnName(), "_"));
                     pkColumn.setJdbcType(StringUtils.upperCase(generatorConfigMapping.getJdbcType()));
                     pkColumn.setJavaType(generatorConfigMapping.getJavaType());
+                    pkColumn.setMaxLength(column.getMaxLength());
                 }
             }
         }

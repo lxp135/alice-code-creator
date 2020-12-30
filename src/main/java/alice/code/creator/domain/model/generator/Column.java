@@ -40,11 +40,14 @@ public class Column extends AbstractEntity {
      * 模糊标识
      */
     private Boolean likeFlag;
-
     /**
      * 是否可以为空
      */
     private Boolean isNullable;
+    /**
+     * 字段长度
+     */
+    private String maxLength;
 
     public String getColumnNameCH() {
         return columnNameCH;
@@ -116,5 +119,13 @@ public class Column extends AbstractEntity {
 
     public void setIsNullable(Boolean isNullable) {
         this.isNullable = isNullable;
+    }
+
+    public String getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(String maxLength) {
+        this.maxLength = maxLength;
     }
 }

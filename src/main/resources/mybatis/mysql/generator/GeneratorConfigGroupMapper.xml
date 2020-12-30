@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 代码生成器模板SQL author by contact@liuxp.me -->
-<mapper namespace="alice.code.creator.dao.generator.GeneratorConfigTemplateDao" >
+<!-- 模板分组SQL author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.generator.GeneratorConfigGroupDao" >
     <!-- 映射关系 -->
-    <resultMap id="resultMap" type="alice.code.creator.domain.model.generator.GeneratorConfigTemplate" >
+    <resultMap id="resultMap" type="alice.code.creator.domain.model.generator.GeneratorConfigGroup" >
         <id column="id" property="id" jdbcType="BIGINT" />       <!-- 自增主键 -->
-        <result column="template_code" property="templateCode" jdbcType="VARCHAR" />       <!-- 模板英文名 -->
-        <result column="template_name" property="templateName" jdbcType="VARCHAR" />       <!-- 模板中文名 -->
-        <result column="template_content" property="templateContent" jdbcType="VARCHAR" />       <!-- 模板内容 -->
-        <result column="file_path" property="filePath" jdbcType="VARCHAR" />       <!-- 生成地址相对路径 -->
-        <result column="file_name" property="fileName" jdbcType="VARCHAR" />       <!-- 文件后缀与扩展名 -->
-        <result column="group_id" property="groupId" jdbcType="BIGINT" />       <!-- 分组编号 -->
         <result column="group_name" property="groupName" jdbcType="VARCHAR" />       <!-- 分组名称 -->
+        <result column="group_desc" property="groupDesc" jdbcType="VARCHAR" />       <!-- 分组内容描述 -->
+        <result column="template_amount" property="templateAmount" jdbcType="INTEGER" />       <!-- 模板总数 -->
+        <result column="owner_user_id" property="ownerUserId" jdbcType="BIGINT" />       <!-- 所有者用户编号 -->
+        <result column="owner_user_name" property="ownerUserName" jdbcType="VARCHAR" />       <!-- 所有者用户名称 -->
+        <result column="is_public" property="isPublic" jdbcType="TINYINT" />       <!-- 是否公开 0：私有 1：公开 -->
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />       <!-- 创建时间 -->
         <result column="create_user" property="createUser" jdbcType="VARCHAR" />       <!-- 创建用户 -->
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />       <!-- 更新时间 -->
@@ -23,13 +22,12 @@
     <!-- 查询列 -->
     <sql id="queryColumns">
         id,       /* 自增主键 */
-        template_code,       /* 模板英文名 */
-        template_name,       /* 模板中文名 */
-        template_content,       /* 模板内容 */
-        file_path,       /* 生成地址相对路径 */
-        file_name,       /* 文件后缀与扩展名 */
-        group_id,       /* 分组编号 */
         group_name,       /* 分组名称 */
+        group_desc,       /* 分组内容描述 */
+        template_amount,       /* 模板总数 */
+        owner_user_id,       /* 所有者用户编号 */
+        owner_user_name,       /* 所有者用户名称 */
+        is_public,       /* 是否公开 0：私有 1：公开 */
         create_time,       /* 创建时间 */
         create_user,       /* 创建用户 */
         update_time,       /* 更新时间 */
@@ -50,26 +48,23 @@
             <if test="idMax != null">
                 <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 自增主键小于某值 */
             </if>
-            <if test="templateCode != null and templateCode != ''" >
-                AND template_code = #{templateCode,jdbcType=VARCHAR}       /* 模板英文名 */
-            </if>
-            <if test="templateName != null and templateName != ''" >
-                AND template_name = #{templateName,jdbcType=VARCHAR}       /* 模板中文名 */
-            </if>
-            <if test="templateContent != null and templateContent != ''" >
-                AND template_content = #{templateContent,jdbcType=VARCHAR}       /* 模板内容 */
-            </if>
-            <if test="filePath != null and filePath != ''" >
-                AND file_path = #{filePath,jdbcType=VARCHAR}       /* 生成地址相对路径 */
-            </if>
-            <if test="fileName != null and fileName != ''" >
-                AND file_name = #{fileName,jdbcType=VARCHAR}       /* 文件后缀与扩展名 */
-            </if>
-            <if test="groupId != null" >
-                AND group_id = #{groupId,jdbcType=BIGINT}       /* 分组编号 */
-            </if>
             <if test="groupName != null and groupName != ''" >
                 AND group_name = #{groupName,jdbcType=VARCHAR}       /* 分组名称 */
+            </if>
+            <if test="groupDesc != null and groupDesc != ''" >
+                AND group_desc = #{groupDesc,jdbcType=VARCHAR}       /* 分组内容描述 */
+            </if>
+            <if test="templateAmount != null" >
+                AND template_amount = #{templateAmount,jdbcType=INTEGER}       /* 模板总数 */
+            </if>
+            <if test="ownerUserId != null" >
+                AND owner_user_id = #{ownerUserId,jdbcType=BIGINT}       /* 所有者用户编号 */
+            </if>
+            <if test="ownerUserName != null and ownerUserName != ''" >
+                AND owner_user_name = #{ownerUserName,jdbcType=VARCHAR}       /* 所有者用户名称 */
+            </if>
+            <if test="isPublic != null" >
+                AND is_public = #{isPublic,jdbcType=TINYINT}       /* 是否公开 0：私有 1：公开 */
             </if>
             <if test="createTimeBegin != null" >
                 <![CDATA[ AND create_time >= #{createTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 创建时间/起 */
@@ -105,50 +100,43 @@
                             <otherwise>DESC</otherwise>
                         </choose>
                     </when>
-                    <when test="item.propertyName != null and item.propertyName == 'templateCode'">
-                        template_code    /* 模板英文名 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'templateName'">
-                        template_name    /* 模板中文名 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'templateContent'">
-                        template_content    /* 模板内容 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'filePath'">
-                        file_path    /* 生成地址相对路径 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'fileName'">
-                        file_name    /* 文件后缀与扩展名 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'groupId'">
-                        group_id    /* 分组编号 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
                     <when test="item.propertyName != null and item.propertyName == 'groupName'">
                         group_name    /* 分组名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'groupDesc'">
+                        group_desc    /* 分组内容描述 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'templateAmount'">
+                        template_amount    /* 模板总数 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'ownerUserId'">
+                        owner_user_id    /* 所有者用户编号 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'ownerUserName'">
+                        owner_user_name    /* 所有者用户名称 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'isPublic'">
+                        is_public    /* 是否公开 0：私有 1：公开 */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
@@ -196,28 +184,26 @@
     </sql>
 
     <!-- 插入数据 -->
-    <insert id="insert" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigTemplate" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO generator_config_template (
-            template_code,                      /* 模板英文名 */
-            template_name,                      /* 模板中文名 */
-            template_content,                      /* 模板内容 */
-            file_path,                      /* 生成地址相对路径 */
-            file_name,                      /* 文件后缀与扩展名 */
-            group_id,                      /* 分组编号 */
+    <insert id="insert" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigGroup" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO generator_config_group (
             group_name,                      /* 分组名称 */
+            group_desc,                      /* 分组内容描述 */
+            template_amount,                      /* 模板总数 */
+            owner_user_id,                      /* 所有者用户编号 */
+            owner_user_name,                      /* 所有者用户名称 */
+            is_public,                      /* 是否公开 0：私有 1：公开 */
             create_time,                      /* 创建时间 */
             create_user,                      /* 创建用户 */
             update_time,                      /* 更新时间 */
             update_user,                      /* 更新用户 */
             is_delete       /* 删除标志 0：未删除 1：已删除 */
         )VALUES(
-            #{templateCode, jdbcType=VARCHAR},                 /* 模板英文名 */
-            #{templateName, jdbcType=VARCHAR},                 /* 模板中文名 */
-            #{templateContent, jdbcType=VARCHAR},                 /* 模板内容 */
-            #{filePath, jdbcType=VARCHAR},                 /* 生成地址相对路径 */
-            #{fileName, jdbcType=VARCHAR},                 /* 文件后缀与扩展名 */
-            #{groupId, jdbcType=BIGINT},                 /* 分组编号 */
             #{groupName, jdbcType=VARCHAR},                 /* 分组名称 */
+            #{groupDesc, jdbcType=VARCHAR},                 /* 分组内容描述 */
+            #{templateAmount, jdbcType=INTEGER},                 /* 模板总数 */
+            #{ownerUserId, jdbcType=BIGINT},                 /* 所有者用户编号 */
+            #{ownerUserName, jdbcType=VARCHAR},                 /* 所有者用户名称 */
+            #{isPublic, jdbcType=TINYINT},                 /* 是否公开 0：私有 1：公开 */
             #{createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
             #{createUser, jdbcType=VARCHAR},                 /* 创建用户 */
             #{updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
@@ -228,14 +214,13 @@
 
     <!-- 批量插入数据 -->
     <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO generator_config_template (
-            template_code,                      /* 模板英文名 */
-            template_name,                      /* 模板中文名 */
-            template_content,                      /* 模板内容 */
-            file_path,                      /* 生成地址相对路径 */
-            file_name,                      /* 文件后缀与扩展名 */
-            group_id,                      /* 分组编号 */
+        INSERT INTO generator_config_group (
             group_name,                      /* 分组名称 */
+            group_desc,                      /* 分组内容描述 */
+            template_amount,                      /* 模板总数 */
+            owner_user_id,                      /* 所有者用户编号 */
+            owner_user_name,                      /* 所有者用户名称 */
+            is_public,                      /* 是否公开 0：私有 1：公开 */
             create_time,                      /* 创建时间 */
             create_user,                      /* 创建用户 */
             update_time,                      /* 更新时间 */
@@ -244,13 +229,12 @@
         )VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (
-                #{item.templateCode, jdbcType=VARCHAR},                 /* 模板英文名 */
-                #{item.templateName, jdbcType=VARCHAR},                 /* 模板中文名 */
-                #{item.templateContent, jdbcType=VARCHAR},                 /* 模板内容 */
-                #{item.filePath, jdbcType=VARCHAR},                 /* 生成地址相对路径 */
-                #{item.fileName, jdbcType=VARCHAR},                 /* 文件后缀与扩展名 */
-                #{item.groupId, jdbcType=BIGINT},                 /* 分组编号 */
                 #{item.groupName, jdbcType=VARCHAR},                 /* 分组名称 */
+                #{item.groupDesc, jdbcType=VARCHAR},                 /* 分组内容描述 */
+                #{item.templateAmount, jdbcType=INTEGER},                 /* 模板总数 */
+                #{item.ownerUserId, jdbcType=BIGINT},                 /* 所有者用户编号 */
+                #{item.ownerUserName, jdbcType=VARCHAR},                 /* 所有者用户名称 */
+                #{item.isPublic, jdbcType=TINYINT},                 /* 是否公开 0：私有 1：公开 */
                 #{item.createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
                 #{item.createUser, jdbcType=VARCHAR},                 /* 创建用户 */
                 #{item.updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
@@ -263,28 +247,25 @@
     <!-- 按主键更新 -->
     <update id="updateByPrimaryKey" parameterType="java.util.Map">
         <if test="_parameter != null">
-            UPDATE generator_config_template
+            UPDATE generator_config_group
             <set>
-                <if test="templateCode != null">
-                    template_code = #{templateCode, jdbcType=VARCHAR},    /* 模板英文名 */
-                </if>
-                <if test="templateName != null">
-                    template_name = #{templateName, jdbcType=VARCHAR},    /* 模板中文名 */
-                </if>
-                <if test="templateContent != null">
-                    template_content = #{templateContent, jdbcType=VARCHAR},    /* 模板内容 */
-                </if>
-                <if test="filePath != null">
-                    file_path = #{filePath, jdbcType=VARCHAR},    /* 生成地址相对路径 */
-                </if>
-                <if test="fileName != null">
-                    file_name = #{fileName, jdbcType=VARCHAR},    /* 文件后缀与扩展名 */
-                </if>
-                <if test="groupId != null">
-                    group_id = #{groupId, jdbcType=BIGINT},    /* 分组编号 */
-                </if>
                 <if test="groupName != null">
                     group_name = #{groupName, jdbcType=VARCHAR},    /* 分组名称 */
+                </if>
+                <if test="groupDesc != null">
+                    group_desc = #{groupDesc, jdbcType=VARCHAR},    /* 分组内容描述 */
+                </if>
+                <if test="templateAmount != null">
+                    template_amount = #{templateAmount, jdbcType=INTEGER},    /* 模板总数 */
+                </if>
+                <if test="ownerUserId != null">
+                    owner_user_id = #{ownerUserId, jdbcType=BIGINT},    /* 所有者用户编号 */
+                </if>
+                <if test="ownerUserName != null">
+                    owner_user_name = #{ownerUserName, jdbcType=VARCHAR},    /* 所有者用户名称 */
+                </if>
+                <if test="isPublic != null">
+                    is_public = #{isPublic, jdbcType=TINYINT},    /* 是否公开 0：私有 1：公开 */
                 </if>
                 <if test="createTime != null">
                     create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
@@ -308,9 +289,9 @@
     </update>
 
     <!-- 按主键删除 -->
-    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigTemplate">
+    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigGroup">
         <if test="_parameter != null">
-            UPDATE generator_config_template
+            UPDATE generator_config_group
             <set>
                 is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
                 update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
@@ -326,7 +307,7 @@
     <!-- 按主键批量删除 -->
     <update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
         <if test="_parameter != null">
-            UPDATE generator_config_template
+            UPDATE generator_config_group
             <set>
                 is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
                 update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
@@ -345,7 +326,7 @@
     <!-- 按主键批量物理删除，慎用 -->
     <delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
         <if test="_parameter != null">
-            DELETE FROM generator_config_template
+            DELETE FROM generator_config_group
             <where>
                 id in	/* 自增主键集合 */
                 <foreach collection="list" item="id" open="(" separator="," close=")">
@@ -360,7 +341,7 @@
         SELECT
         <include refid="queryColumns"/>
         FROM
-        generator_config_template
+        generator_config_group
         <where>
             is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
         </where>
@@ -371,7 +352,7 @@
         SELECT
         <include refid="queryColumns"/>
         FROM
-        generator_config_template
+        generator_config_group
         <where>
             id = #{id, jdbcType=BIGINT}	/* 自增主键 */
             AND is_delete = 0			/* 删除标志 0：未删除 1：已删除 */
@@ -383,7 +364,7 @@
         SELECT
         <include refid="queryColumns"/>
         FROM
-        generator_config_template
+        generator_config_group
         <where>
             id in	/* 自增主键集合 */
             <foreach collection="list" item="id" open="(" separator="," close=")">
@@ -398,7 +379,7 @@
         SELECT
         <include refid="queryColumns"/>
         FROM
-        generator_config_template
+        generator_config_group
         <include refid="queryClause"/>
         <include refid="sortClause"/>
         <include refid="pageClause"/>
@@ -409,7 +390,7 @@
         SELECT
         COUNT(1)
         FROM
-        generator_config_template
+        generator_config_group
         <include refid="queryClause"/>
     </select>
 

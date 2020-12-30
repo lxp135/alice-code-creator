@@ -1,11 +1,17 @@
 package alice.code.creator.domain.model.generator;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import alice.code.creator.domain.Transient;
+
 import alice.code.creator.domain.model.AbstractEntity;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 /**
- * 代码生成器模板配置Domain
+ * 代码生成器模板Domain
  * User: contact@liuxp.me
- * Date: 2018-12-26
+ * Date: 2020-12-12
  **/
 public class GeneratorConfigTemplate extends AbstractEntity{
 
@@ -30,17 +36,13 @@ public class GeneratorConfigTemplate extends AbstractEntity{
      */
     private String fileName;
     /**
-     * 是否私有 0:公共,1:私有
+     * 分组编号
      */
-    private Integer isPrivate;
+    private Long groupId;
     /**
-     * 所有者编号
+     * 分组名称
      */
-    private Long ownerId;
-    /**
-     * 所有者名称
-     */
-    private String ownerName;
+    private String groupName;
 
     /**
      * 获取模板英文名
@@ -118,48 +120,33 @@ public class GeneratorConfigTemplate extends AbstractEntity{
         this.fileName = fileName;
     }
     /**
-     * 获取是否私有 0:公共,1:私有
-     * @return 是否私有 0:公共,1:私有
+     * 获取分组编号
+     * @return 分组编号
      */
-    public Integer getIsPrivate() {
-        return isPrivate;
+    public Long getGroupId() {
+        return groupId;
     }
 
     /**
-     * 设置是否私有 0:公共,1:私有
-     * @param isPrivate 是否私有 0:公共,1:私有
+     * 设置分组编号
+     * @param groupId 分组编号
      */
-    public void setIsPrivate(Integer isPrivate) {
-        this.isPrivate = isPrivate;
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
     /**
-     * 获取所有者编号
-     * @return 所有者编号
+     * 获取分组名称
+     * @return 分组名称
      */
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    /**
-     * 设置所有者编号
-     * @param ownerId 所有者编号
-     */
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
-    }
-    /**
-     * 获取所有者名称
-     * @return 所有者名称
-     */
-    public String getOwnerName() {
-        return ownerName;
+    public String getGroupName() {
+        return groupName;
     }
 
     /**
-     * 设置所有者名称
-     * @param ownerName 所有者名称
+     * 设置分组名称
+     * @param groupName 分组名称
      */
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }
