@@ -26,7 +26,7 @@
                         <div class="form-group row">
                             <label class="col-12 col-sm-3 col-form-label text-sm-right" for="menuDesc">菜单描述</label>
                             <div class="col-12 col-sm-8 col-lg-6">
-                                <input class="form-control form-control-xs" id="menuDesc" name="menuDesc" type="text">
+                                <textarea class="form-control form-control-xs" id="menuDesc" name="menuDesc"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -42,12 +42,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="menuParentId">父级主键</label>
-                            <div class="col-12 col-sm-8 col-lg-6">
-                                <input class="form-control form-control-xs" id="menuParentId" name="menuParentId" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-12 col-sm-3 col-form-label text-sm-right" for="menuLevel">级别</label>
                             <div class="col-12 col-sm-8 col-lg-6">
                                 <select class="select2 select2-xs" id="menuLevel" name="menuLevel">
@@ -59,6 +53,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="menuParentId">父级菜单</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <select class="select2 select2-xs" id="menuParentId" name="menuParentId">
+                                    <option value="" selected="selected">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-12 col-sm-3 col-form-label text-sm-right" for="menuType">类别</label>
                             <div class="col-12 col-sm-8 col-lg-6">
                                 <select class="select2 select2-xs" id="menuType" name="menuType">
@@ -66,12 +68,6 @@
                                     <option value="0">路径</option>
                                     <option value="1">菜单</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="remark">备注</label>
-                            <div class="col-12 col-sm-8 col-lg-6">
-                                <textarea class="form-control form-control-xs" id="remark" name="remark"></textarea>
                             </div>
                         </div>
                         <hr class="hr hr-32"/>
