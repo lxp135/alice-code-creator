@@ -46,6 +46,9 @@ public class GeneratorConfigDatasourceController extends BaseController{
             @RequestParam(value = "sord", required = false, defaultValue = "desc") String sortOrder) {
 
         Page<GeneratorConfigDatasource> page = buildPage(generatorConfigDatasource, pageNum,pageSize,sortName,sortOrder);
+
+        generatorConfigDatasource.setOwnerUserId(getAccount().getId()); // 查询条件限定，只能查询自己配置的数据源
+
         // 执行查询
         return generatorConfigDatasourceService.selectPage(page);
     }
@@ -58,6 +61,8 @@ public class GeneratorConfigDatasourceController extends BaseController{
     @RequestMapping(value = "/selectList", method = RequestMethod.POST)
     @ResponseBody
     public List<GeneratorConfigDatasource> selectList(GeneratorConfigDatasource generatorConfigDatasource) {
+
+        generatorConfigDatasource.setOwnerUserId(getAccount().getId()); // 查询条件限定，只能查询自己配置的数据源
 
         return generatorConfigDatasourceService.selectList(generatorConfigDatasource);
     }
@@ -83,6 +88,9 @@ public class GeneratorConfigDatasourceController extends BaseController{
     @ResponseBody
     public GeneratorConfigDatasource insert(GeneratorConfigDatasource generatorConfigDatasource) {
 
+        generatorConfigDatasource.setOwnerUserId(getAccount().getId()); // 所有者用户编号
+        generatorConfigDatasource.setOwnerUserName(getAccount().getUserName()); // 所有者用户名称
+
         // 执行插入，返回已设置主键的数据实体
         return generatorConfigDatasourceService.insert(generatorConfigDatasource,getAccount().getUserName());
     }
@@ -95,6 +103,10 @@ public class GeneratorConfigDatasourceController extends BaseController{
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public Boolean update(GeneratorConfigDatasource generatorConfigDatasource) {
+
+        generatorConfigDatasource.setOwnerUserId(getAccount().getId()); // 所有者用户编号
+        generatorConfigDatasource.setOwnerUserName(getAccount().getUserName()); // 所有者用户名称
+
         // 执行更新
         int rows = generatorConfigDatasourceService.update(generatorConfigDatasource,getAccount().getUserName());
         return rows > 0;

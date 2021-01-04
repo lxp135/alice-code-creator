@@ -1,0 +1,65 @@
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">数据源配置<span class="card-subtitle">新增</span></div>
+                <div class="card-body">
+                    <form id="addForm">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="datasourceName">名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="datasourceName" name="datasourceName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="datasourceType">类型</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <select class="form-control" id="datasourceType" name="datasourceType">
+                                    <option value="MySQL" selected="selected">MySQL</option>
+                                    <option value="Oracle">Oracle</option>
+                                    <option value="SQLServer">SQLServer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="driverClassName">JDBC驱动</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="driverClassName" name="driverClassName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="url">数据源地址</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="url" name="url" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="username">用户名</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="username" name="username" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right" for="password">密码</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input class="form-control form-control-xs" id="password" name="password" type="text">
+                            </div>
+                        </div>
+                        <hr class="hr hr-32"/>
+                        <p class="text-center">
+                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                <i class="fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                            <button id="btnBack" class="btn btn-space btn-secondary" type="button" onclick="history.back(-1);">
+                                <i class="fa fa-undo bigger-110"></i>
+                                返回
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="biz/generator/config/datasource/generator_config_datasource_add.js"></script>
