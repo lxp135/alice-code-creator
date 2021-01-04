@@ -1,4 +1,6 @@
-package alice.code.creator.common.framework.account;
+package alice.code.creator.common.framework.context;
+
+import alice.code.creator.domain.Account;
 
 /**
  * 应用上下文

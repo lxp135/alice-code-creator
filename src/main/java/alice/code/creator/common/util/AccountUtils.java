@@ -1,5 +1,6 @@
-package alice.code.creator.common.framework.account;
+package alice.code.creator.common.util;
 
+import alice.code.creator.domain.Account;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public abstract class AccountUtils {

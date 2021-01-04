@@ -84,7 +84,7 @@ public class GeneratorConfigTemplateController extends BaseController{
     public GeneratorConfigTemplate insert(GeneratorConfigTemplate generatorConfigTemplate) {
 
         // 执行插入，返回已设置主键的数据实体
-        return generatorConfigTemplateService.insert(generatorConfigTemplate,getAccount().getUserName());
+        return generatorConfigTemplateService.insert(generatorConfigTemplate, getAccount().getId(),getAccount().getUserName());
     }
 
     /**
@@ -96,7 +96,7 @@ public class GeneratorConfigTemplateController extends BaseController{
     @ResponseBody
     public Boolean update(GeneratorConfigTemplate generatorConfigTemplate) {
         // 执行更新
-        int rows = generatorConfigTemplateService.update(generatorConfigTemplate,getAccount().getUserName());
+        int rows = generatorConfigTemplateService.update(generatorConfigTemplate, getAccount().getId(),getAccount().getUserName());
         return rows > 0;
     }
 
@@ -109,7 +109,7 @@ public class GeneratorConfigTemplateController extends BaseController{
     @ResponseBody
     public Boolean delete(Long id) {
         // 执行逻辑删除
-        int rows = generatorConfigTemplateService.delete(id,getAccount().getUserName());
+        int rows = generatorConfigTemplateService.delete(id,getAccount().getId(),getAccount().getUserName());
         return rows > 0;
     }
 

@@ -1,7 +1,7 @@
 package alice.code.creator.controller.generator;
 
-import alice.code.creator.common.framework.account.Account;
-import alice.code.creator.common.framework.account.AccountUtils;
+import alice.code.creator.domain.Account;
+import alice.code.creator.common.util.AccountUtils;
 import alice.code.creator.controller.BaseController;
 import alice.code.creator.domain.model.Result;
 import alice.code.creator.domain.model.generator.GeneratorConfigIndividual;

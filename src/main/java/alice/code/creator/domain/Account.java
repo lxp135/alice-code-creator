@@ -1,4 +1,4 @@
-package alice.code.creator.common.framework.account;
+package alice.code.creator.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

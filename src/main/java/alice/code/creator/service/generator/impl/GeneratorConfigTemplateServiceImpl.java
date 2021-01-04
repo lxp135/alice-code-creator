@@ -1,5 +1,6 @@
 package alice.code.creator.service.generator.impl;
 
+import alice.code.creator.common.framework.context.BusinessException;
 import alice.code.creator.common.service.AbstractService;
 import alice.code.creator.dao.generator.GeneratorConfigTemplateDao;
 import alice.code.creator.domain.model.generator.GeneratorConfigGroup;
@@ -31,7 +32,7 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
 
     @Override
     @Transactional
-    public GeneratorConfigTemplate insert(GeneratorConfigTemplate generatorConfigTemplate, String createUser) {
+    public GeneratorConfigTemplate insert(GeneratorConfigTemplate generatorConfigTemplate, Long userId,String userName) {
 
         Long groupId = generatorConfigTemplate.getGroupId();
 
@@ -40,23 +41,45 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
         GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupService.selectOne(groupId);
 
         if(null==generatorConfigGroup){
-            throw new RuntimeException("模板分组不存在");
+            throw new BusinessException("模板分组不存在");
+        }
+
+        if(!userId.equals(generatorConfigGroup.getOwnerUserId())){
+            // 您不能删除其他用户的模板
+            throw new BusinessException("您不能在其他用户的分组下创建模板");
         }
 
         // 计算该分组内模板数量
         generatorConfigGroup.setTemplateAmount(generatorConfigGroup.getTemplateAmount()+1);
-        generatorConfigGroupService.update(generatorConfigGroup,createUser);
+        generatorConfigGroupService.update(generatorConfigGroup,userName);
 
         // 设置分组名称
         generatorConfigTemplate.setGroupName(generatorConfigGroup.getGroupName());
 
         // 插入新模板
-        return super.insert(generatorConfigTemplate,createUser);
+        return super.insert(generatorConfigTemplate,userName);
     }
 
     @Override
     @Transactional
-    public int delete(Long id, String deleteUser){
+    public int update(GeneratorConfigTemplate generatorConfigTemplate, Long userId, String userName) {
+
+        Assert.notNull(generatorConfigTemplate.getGroupId(),"groupId不能为空");
+
+        GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupService.selectOne(generatorConfigTemplate.getGroupId());
+
+        if(!userId.equals(generatorConfigGroup.getOwnerUserId())){
+            // 您不能删除其他用户的模板
+            throw new BusinessException("您不能在其他用户的分组下修改模板");
+        }
+
+        return super.update(generatorConfigTemplate,userName);
+    }
+
+    @Override
+    @Transactional
+    public int delete(Long id, Long userId,String userName){
+
         GeneratorConfigTemplate generatorConfigTemplate = super.selectOne(id);
 
         if(null==generatorConfigTemplate){
@@ -66,13 +89,18 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
         GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupService.selectOne(generatorConfigTemplate.getGroupId());
 
         if(null==generatorConfigGroup){
-            throw new RuntimeException("模板分组不存在");
+            throw new BusinessException("模板分组不存在");
+        }
+
+        if(!userId.equals(generatorConfigGroup.getOwnerUserId())){
+            // 您不能删除其他用户的模板
+            throw new BusinessException("您不能在其他用户的分组下删除模板");
         }
 
         // 计算该分组内模板数量
         generatorConfigGroup.setTemplateAmount(generatorConfigGroup.getTemplateAmount()-1);
-        generatorConfigGroupService.update(generatorConfigGroup,deleteUser);
+        generatorConfigGroupService.update(generatorConfigGroup,userName);
 
-        return super.delete(id, deleteUser);
+        return super.delete(id, userName);
     }
 }

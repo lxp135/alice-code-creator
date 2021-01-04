@@ -20,4 +20,7 @@ public final class ResultCodeConstant {
 
     // 数据库异常
     public static final Integer SQL_EXCEPTION = 503;
+
+    // 业务异常
+    public static final Integer BUSINESS_EXCEPTION = 504;
 }

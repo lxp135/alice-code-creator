@@ -108,7 +108,7 @@ public class GeneratorConfigGroupController extends BaseController{
         generatorConfigGroup.setOwnerUserName(getAccount().getUserName()); // 所有者用户名称
 
         // 执行更新
-        int rows = generatorConfigGroupService.update(generatorConfigGroup,getAccount().getUserName());
+        int rows = generatorConfigGroupService.update(generatorConfigGroup,getAccount().getId(),getAccount().getUserName());
 				return rows > 0;
     }
 
@@ -121,7 +121,7 @@ public class GeneratorConfigGroupController extends BaseController{
     @ResponseBody
     public Boolean delete(Long id) {
         // 执行逻辑删除
-        int rows = generatorConfigGroupService.delete(id,getAccount().getUserName());
+        int rows = generatorConfigGroupService.delete(id,getAccount().getId(),getAccount().getUserName());
 				return rows > 0;
     }
 

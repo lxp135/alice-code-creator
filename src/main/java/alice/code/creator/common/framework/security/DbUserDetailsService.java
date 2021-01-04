@@ -4,7 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import alice.code.creator.common.framework.account.Account;
+import alice.code.creator.domain.Account;
 import alice.code.creator.domain.model.base.*;
 import alice.code.creator.service.base.*;
 
