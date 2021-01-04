@@ -51,6 +51,7 @@
     <sql id="queryClause">
         <where>
             is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
+            AND (is_public = 1 OR (is_public = 0 AND owner_user_id = #{loginUserId,jdbcType=BIGINT}))
             <if test="id != null">
                 AND id = #{id, jdbcType=BIGINT}	/* 自增主键 */
             </if>

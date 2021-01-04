@@ -1,7 +1,3 @@
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">开发工具</li>
-    <li class="breadcrumb-item active">模板管理</li>
-</ol>
 <div class="main-content container-fluid">
     <div class="col-lg-12">
         <div class="card card-contrast">
@@ -12,33 +8,29 @@
                         <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">模板英文名</span>
+                                    <span class="input-group-text">分组名称</span>
                                 </div>
-                                <input class="form-control" type="text" name="templateCode">
+                                <input class="form-control" type="text" name="groupName">
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">模板中文名</span>
+                                    <span class="input-group-text">创建者</span>
                                 </div>
-                                <input class="form-control" type="text" name="templateName">
+                                <input class="form-control" type="text" name="ownerUserName">
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">生成地址相对路径</span>
+                                    <span class="input-group-text">是否公开</span>
                                 </div>
-                                <input class="form-control" type="text" name="filePath">
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 col-xl-3">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">文件后缀与扩展名</span>
-                                </div>
-                                <input class="form-control" type="text" name="fileName">
+                                <select class="form-control" id="isPublic" name="isPublic">
+                                    <option value="" selected="selected">全部</option>
+                                    <option value="0">私有</option>
+                                    <option value="1">公开</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -54,7 +46,7 @@
     <div class="col-lg-12">
         <div class="card card-contrast">
             <div class="card-header card-header-contrast card-header-featured card-header-small">
-                <a class="btn btn-space btn-primary" href="#biz/generator/template/generator_config_template_add">
+                <a class="btn btn-space btn-primary" href="#biz/generator/config/group/generator_config_group_add">
                     <i class="fa fa-plus"></i>
                     <span class="bigger-110">新增</span>
                 </a>
@@ -66,4 +58,4 @@
         </div>
     </div>
 </div>
-<script src="biz/generator/template/generator_config_template_list.js"></script>
+<script src="biz/generator/config/group/generator_config_group_list.js"></script>

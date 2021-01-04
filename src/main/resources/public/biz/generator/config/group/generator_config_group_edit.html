@@ -1,0 +1,107 @@
+<aside class="page-aside codeditor">
+    <div class="be-scroller-aside">
+        <div class="aside-content">
+            <div class="content">
+                <div class="aside-header">
+                    <button class="navbar-toggle" data-target=".aside-nav" data-toggle="collapse" type="button"><span class="icon mdi mdi-caret-down"></span></button><span class="title">模板分组</span>
+                    <p class="description">修改 - 编辑分组默认配置信息</p>
+                </div>
+                <div class="aside-nav collapse">
+                    <form id="editForm">
+                        <input id="id" name="id" style="display:none;"/>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="groupName"><span style="color:red;">* </span>分组名称</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="groupName" name="groupName" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="groupDesc">内容描述</label>
+                            <div class="col-12 col-sm-8">
+                                <textarea class="form-control form-control-xs" id="groupDesc" name="groupDesc"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="defaultSign"><span style="color:red;">* </span>签名</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="defaultSign" name="defaultSign" placeholder="建议输入姓名、邮箱等联系方式" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="defaultPackage"><span style="color:red;">* </span>包路径</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="defaultPackage" name="defaultPackage" placeholder="com.example" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="defaultTablePrefix">表前缀</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="defaultTablePrefix" name="defaultTablePrefix" placeholder="该字段存在值时，生成的代码和路径会将表前缀忽略" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="defaultFieldUnique">唯一标识</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="defaultFieldUnique" name="defaultFieldUnique" placeholder="主键字段名称" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="defaultFieldExt">扩展标识</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="defaultFieldExt" name="defaultFieldExt" type="text" placeholder="生成代码时，在扩展标识字段列表中获取，不在常规字段列表出现">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="defaultFieldEffective">逻辑删除</label>
+                            <div class="col-12 col-sm-8">
+                                <input class="form-control form-control-xs" id="defaultFieldEffective" name="defaultFieldEffective" placeholder="生成代码时，在逻辑删除标识字段列表中获取，不在常规字段列表出现" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-form-label text-sm-right" for="isPublic"><span style="color:red;">* </span>是否公开</label>
+                            <div class="col-12 col-sm-8">
+                                <select class="select2 select2-xs" id="isPublic" name="isPublic">
+                                    <option value="0" selected="selected">私有</option>
+                                    <option value="1">公开</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr class="hr hr-32"/>
+                        <p class="text-center">
+                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                <i class="fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                            <button id="btnBack" class="btn btn-space btn-secondary" type="button">
+                                <i class="fa fa-undo bigger-110"></i>
+                                返回
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<div class="main-content container-fluid code-editor-extend">
+    <div class="content" style="height: 100%">
+
+        <div class="col-lg-12" style="margin-top:20px;">
+            <div class="card card-contrast">
+                <div class="card-header card-header-contrast card-header-featured card-header-small">
+                    <a id="addButton" class="btn btn-space btn-primary" href="javascript:void(0);">
+                        <i class="fa fa-plus"></i>
+                        <span class="bigger-110">新增</span>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table id="gridTable"></table>
+                    <div id="gridPager"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="biz/generator/config/group/generator_config_group_edit.js"></script>

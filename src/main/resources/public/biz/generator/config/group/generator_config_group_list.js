@@ -4,14 +4,14 @@ var page = {
     fn:{
         // 跳转到修改页面
         openEditPage : function (id) {
-            window.location.href = "#biz/generator/template/generator_config_template_edit?id="+id;
+            window.location.href = "#biz/generator/config/group/generator_config_group_edit?id="+id;
         },
         // 根据ID删除数据
         deleteById : function (id) {
             jQuery.alicej.util.bootbox.showConfirm("是否删除该记录？",function(){
                 jQuery.ajax({
                     type: "POST",
-                    url: '/web/generator/template/delete',
+                    url: '/web/generator/config/group/delete',
                     data : {id:id},
                     dataType:'json',
                     success: function(rsp){
@@ -34,16 +34,20 @@ jQuery(function(){
 
     page.obj.gridTable.jqGrid({
         mtype:"POST",
-        url: "/web/generator/template/selectPage",
+        url: "/web/generator/config/group/selectPage",
         datatype: "json",
         autowidth: true,
         height: "auto",
         colModel:[
             {name:'id',label:'自增主键', index:'id', sortable:false, hidden:true},
-            {name:'templateCode',label:'模板英文名', index:'templateCode', sortable:true},
-            {name:'templateName',label:'模板中文名', index:'templateName', sortable:true},
-            {name:'filePath',label:'生成地址相对路径', index:'filePath', sortable:true},
-            {name:'fileName',label:'文件后缀与扩展名', index:'fileName', sortable:true},
+            {name:'groupName',label:'分组名称', index:'groupName', sortable:true},
+            {name:'defaultSign',label:'签名', index:'defaultSign', sortable:true},
+            {name:'defaultPackage',label:'包路径', index:'defaultPackage', sortable:true},
+            {name:'templateAmount',label:'模板数量', index:'templateAmount', sortable:true},
+            {name:'ownerUserName',label:'所有者', index:'ownerUserName', sortable:true},
+            {name:'isPublic',label:'是否公开', index:'isPublic', sortable:true,formatter:function (cellValue,options,rowObject){
+                return cellValue == "0" ? '私有' : '公开';
+                }},
             {name:'', label:'操作', index:'', width:100, fixed:true, sortable:false, resize:false,
                 formatter:function(cellValue,options,rowObject){
                     var context = "";
@@ -83,7 +87,7 @@ jQuery(function(){
 
         // 取得查询参数
         var gridParam = {
-            url: "/web/generator/template/selectPage",
+            url: "/web/generator/config/group/selectPage",
             postData:jQuery.alicej.util.serialize("#searchForm"),
             page:1
         };

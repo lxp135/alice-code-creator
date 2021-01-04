@@ -63,6 +63,10 @@ public class GeneratorConfigGroup extends AbstractEntity{
      * 是否公开 0：私有 1：公开
      */
     private Integer isPublic;
+    /**
+     * 当前登录用户编号
+     */
+    private Long loginUserId;
 
     /**
      * 获取分组名称
@@ -257,5 +261,13 @@ public class GeneratorConfigGroup extends AbstractEntity{
      */
     public void setIsPublic(Integer isPublic) {
         this.isPublic = isPublic;
+    }
+
+    public Long getLoginUserId() {
+        return loginUserId;
+    }
+
+    public void setLoginUserId(Long loginUserId) {
+        this.loginUserId = loginUserId;
     }
 }

@@ -45,6 +45,8 @@ public class GeneratorConfigGroupController extends BaseController{
             @RequestParam(value = "sidx", required = false, defaultValue = "ts") String sortName,
             @RequestParam(value = "sord", required = false, defaultValue = "desc") String sortOrder) {
 
+        generatorConfigGroup.setLoginUserId(getAccount().getId()); // 当前登录用户编号
+
         Page<GeneratorConfigGroup> page = buildPage(generatorConfigGroup, pageNum,pageSize,sortName,sortOrder);
         // 执行查询
         return generatorConfigGroupService.selectPage(page);
@@ -58,6 +60,8 @@ public class GeneratorConfigGroupController extends BaseController{
     @RequestMapping(value = "/selectList", method = RequestMethod.POST)
     @ResponseBody
     public List<GeneratorConfigGroup> selectList(GeneratorConfigGroup generatorConfigGroup) {
+
+        generatorConfigGroup.setLoginUserId(getAccount().getId()); // 当前登录用户编号
 
         return generatorConfigGroupService.selectList(generatorConfigGroup);
     }
@@ -83,6 +87,10 @@ public class GeneratorConfigGroupController extends BaseController{
     @ResponseBody
     public GeneratorConfigGroup insert(GeneratorConfigGroup generatorConfigGroup) {
 
+        generatorConfigGroup.setTemplateAmount(0);
+        generatorConfigGroup.setOwnerUserId(getAccount().getId()); // 所有者用户编号
+        generatorConfigGroup.setOwnerUserName(getAccount().getUserName()); // 所有者用户名称
+
         // 执行插入，返回已设置主键的数据实体
         return generatorConfigGroupService.insert(generatorConfigGroup,getAccount().getUserName());
     }
@@ -95,6 +103,10 @@ public class GeneratorConfigGroupController extends BaseController{
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public Boolean update(GeneratorConfigGroup generatorConfigGroup) {
+
+        generatorConfigGroup.setOwnerUserId(getAccount().getId()); // 所有者用户编号
+        generatorConfigGroup.setOwnerUserName(getAccount().getUserName()); // 所有者用户名称
+
         // 执行更新
         int rows = generatorConfigGroupService.update(generatorConfigGroup,getAccount().getUserName());
 				return rows > 0;

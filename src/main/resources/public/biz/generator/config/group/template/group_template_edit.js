@@ -9,11 +9,14 @@ var page = {
             java : 'text/x-java',
             html : 'text/html',
             js : 'text/javascript'
-        }
+        },
+        groupId:null
     }
 };
 
 $(function () {
+
+    page.obj.groupId = jQuery.alicej.util.getUrlParam("groupId");
 
     // 取得待修改的数据
     jQuery.alicej.util.ajax({
@@ -89,7 +92,7 @@ $(function () {
                     dataType:'json',
                     success: function(rsp){
                         jQuery.alicej.util.bootbox.alert("保存成功！",function () {
-                            window.location.href = "#biz/generator/template/generator_config_template_list";
+                            window.location.href = "#biz/generator/config/group/generator_config_group_edit?id="+page.obj.groupId;
                         });
                     }
                 });

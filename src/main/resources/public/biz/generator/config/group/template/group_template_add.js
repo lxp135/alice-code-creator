@@ -10,10 +10,13 @@ var page = {
             html : 'text/html',
             js : 'text/javascript'
         }
+        ,groupId:null
     }
 };
 
 $(function () {
+
+    page.obj.groupId = jQuery.alicej.util.getUrlParam("groupId");
 
     page.obj.codeMirror = CodeMirror.fromTextArea(document.getElementById("console"),{
         lineNumbers: true,
@@ -62,7 +65,8 @@ $(function () {
             page.obj.codeMirror.save();
             var params = jQuery.alicej.util.serialize("#addForm");
             params.templateContent = page.obj.codeMirror.getTextArea().value;
-            params.isPrivate = 0;
+            params.groupId = page.obj.groupId; // 分组编号
+
             jQuery.alicej.util.ajax({
             type: "POST",
                 url: '/web/generator/template/insert',
@@ -70,7 +74,7 @@ $(function () {
                 dataType:'json',
                 success: function(rsp){
                     jQuery.alicej.util.bootbox.alert("保存成功！",function () {
-                        window.location.href = "#biz/generator/template/generator_config_template_list";
+                        window.location.href = "#biz/generator/config/group/generator_config_group_edit?id="+page.obj.groupId;
                         });
                     }
                 });
