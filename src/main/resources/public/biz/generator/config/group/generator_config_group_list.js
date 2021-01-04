@@ -9,7 +9,7 @@ var page = {
         // 根据ID删除数据
         deleteById : function (id) {
             jQuery.alicej.util.bootbox.showConfirm("是否删除该记录？",function(){
-                jQuery.ajax({
+                jQuery.alicej.util.ajax({
                     type: "POST",
                     url: '/web/generator/config/group/delete',
                     data : {id:id},
