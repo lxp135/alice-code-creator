@@ -21,6 +21,9 @@
         SELECT TABLE_SCHEMA FROM information_schema.COLUMNS
         <where>
             <![CDATA[ TABLE_SCHEMA <> 'information_schema' ]]>
+            AND <![CDATA[ TABLE_SCHEMA <> 'performance_schema' ]]>
+            AND <![CDATA[ TABLE_SCHEMA <> 'mysql' ]]>
+            AND <![CDATA[ TABLE_SCHEMA <> 'sys' ]]>
         </where>
         GROUP BY TABLE_SCHEMA
     </select>

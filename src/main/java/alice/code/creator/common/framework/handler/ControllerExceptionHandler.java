@@ -29,7 +29,7 @@ public class ControllerExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
-    public Result<Boolean> handleIllegalArgumentException(BusinessException e){
+    public Result<Boolean> businessExceptionHandle(BusinessException e){
         e.printStackTrace();
         return new Result<>(ResultCodeConstant.BUSINESS_EXCEPTION,e.getMessage());
     }
