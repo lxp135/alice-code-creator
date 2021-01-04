@@ -1,12 +1,6 @@
 package alice.code.creator.domain.model.generator;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import alice.code.creator.domain.Transient;
-
 import alice.code.creator.domain.model.AbstractEntity;
-
-import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 用户个性化配置Domain
@@ -48,7 +42,7 @@ public class GeneratorConfigIndividual extends AbstractEntity{
      */
     private String defaultFieldUnique;
     /**
-     * 扩展标识字段（可以存多个，按照都好分割）
+     * 扩展标识字段（可以存多个，按逗号分割）
      */
     private String defaultFieldExt;
     /**

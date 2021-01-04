@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
     <properties>
-        <property name="dialect" value="MYSQL" />                                       <!-- SQL方言 -->
+        <property name="dialect" value="MYSQL" />                                           <!-- SQL方言 -->
     </properties>
-
     <mappers>
-
-        <mapper resource="mybatis/mysql/base/BaseDictionaryMapper.xml" />               <!-- 数据字典 -->
-        <mapper resource="mybatis/mysql/base/BaseMenuMapper.xml" />                     <!-- 菜单表 -->
-        <mapper resource="mybatis/mysql/base/BaseRoleMapper.xml" />                     <!-- 角色表 -->
-        <mapper resource="mybatis/mysql/base/BaseRoleMenuRelMapper.xml" />              <!-- 角色与菜单关系表 -->
-        <mapper resource="mybatis/mysql/base/BaseRoleUserRelMapper.xml" />              <!-- 角色与用户关系表 -->
-        <mapper resource="mybatis/mysql/base/BaseUserMapper.xml" />                     <!-- 用户表 -->
-
+        <mapper resource="mybatis/mysql/base/BaseDictionaryMapper.xml" />                   <!-- 数据字典 -->
+        <mapper resource="mybatis/mysql/base/BaseMenuMapper.xml" />                         <!-- 菜单表 -->
+        <mapper resource="mybatis/mysql/base/BaseRoleMapper.xml" />                         <!-- 角色表 -->
+        <mapper resource="mybatis/mysql/base/BaseRoleMenuRelMapper.xml" />                  <!-- 角色与菜单关系表 -->
+        <mapper resource="mybatis/mysql/base/BaseRoleUserRelMapper.xml" />                  <!-- 角色与用户关系表 -->
+        <mapper resource="mybatis/mysql/base/BaseUserMapper.xml" />                         <!-- 用户表 -->
+        <mapper resource="mybatis/mysql/generator/GeneratorConfigDatasourceMapper.xml" />   <!-- 数据源配置SQL -->
         <mapper resource="mybatis/mysql/generator/GeneratorConfigGroupMapper.xml" />        <!-- 模板分组SQL -->
         <mapper resource="mybatis/mysql/generator/GeneratorConfigIndividualMapper.xml" />   <!-- 用户个性化配置SQL -->
         <mapper resource="mybatis/mysql/generator/GeneratorConfigMappingMapper.xml" />      <!-- 代码生成器映射关系配置表 -->
         <mapper resource="mybatis/mysql/generator/GeneratorConfigTemplateMapper.xml" />     <!-- 代码生成器模板配置表 -->
         <mapper resource="mybatis/mysql/generator/MysqlGeneratorMapper.xml" />              <!-- 代码生成器 -->
-
         <mapper resource="mybatis/mysql/resource/ResourceFileMapper.xml" />                 <!-- 文件 -->
-
     </mappers>
 </configuration>

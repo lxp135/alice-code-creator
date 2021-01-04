@@ -22,14 +22,6 @@ public abstract class AbstractEntity implements Serializable {
      * 数据已删除
      */
     public static final int DELETED = 1;
-    /**
-     * 数据启用
-     */
-    public static final int ENABLE = 1;
-    /**
-     * 数据停用
-     */
-    public static final int NOT_ENABLE = 0;
 
     // 序列化
     private static final long serialVersionUID = 1L;

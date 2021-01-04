@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 模板分组SQL author by contact@liuxp.me -->
-<mapper namespace="alice.code.creator.dao.generator.GeneratorConfigGroupDao" >
+<!-- 数据源配置SQL author by contact@liuxp.me -->
+<mapper namespace="alice.code.creator.dao.generator.GeneratorConfigDatasourceDao" >
     <!-- 映射关系 -->
-    <resultMap id="resultMap" type="alice.code.creator.domain.model.generator.GeneratorConfigGroup" >
+    <resultMap id="resultMap" type="alice.code.creator.domain.model.generator.GeneratorConfigDatasource" >
         <id column="id" property="id" jdbcType="BIGINT" />       <!-- 自增主键 -->
-        <result column="group_name" property="groupName" jdbcType="VARCHAR" />       <!-- 分组名称 -->
-        <result column="group_desc" property="groupDesc" jdbcType="VARCHAR" />       <!-- 分组内容描述 -->
-        <result column="template_amount" property="templateAmount" jdbcType="INTEGER" />       <!-- 模板总数 -->
-        <result column="default_sign" property="defaultSign" jdbcType="VARCHAR" />       <!-- 默认签名 -->
-        <result column="default_package" property="defaultPackage" jdbcType="VARCHAR" />       <!-- 默认包路径 -->
-        <result column="default_table_prefix" property="defaultTablePrefix" jdbcType="VARCHAR" />       <!-- 默认表前缀 -->
-        <result column="default_field_unique" property="defaultFieldUnique" jdbcType="VARCHAR" />       <!-- 唯一标识字段 -->
-        <result column="default_field_ext" property="defaultFieldExt" jdbcType="VARCHAR" />       <!-- 扩展标识字段（可以存多个，按照逗号分割） -->
-        <result column="default_field_effective" property="defaultFieldEffective" jdbcType="VARCHAR" />       <!-- 逻辑删除标识字段名称 -->
+        <result column="datasource_name" property="datasourceName" jdbcType="VARCHAR" />       <!-- 数据源名称 -->
+        <result column="datasource_type" property="datasourceType" jdbcType="VARCHAR" />       <!-- 数据源类型（MySQL,Oracle,SQLServer） -->
+        <result column="driver_class_name" property="driverClassName" jdbcType="VARCHAR" />       <!-- JDBC驱动 -->
+        <result column="url" property="url" jdbcType="VARCHAR" />       <!-- 数据源地址 -->
+        <result column="username" property="username" jdbcType="VARCHAR" />       <!-- 用户名 -->
+        <result column="password" property="password" jdbcType="VARCHAR" />       <!-- 密码 -->
         <result column="owner_user_id" property="ownerUserId" jdbcType="BIGINT" />       <!-- 所有者用户编号 -->
         <result column="owner_user_name" property="ownerUserName" jdbcType="VARCHAR" />       <!-- 所有者用户名称 -->
-        <result column="is_public" property="isPublic" jdbcType="TINYINT" />       <!-- 是否公开 0：私有 1：公开 -->
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />       <!-- 创建时间 -->
         <result column="create_user" property="createUser" jdbcType="VARCHAR" />       <!-- 创建用户 -->
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />       <!-- 更新时间 -->
@@ -28,18 +24,14 @@
     <!-- 查询列 -->
     <sql id="queryColumns">
         id,       /* 自增主键 */
-        group_name,       /* 分组名称 */
-        group_desc,       /* 分组内容描述 */
-        template_amount,       /* 模板总数 */
-        default_sign,       /* 默认签名 */
-        default_package,       /* 默认包路径 */
-        default_table_prefix,       /* 默认表前缀 */
-        default_field_unique,       /* 唯一标识字段 */
-        default_field_ext,       /* 扩展标识字段（可以存多个，按照逗号分割） */
-        default_field_effective,       /* 逻辑删除标识字段名称 */
+        datasource_name,       /* 数据源名称 */
+        datasource_type,       /* 数据源类型（MySQL,Oracle,SQLServer） */
+        driver_class_name,       /* JDBC驱动 */
+        url,       /* 数据源地址 */
+        username,       /* 用户名 */
+        password,       /* 密码 */
         owner_user_id,       /* 所有者用户编号 */
         owner_user_name,       /* 所有者用户名称 */
-        is_public,       /* 是否公开 0：私有 1：公开 */
         create_time,       /* 创建时间 */
         create_user,       /* 创建用户 */
         update_time,       /* 更新时间 */
@@ -60,35 +52,26 @@
             <if test="idMax != null">
                 <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 自增主键小于某值 */
             </if>
-            <if test="groupName != null and groupName != ''" >
-                AND group_name = #{groupName,jdbcType=VARCHAR}       /* 分组名称 */
+            <if test="datasourceName != null and datasourceName != ''" >
+                AND datasource_name = #{datasourceName,jdbcType=VARCHAR}       /* 数据源名称 */
             </if>
-            <if test="groupNameLike != null and groupNameLike != ''" >
-                AND group_name LIKE concat('%', #{groupNameLike,jdbcType=VARCHAR},'%')       /* 分组名称 */
+            <if test="datasourceNameLike != null and datasourceNameLike != ''" >
+                AND datasource_name LIKE concat('%', #{datasourceNameLike,jdbcType=VARCHAR},'%')       /* 数据源名称 */
             </if>
-            <if test="groupDesc != null and groupDesc != ''" >
-                AND group_desc = #{groupDesc,jdbcType=VARCHAR}       /* 分组内容描述 */
+            <if test="datasourceType != null and datasourceType != ''" >
+                AND datasource_type = #{datasourceType,jdbcType=VARCHAR}       /* 数据源类型（MySQL,Oracle,SQLServer） */
             </if>
-            <if test="templateAmount != null" >
-                AND template_amount = #{templateAmount,jdbcType=INTEGER}       /* 模板总数 */
+            <if test="driverClassName != null and driverClassName != ''" >
+                AND driver_class_name = #{driverClassName,jdbcType=VARCHAR}       /* JDBC驱动 */
             </if>
-            <if test="defaultSign != null and defaultSign != ''" >
-                AND default_sign = #{defaultSign,jdbcType=VARCHAR}       /* 默认签名 */
+            <if test="url != null and url != ''" >
+                AND url = #{url,jdbcType=VARCHAR}       /* 数据源地址 */
             </if>
-            <if test="defaultPackage != null and defaultPackage != ''" >
-                AND default_package = #{defaultPackage,jdbcType=VARCHAR}       /* 默认包路径 */
+            <if test="username != null and username != ''" >
+                AND username = #{username,jdbcType=VARCHAR}       /* 用户名 */
             </if>
-            <if test="defaultTablePrefix != null and defaultTablePrefix != ''" >
-                AND default_table_prefix = #{defaultTablePrefix,jdbcType=VARCHAR}       /* 默认表前缀 */
-            </if>
-            <if test="defaultFieldUnique != null and defaultFieldUnique != ''" >
-                AND default_field_unique = #{defaultFieldUnique,jdbcType=VARCHAR}       /* 唯一标识字段 */
-            </if>
-            <if test="defaultFieldExt != null and defaultFieldExt != ''" >
-                AND default_field_ext = #{defaultFieldExt,jdbcType=VARCHAR}       /* 扩展标识字段（可以存多个，按照逗号分割） */
-            </if>
-            <if test="defaultFieldEffective != null and defaultFieldEffective != ''" >
-                AND default_field_effective = #{defaultFieldEffective,jdbcType=VARCHAR}       /* 逻辑删除标识字段名称 */
+            <if test="password != null and password != ''" >
+                AND password = #{password,jdbcType=VARCHAR}       /* 密码 */
             </if>
             <if test="ownerUserId != null" >
                 AND owner_user_id = #{ownerUserId,jdbcType=BIGINT}       /* 所有者用户编号 */
@@ -96,8 +79,8 @@
             <if test="ownerUserName != null and ownerUserName != ''" >
                 AND owner_user_name = #{ownerUserName,jdbcType=VARCHAR}       /* 所有者用户名称 */
             </if>
-            <if test="isPublic != null" >
-                AND is_public = #{isPublic,jdbcType=TINYINT}       /* 是否公开 0：私有 1：公开 */
+            <if test="ownerUserNameLike != null and ownerUserNameLike != ''" >
+                AND owner_user_name LIKE concat('%', #{ownerUserNameLike,jdbcType=VARCHAR},'%')       /* 所有者用户名称 */
             </if>
             <if test="createTimeBegin != null" >
                 <![CDATA[ AND create_time >= #{createTimeBegin,jdbcType=TIMESTAMP} ]]>       /* 创建时间/起 */
@@ -133,64 +116,43 @@
                             <otherwise>DESC</otherwise>
                         </choose>
                     </when>
-                    <when test="item.propertyName != null and item.propertyName == 'groupName'">
-                        group_name    /* 分组名称 */
+                    <when test="item.propertyName != null and item.propertyName == 'datasourceName'">
+                        datasource_name    /* 数据源名称 */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
                         </choose>
                     </when>
-                    <when test="item.propertyName != null and item.propertyName == 'groupDesc'">
-                        group_desc    /* 分组内容描述 */
+                    <when test="item.propertyName != null and item.propertyName == 'datasourceType'">
+                        datasource_type    /* 数据源类型（MySQL,Oracle,SQLServer） */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
                         </choose>
                     </when>
-                    <when test="item.propertyName != null and item.propertyName == 'templateAmount'">
-                        template_amount    /* 模板总数 */
+                    <when test="item.propertyName != null and item.propertyName == 'driverClassName'">
+                        driver_class_name    /* JDBC驱动 */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
                         </choose>
                     </when>
-                    <when test="item.propertyName != null and item.propertyName == 'defaultSign'">
-                        default_sign    /* 默认签名 */
+                    <when test="item.propertyName != null and item.propertyName == 'url'">
+                        url    /* 数据源地址 */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
                         </choose>
                     </when>
-                    <when test="item.propertyName != null and item.propertyName == 'defaultPackage'">
-                        default_package    /* 默认包路径 */
+                    <when test="item.propertyName != null and item.propertyName == 'username'">
+                        username    /* 用户名 */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
                         </choose>
                     </when>
-                    <when test="item.propertyName != null and item.propertyName == 'defaultTablePrefix'">
-                        default_table_prefix    /* 默认表前缀 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'defaultFieldUnique'">
-                        default_field_unique    /* 唯一标识字段 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'defaultFieldExt'">
-                        default_field_ext    /* 扩展标识字段（可以存多个，按照逗号分割） */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'defaultFieldEffective'">
-                        default_field_effective    /* 逻辑删除标识字段名称 */
+                    <when test="item.propertyName != null and item.propertyName == 'password'">
+                        password    /* 密码 */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
@@ -205,13 +167,6 @@
                     </when>
                     <when test="item.propertyName != null and item.propertyName == 'ownerUserName'">
                         owner_user_name    /* 所有者用户名称 */
-                        <choose>
-                            <when test="item.ascending">ASC</when>
-                            <otherwise>DESC</otherwise>
-                        </choose>
-                    </when>
-                    <when test="item.propertyName != null and item.propertyName == 'isPublic'">
-                        is_public    /* 是否公开 0：私有 1：公开 */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
@@ -259,38 +214,30 @@
     </sql>
 
     <!-- 插入数据 -->
-    <insert id="insert" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigGroup" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO generator_config_group (
-            group_name,                      /* 分组名称 */
-            group_desc,                      /* 分组内容描述 */
-            template_amount,                      /* 模板总数 */
-            default_sign,                      /* 默认签名 */
-            default_package,                      /* 默认包路径 */
-            default_table_prefix,                      /* 默认表前缀 */
-            default_field_unique,                      /* 唯一标识字段 */
-            default_field_ext,                      /* 扩展标识字段（可以存多个，按照逗号分割） */
-            default_field_effective,                      /* 逻辑删除标识字段名称 */
+    <insert id="insert" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigDatasource" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO generator_config_datasource (
+            datasource_name,                      /* 数据源名称 */
+            datasource_type,                      /* 数据源类型（MySQL,Oracle,SQLServer） */
+            driver_class_name,                      /* JDBC驱动 */
+            url,                      /* 数据源地址 */
+            username,                      /* 用户名 */
+            password,                      /* 密码 */
             owner_user_id,                      /* 所有者用户编号 */
             owner_user_name,                      /* 所有者用户名称 */
-            is_public,                      /* 是否公开 0：私有 1：公开 */
             create_time,                      /* 创建时间 */
             create_user,                      /* 创建用户 */
             update_time,                      /* 更新时间 */
             update_user,                      /* 更新用户 */
             is_delete       /* 删除标志 0：未删除 1：已删除 */
         )VALUES(
-            #{groupName, jdbcType=VARCHAR},                 /* 分组名称 */
-            #{groupDesc, jdbcType=VARCHAR},                 /* 分组内容描述 */
-            #{templateAmount, jdbcType=INTEGER},                 /* 模板总数 */
-            #{defaultSign, jdbcType=VARCHAR},                 /* 默认签名 */
-            #{defaultPackage, jdbcType=VARCHAR},                 /* 默认包路径 */
-            #{defaultTablePrefix, jdbcType=VARCHAR},                 /* 默认表前缀 */
-            #{defaultFieldUnique, jdbcType=VARCHAR},                 /* 唯一标识字段 */
-            #{defaultFieldExt, jdbcType=VARCHAR},                 /* 扩展标识字段（可以存多个，按照逗号分割） */
-            #{defaultFieldEffective, jdbcType=VARCHAR},                 /* 逻辑删除标识字段名称 */
+            #{datasourceName, jdbcType=VARCHAR},                 /* 数据源名称 */
+            #{datasourceType, jdbcType=VARCHAR},                 /* 数据源类型（MySQL,Oracle,SQLServer） */
+            #{driverClassName, jdbcType=VARCHAR},                 /* JDBC驱动 */
+            #{url, jdbcType=VARCHAR},                 /* 数据源地址 */
+            #{username, jdbcType=VARCHAR},                 /* 用户名 */
+            #{password, jdbcType=VARCHAR},                 /* 密码 */
             #{ownerUserId, jdbcType=BIGINT},                 /* 所有者用户编号 */
             #{ownerUserName, jdbcType=VARCHAR},                 /* 所有者用户名称 */
-            #{isPublic, jdbcType=TINYINT},                 /* 是否公开 0：私有 1：公开 */
             #{createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
             #{createUser, jdbcType=VARCHAR},                 /* 创建用户 */
             #{updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
@@ -301,19 +248,15 @@
 
     <!-- 批量插入数据 -->
     <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO generator_config_group (
-            group_name,                      /* 分组名称 */
-            group_desc,                      /* 分组内容描述 */
-            template_amount,                      /* 模板总数 */
-            default_sign,                      /* 默认签名 */
-            default_package,                      /* 默认包路径 */
-            default_table_prefix,                      /* 默认表前缀 */
-            default_field_unique,                      /* 唯一标识字段 */
-            default_field_ext,                      /* 扩展标识字段（可以存多个，按照逗号分割） */
-            default_field_effective,                      /* 逻辑删除标识字段名称 */
+        INSERT INTO generator_config_datasource (
+            datasource_name,                      /* 数据源名称 */
+            datasource_type,                      /* 数据源类型（MySQL,Oracle,SQLServer） */
+            driver_class_name,                      /* JDBC驱动 */
+            url,                      /* 数据源地址 */
+            username,                      /* 用户名 */
+            password,                      /* 密码 */
             owner_user_id,                      /* 所有者用户编号 */
             owner_user_name,                      /* 所有者用户名称 */
-            is_public,                      /* 是否公开 0：私有 1：公开 */
             create_time,                      /* 创建时间 */
             create_user,                      /* 创建用户 */
             update_time,                      /* 更新时间 */
@@ -322,18 +265,14 @@
         )VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (
-                #{item.groupName, jdbcType=VARCHAR},                 /* 分组名称 */
-                #{item.groupDesc, jdbcType=VARCHAR},                 /* 分组内容描述 */
-                #{item.templateAmount, jdbcType=INTEGER},                 /* 模板总数 */
-                #{item.defaultSign, jdbcType=VARCHAR},                 /* 默认签名 */
-                #{item.defaultPackage, jdbcType=VARCHAR},                 /* 默认包路径 */
-                #{item.defaultTablePrefix, jdbcType=VARCHAR},                 /* 默认表前缀 */
-                #{item.defaultFieldUnique, jdbcType=VARCHAR},                 /* 唯一标识字段 */
-                #{item.defaultFieldExt, jdbcType=VARCHAR},                 /* 扩展标识字段（可以存多个，按照逗号分割） */
-                #{item.defaultFieldEffective, jdbcType=VARCHAR},                 /* 逻辑删除标识字段名称 */
+                #{item.datasourceName, jdbcType=VARCHAR},                 /* 数据源名称 */
+                #{item.datasourceType, jdbcType=VARCHAR},                 /* 数据源类型（MySQL,Oracle,SQLServer） */
+                #{item.driverClassName, jdbcType=VARCHAR},                 /* JDBC驱动 */
+                #{item.url, jdbcType=VARCHAR},                 /* 数据源地址 */
+                #{item.username, jdbcType=VARCHAR},                 /* 用户名 */
+                #{item.password, jdbcType=VARCHAR},                 /* 密码 */
                 #{item.ownerUserId, jdbcType=BIGINT},                 /* 所有者用户编号 */
                 #{item.ownerUserName, jdbcType=VARCHAR},                 /* 所有者用户名称 */
-                #{item.isPublic, jdbcType=TINYINT},                 /* 是否公开 0：私有 1：公开 */
                 #{item.createTime, jdbcType=TIMESTAMP},                 /* 创建时间 */
                 #{item.createUser, jdbcType=VARCHAR},                 /* 创建用户 */
                 #{item.updateTime, jdbcType=TIMESTAMP},                 /* 更新时间 */
@@ -346,43 +285,31 @@
     <!-- 按主键更新 -->
     <update id="updateByPrimaryKey" parameterType="java.util.Map">
         <if test="_parameter != null">
-            UPDATE generator_config_group
+            UPDATE generator_config_datasource
             <set>
-                <if test="groupName != null">
-                    group_name = #{groupName, jdbcType=VARCHAR},    /* 分组名称 */
+                <if test="datasourceName != null">
+                    datasource_name = #{datasourceName, jdbcType=VARCHAR},    /* 数据源名称 */
                 </if>
-                <if test="groupDesc != null">
-                    group_desc = #{groupDesc, jdbcType=VARCHAR},    /* 分组内容描述 */
+                <if test="datasourceType != null">
+                    datasource_type = #{datasourceType, jdbcType=VARCHAR},    /* 数据源类型（MySQL,Oracle,SQLServer） */
                 </if>
-                <if test="templateAmount != null">
-                    template_amount = #{templateAmount, jdbcType=INTEGER},    /* 模板总数 */
+                <if test="driverClassName != null">
+                    driver_class_name = #{driverClassName, jdbcType=VARCHAR},    /* JDBC驱动 */
                 </if>
-                <if test="defaultSign != null">
-                    default_sign = #{defaultSign, jdbcType=VARCHAR},    /* 默认签名 */
+                <if test="url != null">
+                    url = #{url, jdbcType=VARCHAR},    /* 数据源地址 */
                 </if>
-                <if test="defaultPackage != null">
-                    default_package = #{defaultPackage, jdbcType=VARCHAR},    /* 默认包路径 */
+                <if test="username != null">
+                    username = #{username, jdbcType=VARCHAR},    /* 用户名 */
                 </if>
-                <if test="defaultTablePrefix != null">
-                    default_table_prefix = #{defaultTablePrefix, jdbcType=VARCHAR},    /* 默认表前缀 */
-                </if>
-                <if test="defaultFieldUnique != null">
-                    default_field_unique = #{defaultFieldUnique, jdbcType=VARCHAR},    /* 唯一标识字段 */
-                </if>
-                <if test="defaultFieldExt != null">
-                    default_field_ext = #{defaultFieldExt, jdbcType=VARCHAR},    /* 扩展标识字段（可以存多个，按照逗号分割） */
-                </if>
-                <if test="defaultFieldEffective != null">
-                    default_field_effective = #{defaultFieldEffective, jdbcType=VARCHAR},    /* 逻辑删除标识字段名称 */
+                <if test="password != null">
+                    password = #{password, jdbcType=VARCHAR},    /* 密码 */
                 </if>
                 <if test="ownerUserId != null">
                     owner_user_id = #{ownerUserId, jdbcType=BIGINT},    /* 所有者用户编号 */
                 </if>
                 <if test="ownerUserName != null">
                     owner_user_name = #{ownerUserName, jdbcType=VARCHAR},    /* 所有者用户名称 */
-                </if>
-                <if test="isPublic != null">
-                    is_public = #{isPublic, jdbcType=TINYINT},    /* 是否公开 0：私有 1：公开 */
                 </if>
                 <if test="createTime != null">
                     create_time = #{createTime, jdbcType=TIMESTAMP},    /* 创建时间 */
@@ -406,9 +333,9 @@
     </update>
 
     <!-- 按主键删除 -->
-    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigGroup">
+    <update id="deleteByPrimaryKey" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigDatasource">
         <if test="_parameter != null">
-            UPDATE generator_config_group
+            UPDATE generator_config_datasource
             <set>
                 is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
                 update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
@@ -424,7 +351,7 @@
     <!-- 按主键批量删除 -->
     <update id="batchDeleteByPrimaryKey" parameterType="java.util.Map">
         <if test="_parameter != null">
-            UPDATE generator_config_group
+            UPDATE generator_config_datasource
             <set>
                 is_delete = 1,    /* 删除标志 0：未删除 1：已删除 */
                 update_user = #{updateUser, jdbcType=VARCHAR},	/* 修改人 */
@@ -443,7 +370,7 @@
     <!-- 按主键批量物理删除，慎用 -->
     <delete id="batchDeleteByPrimaryKeyPhysically" parameterType="java.util.List">
         <if test="_parameter != null">
-            DELETE FROM generator_config_group
+            DELETE FROM generator_config_datasource
             <where>
                 id in	/* 自增主键集合 */
                 <foreach collection="list" item="id" open="(" separator="," close=")">
@@ -458,7 +385,7 @@
         SELECT
         <include refid="queryColumns"/>
         FROM
-        generator_config_group
+        generator_config_datasource
         <where>
             is_delete = 0    /* 删除标志 0：未删除 1：已删除 */
         </where>
@@ -469,7 +396,7 @@
         SELECT
         <include refid="queryColumns"/>
         FROM
-        generator_config_group
+        generator_config_datasource
         <where>
             id = #{id, jdbcType=BIGINT}	/* 自增主键 */
             AND is_delete = 0			/* 删除标志 0：未删除 1：已删除 */
@@ -481,7 +408,7 @@
         SELECT
         <include refid="queryColumns"/>
         FROM
-        generator_config_group
+        generator_config_datasource
         <where>
             id in	/* 自增主键集合 */
             <foreach collection="list" item="id" open="(" separator="," close=")">
@@ -496,7 +423,7 @@
         SELECT
         <include refid="queryColumns"/>
         FROM
-        generator_config_group
+        generator_config_datasource
         <include refid="queryClause"/>
         <include refid="sortClause"/>
         <include refid="pageClause"/>
@@ -507,7 +434,7 @@
         SELECT
         COUNT(1)
         FROM
-        generator_config_group
+        generator_config_datasource
         <include refid="queryClause"/>
     </select>
 
