@@ -1,5 +1,9 @@
-let generator = {
+var generator = {
     fn:{
+        /**
+         * 初始化方法
+         * 查询数据源码表
+         */
         init : function (){
             jQuery.alicej.util.ajax({
                 type:"POST",
@@ -15,12 +19,16 @@ let generator = {
                 }
             });
         },
-        initDatabase : function (datasource){
+        /**
+         * 查询数据库列表
+         * @param datasourceId 数据源编号
+         */
+        initDatabase : function (datasourceId){
             jQuery.alicej.util.ajax({
                 type:"POST",
                 dataType:'json',
                 data : {
-                    datasourceId: datasource
+                    datasourceId: datasourceId
                 },
                 url: "/generator/selectDatabase",
                 success:function (data) {
@@ -35,7 +43,12 @@ let generator = {
         }
     },
     obj:{
-
+        // 唯一标识字段，用户有自定义配置时会被覆盖
+        defaultFieldUnique:'id',
+        // 系统默认扩展字段，用户有自定义配置时会被覆盖
+        defaultFieldExt:['remark','create_user','create_time','update_user','update_time','ts'],
+        // 系统默认逻辑删除字段，用户有自定义配置时会被覆盖
+        defaultFieldEffective:'is_delete'
     }
 }
 
@@ -120,28 +133,6 @@ $(function(){
 });
 
 /**
- * 初始化数据库列表
- */
-function initDatabaseData(){
-    jQuery.ajax({
-        type:"POST",
-        dataType:'json',
-        url: "/generator/selectDatabase",
-        success:function (data) {
-            $("#tableSchema").empty();
-            $("#tableSchema").append("<option value=''>请选择</option>");
-            // $("#tableSchema").select2("val", "");
-            for (var i = 0; i < data.length; i++) {
-                $("#tableSchema").append("<option value='" + data[i].tableSchema + "'>" + data[i].tableSchema + "</option>");
-            }
-        },
-        error : function(data){
-            Commons.showError(data.responseText);
-        }
-    });
-}
-
-/**
  * 获取数据表
  */
 function selectTableNames(tableSchema){
@@ -189,6 +180,13 @@ function loadGrid(gridTable){
                 edittype: "checkbox",
                 editoptions: {
                     value: "是:"
+                },
+                formatter: function (cellValue, options, rowObject) {
+                    var result = "";
+                    if(rowObject.columnName === generator.obj.defaultFieldUnique){
+                        result = "是";
+                    }
+                    return result;
                 }
             },
             {name:'likeFlag',label:'模糊标识', width:80, fixed:false, sortable: false, 
