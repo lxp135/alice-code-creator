@@ -75,7 +75,42 @@ public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
 
     @Override
     public List<ColumnGenerator> selectTableNames(Long datasourceId,String tableSchema) {
-        return null;
+
+        GeneratorConfigDatasource datasource = null;
+
+        if(datasourceId == -1){
+            datasource = new GeneratorConfigDatasource();
+            datasource.setDriverClassName(defaultDriverClassName);
+            datasource.setUrl(defaultUrl);
+            datasource.setUsername(defaultUsername);
+            datasource.setPassword(defaultPassword);
+        }else{
+            datasource = generatorConfigDatasourceService.selectOne(datasourceId);
+        }
+
+        if(datasource == null){
+            throw new BusinessException("数据源不存在");
+        }
+
+        String sql =
+                "SELECT TABLE_NAME,TABLE_COMMENT " +
+                "FROM information_schema.TABLES " +
+                "WHERE" +
+                "   TABLE_SCHEMA = '"+tableSchema+"'" +
+                "GROUP BY TABLE_NAME";
+
+        List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
+
+        List<ColumnGenerator> columnGeneratorList = new ArrayList<>();
+
+        for(Map<String,Object> result : resultList){
+            ColumnGenerator columnGenerator = new ColumnGenerator();
+            columnGenerator.setTableName(String.valueOf(result.get("TABLE_NAME")));
+            columnGenerator.setTableComment(String.valueOf(result.get("TABLE_COMMENT")));
+            columnGeneratorList.add(columnGenerator);
+        }
+
+        return columnGeneratorList;
     }
 
     @Override

@@ -50,8 +50,6 @@ $(function(){
 
     var gridTable = jQuery("#gridTable");
 
-    // initDatabaseData();
-
     // 加载数据列表
     loadGrid(gridTable);
 
@@ -152,7 +150,8 @@ function selectTableNames(tableSchema){
         dataType:'json',
         url : "/generator/selectTableNames",
         data : {
-            tableSchema: tableSchema
+            tableSchema: tableSchema,
+            datasourceId:$("#datasource").val()
         },
         success : function(data) {
             for(var i=0; i<data.length; i++){
