@@ -1,12 +1,56 @@
+let generator = {
+    fn:{
+        init : function (){
+            jQuery.alicej.util.ajax({
+                type:"POST",
+                dataType:'json',
+                url: "/generator/selectDatasource",
+                success:function (data) {
+                    $("#datasource").empty();
+                    $("#datasource").append("<option value=''>请选择</option>");
+                    // $("#tableSchema").select2("val", "");
+                    for (var i = 0; i < data.length; i++) {
+                        $("#datasource").append("<option value='" + data[i].id + "'>" + data[i].datasourceName + "</option>");
+                    }
+                }
+            });
+        },
+        initDatabase : function (datasource){
+            jQuery.alicej.util.ajax({
+                type:"POST",
+                dataType:'json',
+                data : {
+                    datasourceId: datasource
+                },
+                url: "/generator/selectDatabase",
+                success:function (data) {
+                    $("#tableSchema").empty();
+                    $("#tableSchema").append("<option value=''>请选择</option>");
+                    // $("#tableSchema").select2("val", "");
+                    for (var i = 0; i < data.length; i++) {
+                        $("#tableSchema").append("<option value='" + data[i].tableSchema + "'>" + data[i].tableSchema + "</option>");
+                    }
+                }
+            });
+        }
+    },
+    obj:{
+
+    }
+}
+
 /**
  * MySQL元数据代码生成页面JS
  * @author contact@liuxp.me
  */
 $(function(){
 
+    // 初始化
+    generator.fn.init();
+
     var gridTable = jQuery("#gridTable");
 
-    initDatabaseData();
+    // initDatabaseData();
 
     // 加载数据列表
     loadGrid(gridTable);
@@ -14,6 +58,22 @@ $(function(){
     // 重置数据列表宽度
     $(window).resize(function(){
         gridTable.setGridWidth(gridTable.parents(".card-body").width(), false);
+    });
+
+    $('#datasource').change(function() {
+        //初始化数据
+        $("#tableSchema").empty();
+        $("#tableSchema").append("<option value=''>请选择</option>");
+        $("#tableName").empty();
+        $("#tableName").append("<option value=''>请选择</option>");
+        // $("#tableName").select2("val", "");
+        $("#tableComment").val("");
+        clear();
+
+        var datasource = $(this).val();
+        if(datasource != ""){
+            generator.fn.initDatabase(datasource);
+        }
     });
 
     $('#tableSchema').change(function() {
@@ -46,7 +106,7 @@ $(function(){
         // }
     });
 
-    $("#generator").click(generator);
+    $("#generator").click(download);
 
     // 初始化表单验证
     $('#generatorForm').validator({
@@ -253,7 +313,7 @@ function clear(){
 /**
  *  代码生成
  */
-function generator() {
+function download() {
 
     $("#gridTable").jqGrid('saveRow', lastSelectId, false, 'clientArray');
     lastSelectId = null;

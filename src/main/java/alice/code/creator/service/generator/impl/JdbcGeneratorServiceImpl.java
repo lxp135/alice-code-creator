@@ -1,0 +1,206 @@
+package alice.code.creator.service.generator.impl;
+
+import alice.code.creator.common.framework.context.BusinessException;
+import alice.code.creator.domain.model.generator.ColumnGenerator;
+import alice.code.creator.domain.model.generator.GeneratorConfigDatasource;
+import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
+import alice.code.creator.service.generator.JdbcGeneratorService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
+
+    @Resource
+    private GeneratorConfigDatasourceService generatorConfigDatasourceService;
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String defaultDriverClassName;
+
+    @Value("${spring.datasource.url}")
+    private String defaultUrl;
+
+    @Value("${spring.datasource.username}")
+    private String defaultUsername;
+
+    @Value("${spring.datasource.password}")
+    private String defaultPassword;
+
+    @Override
+    public List<ColumnGenerator> selectDatabase(Long datasourceId) {
+
+        GeneratorConfigDatasource datasource = null;
+
+        if(datasourceId == -1){
+            datasource = new GeneratorConfigDatasource();
+            datasource.setDriverClassName(defaultDriverClassName);
+            datasource.setUrl(defaultUrl);
+            datasource.setUsername(defaultUsername);
+            datasource.setPassword(defaultPassword);
+        }else{
+            datasource = generatorConfigDatasourceService.selectOne(datasourceId);
+        }
+
+        if(datasource == null){
+            throw new BusinessException("数据源不存在");
+        }
+
+        String sql = "SELECT TABLE_SCHEMA FROM information_schema.COLUMNS" +
+                "        WHERE" +
+                "            TABLE_SCHEMA <> 'information_schema'" +
+                "            AND TABLE_SCHEMA <> 'performance_schema'" +
+                "            AND TABLE_SCHEMA <> 'mysql'" +
+                "            AND TABLE_SCHEMA <> 'sys'" +
+                "        GROUP BY TABLE_SCHEMA";
+
+        List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
+
+        List<ColumnGenerator> columnGeneratorList = new ArrayList<>();
+
+        for(Map<String,Object> result : resultList){
+            ColumnGenerator columnGenerator = new ColumnGenerator();
+            columnGenerator.setTableSchema(String.valueOf(result.get("TABLE_SCHEMA")));
+            columnGeneratorList.add(columnGenerator);
+        }
+
+        return columnGeneratorList;
+    }
+
+    @Override
+    public List<ColumnGenerator> selectTableNames(Long datasourceId,String tableSchema) {
+        return null;
+    }
+
+    @Override
+    public List<ColumnGenerator> selectColumnNames(Long datasourceId,String tableSchema,String tableName) {
+        return null;
+    }
+
+    private List<Map<String,Object>> execute(String className,String url,String username,String password,String sql){
+
+        List<Map<String,Object>> result = new ArrayList<>();
+
+        // 第一步：加载驱动
+        try {// 加载 MySql 的驱动类 将驱动注册到 DriverManager 当中
+            Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            System.out.println("加载驱动失败！请检查驱动名称");
+            e.printStackTrace();
+        }
+
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            // 第二步：获取连接
+            con = DriverManager.getConnection(url, username, password);
+            // 第四步：获取 statement 类
+            statement = con.createStatement();
+            // 第五步：获取到执行后的结果集 resultSet
+            resultSet = statement.executeQuery(sql);
+
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int count = resultSetMetaData.getColumnCount();
+
+            while(resultSet.next()){
+
+                Map<String,Object> line = new HashMap<>();
+
+                for(int i=0;i<count;i++){
+                    line.put(resultSetMetaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
+                result.add(line);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("数据库连接失败！请检查数据库连接信息");
+            e.printStackTrace();
+        }finally {
+            // 先关闭结果集
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            // 然后关闭 Statement 对象
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            // 最后关闭连接
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String ClassName = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/alice_code_creator?characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai";
+        String username = "root";
+        String password = "root";
+
+        // 第一步：加载驱动
+        try {// 加载 MySql 的驱动类 将驱动注册到 DriverManager 当中
+            Class.forName(ClassName);
+        } catch (ClassNotFoundException e) {
+            System.out.println("加载驱动失败！请检查驱动名称");
+            e.printStackTrace();
+        }
+
+        Connection con = null;
+        Statement statement = null;
+        String sql = null;
+        ResultSet resultSet = null;
+        try {
+            // 第二步：获取连接
+            con = DriverManager.getConnection(url, username, password);
+            // 第三步：创建 sql
+            sql = "SELECT * FROM base_user";
+            // 第四步：获取 statement 类
+            statement = con.createStatement();
+            // 第五步：获取到执行后的结果集 resultSet
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()){
+                // 通过结果集的操作方法进行数据的获取   这里可以进行实际的业务操作，例如存到一个对应的实体类，返回给前端
+                // 这里是获取的
+                System.out.println(resultSet.getString(1));
+                System.out.println(resultSet.getString(2));
+            }
+        } catch (SQLException e) {
+            System.out.println("数据库连接失败！请检查数据库连接信息");
+            e.printStackTrace();
+        }finally {
+            // 先关闭结果集
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            // 然后关闭 Statement 对象
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            // 最后关闭连接
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

@@ -1,5 +1,8 @@
 package alice.code.creator.controller.generator;
 
+import alice.code.creator.domain.model.generator.GeneratorConfigDatasource;
+import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
+import alice.code.creator.service.generator.JdbcGeneratorService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -30,13 +33,41 @@ public class MysqlGeneratorController extends BaseController {
 	@Resource
 	private MysqlGeneratorService mysqlGeneratorService;
 
+	@Resource
+	private JdbcGeneratorService jdbcGeneratorService;
+
+	@Resource
+	private GeneratorConfigDatasourceService generatorConfigDatasourceService;
+
+	/**
+	 * 取得数据源
+	 * @return 默认数据源 + 用户配置的数据源集合
+	 */
+	@RequestMapping(value = "/selectDatasource", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public List<GeneratorConfigDatasource> selectDatasource(){
+
+		GeneratorConfigDatasource query = new GeneratorConfigDatasource();
+		query.setOwnerUserId(getAccount().getId());
+
+		List<GeneratorConfigDatasource> result = generatorConfigDatasourceService.selectList(query);
+
+		GeneratorConfigDatasource defaultDatasource = new GeneratorConfigDatasource();
+		defaultDatasource.setId(-1L);
+		defaultDatasource.setDatasourceName("默认数据库");
+
+		result.add(0,defaultDatasource);
+
+		return result;
+	}
+
 	/**
 	 * 数据库表信息查询
 	 */
 	@RequestMapping(value = "/selectDatabase", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<ColumnGenerator> selectDatabase() {
-		return  mysqlGeneratorService.selectDatabase();
+	public List<ColumnGenerator> selectDatabase(Long datasourceId) {
+		return jdbcGeneratorService.selectDatabase(datasourceId);
 	}
 
 	/**
@@ -44,17 +75,23 @@ public class MysqlGeneratorController extends BaseController {
 	 */
 	@RequestMapping(value = "/selectTableNames", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<ColumnGenerator> selectTableNames(ColumnGenerator columnGenerator) {
-		return  mysqlGeneratorService.selectTableNames(columnGenerator);
+	public List<ColumnGenerator> selectTableNames(Long datasourceId,String tableSchema) {
+
+		return jdbcGeneratorService.selectTableNames(datasourceId,tableSchema);
 	}
 
 	/**
 	 * 字段信息查询
+	 * @param datasourceId 数据源编号
+	 * @param tableSchema 库名称
+	 * @param tableName 表名称
+	 * @return 字段信息
 	 */
 	@RequestMapping(value = "/selectColumnNames", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> selectColumnNames(ColumnGenerator columnGenerator) {
-		List<ColumnGenerator> columnGeneratorList =  mysqlGeneratorService.selectColumnNames(columnGenerator);
+	public Map<String, Object> selectColumnNames(Long datasourceId,String tableSchema,String tableName) {
+
+		List<ColumnGenerator> columnGeneratorList =  jdbcGeneratorService.selectColumnNames(datasourceId,tableSchema,tableName);
 		Map<String, Object> result = new HashMap<>();
 		result.put("root", columnGeneratorList);
 		return result;

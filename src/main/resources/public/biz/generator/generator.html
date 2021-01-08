@@ -11,7 +11,17 @@
                 <div class="card-header card-header-contrast card-header-featured card-header-small">数据查询</div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="datasource">数据源</label>
+                                </div>
+                                <select class="form-select2 form-control" id="datasource" name="datasource">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="tableSchema">数据库名称</label>
@@ -21,7 +31,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="tableName">表名称</label>
@@ -31,7 +41,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="tableComment">表描述信息</label>
