@@ -14,7 +14,7 @@
                         <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="datasource">数据源</label>
+                                    <label class="input-group-text" for="datasource"><span style="color:red;">* </span>数据源</label>
                                 </div>
                                 <select class="form-select2 form-control" id="datasource" name="datasource">
                                     <option value="">请选择</option>
@@ -24,7 +24,7 @@
                         <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="tableSchema">数据库名称</label>
+                                    <label class="input-group-text" for="tableSchema"><span style="color:red;">* </span>数据库名称</label>
                                 </div>
                                 <select class="form-select2 form-control" id="tableSchema" name="tableSchema">
                                     <option value="">请选择</option>
@@ -34,7 +34,7 @@
                         <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="tableName">表名称</label>
+                                    <label class="input-group-text" for="tableName"><span style="color:red;">* </span>表名称</label>
                                 </div>
                                 <select class="form-select2 form-control" id="tableName" name="tableName">
                                     <option value="">请选择</option>
@@ -69,7 +69,16 @@
                 </div>
                 <div class="card-body card-body-bottom">
                     <div class="row">
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="groupName"><span style="color:red;">* </span>模板分组</label>
+                                </div>
+                                <input class="form-control" type="text" id="groupId" name="groupId" style="display: none;">
+                                <input class="form-control" type="text" id="groupName" name="groupName" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="tablePrefix">表前缀</label>
@@ -77,22 +86,20 @@
                                 <input class="form-control" type="text" id="tablePrefix" name="tablePrefix">
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="author">创建人</label>
                                 </div>
-                                <input class="form-control" type="text" id="author" name="author"
-                                       placeholder="contact@liuxp.me" value="contact@liuxp.me">
+                                <input class="form-control" type="text" id="author" name="author" placeholder="contact@liuxp.me" value="">
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="packagePath">包路径</label>
+                                    <label class="input-group-text" for="packagePath"><span style="color:red;">* </span>包路径</label>
                                 </div>
-                                <input class="form-control" type="text" id="packagePath" name="packagePath"
-                                       placeholder="com.vh.gov.cloud.finance" value="com.vh.gov.cloud.finance">
+                                <input class="form-control" type="text" id="packagePath" name="packagePath" placeholder="alice.code.creator" value="">
                             </div>
                         </div>
                     </div>
@@ -104,4 +111,5 @@
         </div>
     </form>
 </div>
+<script src="biz/generator/config/group/generator_config_group_common.js"></script>
 <script src="biz/generator/generator.js"></script>

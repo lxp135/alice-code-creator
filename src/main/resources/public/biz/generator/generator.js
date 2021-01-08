@@ -54,6 +54,34 @@ var generator = {
  */
 $(function(){
 
+    $("#groupName").click(function (){
+        groupCommon.fn.choose(function (rowData,index){
+
+            $("#groupId").val(rowData.id);
+            $("#groupName").val(rowData.groupName);
+            $("#tablePrefix").val(rowData.defaultTablePrefix);
+            $("#author").val(rowData.defaultSign);
+            $("#packagePath").val(rowData.defaultPackage);
+
+            generator.obj.defaultFieldUnique = rowData.defaultFieldUnique;
+            generator.obj.defaultFieldExt = [];
+
+            if(null!=rowData.defaultFieldExt){
+                var defaultFieldExt = rowData.defaultFieldExt.split(',');
+                for(var i=0;i<defaultFieldExt.length;i++){
+                    generator.obj.defaultFieldExt.push(defaultFieldExt[i]);
+                }
+            }
+            generator.obj.defaultFieldEffective = rowData.defaultFieldEffective;
+
+            if($("#tableName").val() != null){
+                query();
+            }
+
+            layer.close(index);
+        });
+    });
+
     // 初始化
     generator.fn.init();
 
@@ -115,10 +143,12 @@ $(function(){
         timely: 2,
         theme:'yellow_top',
         fields: {
+            'datasource': 'required',
             'tableSchema': 'required',
             'tableName': 'required',
             'author': 'required',
-            'packagePath': 'required'
+            'packagePath': 'required',
+            'groupName': 'required'
         }
     });
 });
