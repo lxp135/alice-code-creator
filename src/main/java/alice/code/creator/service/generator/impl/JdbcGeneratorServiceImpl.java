@@ -115,7 +115,55 @@ public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
 
     @Override
     public List<ColumnGenerator> selectColumnNames(Long datasourceId,String tableSchema,String tableName) {
-        return null;
+        GeneratorConfigDatasource datasource = null;
+
+        if(datasourceId == -1){
+            datasource = new GeneratorConfigDatasource();
+            datasource.setDriverClassName(defaultDriverClassName);
+            datasource.setUrl(defaultUrl);
+            datasource.setUsername(defaultUsername);
+            datasource.setPassword(defaultPassword);
+        }else{
+            datasource = generatorConfigDatasourceService.selectOne(datasourceId);
+        }
+
+        if(datasource == null){
+            throw new BusinessException("数据源不存在");
+        }
+
+        String sql =
+                "SELECT" +
+                "   TABLE_SCHEMA," +
+                "   TABLE_NAME," +
+                "   COLUMN_NAME," +
+                "   DATA_TYPE," +
+                "   COLUMN_KEY," +
+                "   EXTRA," +
+                "   IS_NULLABLE," +
+                "   COLUMN_COMMENT " +
+                "FROM information_schema.COLUMNS " +
+                "WHERE" +
+                "    TABLE_NAME = '"+tableName+"'" +
+                "AND TABLE_SCHEMA = '"+tableSchema+"'";
+
+        List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
+
+        List<ColumnGenerator> columnGeneratorList = new ArrayList<>();
+
+        for(Map<String,Object> result : resultList){
+            ColumnGenerator columnGenerator = new ColumnGenerator();
+            columnGenerator.setTableName(String.valueOf(result.get("TABLE_NAME")));
+            columnGenerator.setTableSchema(String.valueOf(result.get("TABLE_SCHEMA")));
+            columnGenerator.setColumnName(String.valueOf(result.get("COLUMN_NAME")));
+            columnGenerator.setDataType(String.valueOf(result.get("DATA_TYPE")));
+            columnGenerator.setColumnKey(String.valueOf(result.get("COLUMN_KEY")));
+            columnGenerator.setExtra(String.valueOf(result.get("EXTRA")));
+            columnGenerator.setIsNullable(String.valueOf(result.get("IS_NULLABLE")));
+            columnGenerator.setColumnComment(String.valueOf(result.get("COLUMN_COMMENT")));
+            columnGeneratorList.add(columnGenerator);
+        }
+
+        return columnGeneratorList;
     }
 
     private List<Map<String,Object>> execute(String className,String url,String username,String password,String sql){

@@ -294,7 +294,8 @@ function query(){
         url:"/generator/selectColumnNames",
         postData:{
             tableSchema : $("#tableSchema").val(),
-            tableName : $("#tableName").val()
+            tableName : $("#tableName").val(),
+            datasourceId:$("#datasource").val()
         },
         page:1
     };
