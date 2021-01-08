@@ -141,6 +141,7 @@ public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
                 "   EXTRA," +
                 "   IS_NULLABLE," +
                 "   CHARACTER_MAXIMUM_LENGTH," +
+                "   NUMERIC_PRECISION," +
                 "   COLUMN_COMMENT " +
                 "FROM information_schema.COLUMNS " +
                 "WHERE" +
@@ -162,6 +163,9 @@ public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
             columnGenerator.setIsNullable(String.valueOf(result.get("IS_NULLABLE")));
             if(null!=result.get("CHARACTER_MAXIMUM_LENGTH")){
                 columnGenerator.setMaxLength(String.valueOf(result.get("CHARACTER_MAXIMUM_LENGTH")));
+            }
+            if(null!=result.get("NUMERIC_PRECISION")){
+                columnGenerator.setMaxLength(String.valueOf(result.get("NUMERIC_PRECISION")));
             }
             columnGenerator.setColumnComment(String.valueOf(result.get("COLUMN_COMMENT")));
             columnGeneratorList.add(columnGenerator);

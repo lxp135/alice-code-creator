@@ -10,9 +10,7 @@ var generator = {
                 dataType:'json',
                 url: "/generator/selectDatasource",
                 success:function (data) {
-                    $("#datasource").empty();
-                    $("#datasource").append("<option value=''>请选择</option>");
-                    // $("#tableSchema").select2("val", "");
+                    $("#datasource").empty().append("<option value=''>请选择</option>");
                     for (var i = 0; i < data.length; i++) {
                         $("#datasource").append("<option value='" + data[i].id + "'>" + data[i].datasourceName + "</option>");
                     }
@@ -32,9 +30,7 @@ var generator = {
                 },
                 url: "/generator/selectDatabase",
                 success:function (data) {
-                    $("#tableSchema").empty();
-                    $("#tableSchema").append("<option value=''>请选择</option>");
-                    // $("#tableSchema").select2("val", "");
+                    $("#tableSchema").empty().append("<option value=''>请选择</option>");
                     for (var i = 0; i < data.length; i++) {
                         $("#tableSchema").append("<option value='" + data[i].tableSchema + "'>" + data[i].tableSchema + "</option>");
                     }
@@ -73,11 +69,8 @@ $(function(){
 
     $('#datasource').change(function() {
         //初始化数据
-        $("#tableSchema").empty();
-        $("#tableSchema").append("<option value=''>请选择</option>");
-        $("#tableName").empty();
-        $("#tableName").append("<option value=''>请选择</option>");
-        // $("#tableName").select2("val", "");
+        $("#tableSchema").empty().append("<option value=''>请选择</option>");
+        $("#tableName").empty().append("<option value=''>请选择</option>");
         $("#tableComment").val("");
         clear();
 
@@ -89,9 +82,7 @@ $(function(){
 
     $('#tableSchema').change(function() {
         //初始化数据
-        $("#tableName").empty();
-        $("#tableName").append("<option value=''>请选择</option>");
-        // $("#tableName").select2("val", "");
+        $("#tableName").empty().append("<option value=''>请选择</option>");
         $("#tableComment").val("");
         clear();
 
@@ -136,7 +127,7 @@ $(function(){
  * 获取数据表
  */
 function selectTableNames(tableSchema){
-    jQuery.ajax({
+    jQuery.alicej.util.ajax({
         type : "POST",
         dataType:'json',
         url : "/generator/selectTableNames",
@@ -148,9 +139,6 @@ function selectTableNames(tableSchema){
             for(var i=0; i<data.length; i++){
                 $("#tableName").append("<option value='"+data[i].tableName+"' tableComment='"+data[i].tableComment+"'>"+data[i].tableName+"</option>");
             }
-        },
-        error: function (data) {
-            Commons.showError(data.responseText);
         }
     });
 }
@@ -183,6 +171,9 @@ function loadGrid(gridTable){
                 },
                 formatter: function (cellValue, options, rowObject) {
                     var result = "";
+                    if(cellValue !== undefined){
+                        result = cellValue;
+                    }
                     if(rowObject.columnName === generator.obj.defaultFieldUnique){
                         result = "是";
                     }
@@ -204,18 +195,14 @@ function loadGrid(gridTable){
                 },
                 formatter: function (cellValue, options, rowObject) {
                     var result = "";
-                    if(rowObject.columnName == "remark"){
-                        result = "是";
-                    }else if(rowObject.columnName == "create_user"){
-                        result = "是";
-                    }else if(rowObject.columnName == "create_time"){
-                        result = "是";
-                    }else if(rowObject.columnName == "update_user"){
-                        result = "是";
-                    }else if(rowObject.columnName == "update_time"){
-                        result = "是";
-                    }else if(rowObject.columnName == "ts"){
-                        result = "是";
+                    if(cellValue !== undefined){
+                        result = cellValue;
+                    }
+
+                    for(var i=0;i<generator.obj.defaultFieldExt.length;i++){
+                        if(rowObject.columnName === generator.obj.defaultFieldExt[i]){
+                            result = "是";
+                        }
                     }
                     return result;
                 }
@@ -228,7 +215,10 @@ function loadGrid(gridTable){
                 },
                 formatter: function (cellValue, options, rowObject) {
                     var result = "";
-                    if(rowObject.columnName == "is_delete"){
+                    if(cellValue !== undefined){
+                        result = cellValue;
+                    }
+                    if(rowObject.columnName === generator.obj.defaultFieldEffective){
                         result = "是";
                     }
                     return result;
@@ -245,12 +235,12 @@ function loadGrid(gridTable){
                 editable : true,
                 edittype: "select",
                 editoptions: {
-                    value : ":;CREATER_NAME:CREATER_NAME;CREATE_TIME:CREATE_TIME;OPERATOR_NAME:OPERATOR_NAME;OPERATE_TIME:OPERATE_TIME"
+                    value : ":;CREATOR_NAME:CREATOR_NAME;CREATE_TIME:CREATE_TIME;OPERATOR_NAME:OPERATOR_NAME;OPERATE_TIME:OPERATE_TIME"
                 },
                 formatter: function (cellValue, options, rowObject) {
                     var result = "";
                     if(rowObject.columnName == "create_user"){
-                        result = "CREATER_NAME";
+                        result = "CREATOR_NAME";
                     }else if(rowObject.columnName == "create_time"){
                         result = "CREATE_TIME";
                     }else if(rowObject.columnName == "update_user"){
