@@ -36,6 +36,10 @@ public class MysqlGenerator extends AbstractEntity {
      * 字段JSON
      */
     private String columnJson;
+    /**
+     * 分组编号
+     */
+    private Long groupId;
 
 
     public String getTableSchema() {
@@ -92,5 +96,13 @@ public class MysqlGenerator extends AbstractEntity {
 
     public void setTablePrefix(String tablePrefix) {
         this.tablePrefix = tablePrefix;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 }

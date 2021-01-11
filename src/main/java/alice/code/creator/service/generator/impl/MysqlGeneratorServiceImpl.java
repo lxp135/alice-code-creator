@@ -92,7 +92,9 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
             String currentProjectPath =  System.getProperty("java.io.tmpdir");
 
             // 模板列表
-            List<GeneratorConfigTemplate> generatorConfigTemplateList = generatorConfigTemplateService.selectAll();
+            GeneratorConfigTemplate generatorConfigTemplateQuery = new GeneratorConfigTemplate();
+            generatorConfigTemplateQuery.setGroupId(mysqlGenerator.getGroupId());
+            List<GeneratorConfigTemplate> generatorConfigTemplateList = generatorConfigTemplateService.selectList(generatorConfigTemplateQuery);
             for(GeneratorConfigTemplate template : generatorConfigTemplateList){
                 String importFilePath = currentProjectPath + GENERATOR_PATH + File.separator + hashMap.get("tableClassNameEN");
                 importFilePath =importFilePath + File.separator + hashMap.get("packagePath").toString().replaceAll("\\.","/");
@@ -149,7 +151,7 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
 
         if(StringUtils.isNotBlank(mysqlGenerator.getTablePrefix())){
             String tablePrefix = mysqlGenerator.getTablePrefix() + "_";
-            tableNameEN = tableNameEN.replaceAll(tablePrefix, "");
+            tableNameEN = tableNameEN.replaceFirst(tablePrefix, "");
             hashMap.put("tablePrefix", StringFormatUtils.getFirstOne(mysqlGenerator.getTableName())+"_");          // 表名前缀（带下划线）
         }else{
             hashMap.put("tablePrefix","");          // 表名前缀（带下划线）
