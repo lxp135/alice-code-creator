@@ -84,7 +84,8 @@ $(function () {
 
                 var params = jQuery.alicej.util.serialize("#editForm");
                 params.templateContent = page.obj.codeMirror.getTextArea().value;
-                params.isPrivate = 0;
+                params.groupId = page.obj.groupId; // 分组编号
+
                 jQuery.alicej.util.ajax({
                     type: "POST",
                     url: 'web/generator/template/update',
