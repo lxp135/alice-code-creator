@@ -17,6 +17,5 @@
         <mapper resource="mybatis/mysql/generator/GeneratorConfigMappingMapper.xml" />      <!-- 代码生成器映射关系配置表 -->
         <mapper resource="mybatis/mysql/generator/GeneratorConfigTemplateMapper.xml" />     <!-- 代码生成器模板配置表 -->
         <mapper resource="mybatis/mysql/generator/MysqlGeneratorMapper.xml" />              <!-- 代码生成器 -->
-        <mapper resource="mybatis/mysql/resource/ResourceFileMapper.xml" />                 <!-- 文件 -->
     </mappers>
 </configuration>

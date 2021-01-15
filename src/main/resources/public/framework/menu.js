@@ -8,11 +8,8 @@ $.ajax({
         $("[name=loginUserName]").html(data.userName);
 
         // 用户头像
-        if(data.userFace!=null&&""!=data.userFace){
-            $("#loginUserFace").attr("src","/web/resource/file/downloadImage/"+data.userFace+"?"+new Date().getTime());
-        }else{
-            $("#loginUserFace").attr("src","/assets/img/avatar.png");
-        }
+        $("#loginUserFace").attr("src","/assets/img/avatar.png");
+
         // 缓存登录用户信息
         $.alicej.cache.user = data;
     }
