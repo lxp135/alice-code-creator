@@ -162,6 +162,7 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
         hashMap.put("packagePath", mysqlGenerator.getPackagePath());            // 包路径
         hashMap.put("tableNameCH", mysqlGenerator.getTableComment());           // 中文表名
         hashMap.put("tableNameEN", tableNameEN);                                // 英文表名
+        hashMap.put("tableNameENUpperCase", tableNameEN.toUpperCase());                                // 英文表名（大写）
         hashMap.put("tablePrefixLowerCase", StringFormatUtils.getFirstOne(mysqlGenerator.getTableName()).toLowerCase());     // 表名前缀（小写）
         hashMap.put("tablePrefixUpperCase", StringFormatUtils.getFirstOne(mysqlGenerator.getTableName()).toUpperCase());     // 表名前缀（大写）
         hashMap.put("author", mysqlGenerator.getAuthor());                      // 创建者
