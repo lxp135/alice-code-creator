@@ -96,18 +96,18 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
             generatorConfigTemplateQuery.setGroupId(mysqlGenerator.getGroupId());
             List<GeneratorConfigTemplate> generatorConfigTemplateList = generatorConfigTemplateService.selectList(generatorConfigTemplateQuery);
             for(GeneratorConfigTemplate template : generatorConfigTemplateList){
-                String importFilePath = currentProjectPath + GENERATOR_PATH + File.separator + hashMap.get("tableClassNameEN");
+                String importFilePath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator + hashMap.get("tableClassNameEN");
                 importFilePath =importFilePath + File.separator + hashMap.get("packagePath").toString().replaceAll("\\.","/");
                 importFilePath =importFilePath + File.separator + template.getFilePath().replaceAll("\\.","/");
                 importFilePath =importFilePath + File.separator + hashMap.get("tableClassNameEN") + template.getFileName();
                 if(template.getTemplateCode().equals("sqlMapperTemplate")){
                     // sqlMapper文件路径与文件名规则
-                    importFilePath = currentProjectPath + GENERATOR_PATH + File.separator+hashMap.get("tableClassNameEN"); // 路径名称
+                    importFilePath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator+hashMap.get("tableClassNameEN"); // 路径名称
                     importFilePath = importFilePath + File.separator + hashMap.get("tableClassNameEN") + template.getFileName(); // 文件名
                 }
                 if(template.getFilePath().equals("html")){
                     // html与js文件路径与文件名规则
-                    importFilePath = currentProjectPath + GENERATOR_PATH + File.separator+hashMap.get("tableClassNameEN"); // 路径名称
+                    importFilePath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator+hashMap.get("tableClassNameEN"); // 路径名称
                     importFilePath = importFilePath + File.separator + "html" + File.separator + hashMap.get("htmlFileName") + template.getFileName(); // 文件名
                 }
                 File file = new File(importFilePath);
@@ -120,8 +120,8 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
             }
 
             // 生成压缩包
-            String folderSrcPath = currentProjectPath + GENERATOR_PATH + File.separator+hashMap.get("tableClassNameEN")+ File.separator;
-            String forderDesPath = currentProjectPath + GENERATOR_PATH + File.separator+hashMap.get("tableClassNameEN")+"_"+new Date().getTime()+".zip";
+            String folderSrcPath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator + hashMap.get("tableClassNameEN")+ File.separator;
+            String forderDesPath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator + hashMap.get("tableClassNameEN")+"_"+new Date().getTime()+".zip";
             FileZipUtils.zip(folderSrcPath, forderDesPath, "");
             // 下载文件
             File file = new File(forderDesPath);
