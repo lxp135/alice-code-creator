@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 29/01/2021 18:17:50
+ Date: 17/03/2021 15:44:13
 */
 
 SET NAMES utf8mb4;
@@ -176,8 +176,6 @@ CREATE TABLE `base_role_user_rel`  (
 -- ----------------------------
 INSERT INTO `base_role_user_rel` VALUES (3, 3, 3, '2018-06-28 09:52:16', '系统用户', '2018-06-28 09:52:16', '系统用户', 0);
 INSERT INTO `base_role_user_rel` VALUES (4, 1, 3, '2018-06-28 09:52:57', '系统用户', '2018-06-28 09:52:57', '系统用户', 0);
-INSERT INTO `base_role_user_rel` VALUES (29, 3, 5, '2020-12-12 11:38:17', 'liuxp2', '2020-12-12 11:38:17', 'liuxp2', 0);
-INSERT INTO `base_role_user_rel` VALUES (30, 3, 6, '2021-01-04 15:29:46', 'test1', '2021-01-04 15:29:46', 'test1', 0);
 
 -- ----------------------------
 -- Table structure for base_user
@@ -208,8 +206,6 @@ CREATE TABLE `base_user`  (
 -- Records of base_user
 -- ----------------------------
 INSERT INTO `base_user` VALUES (3, 'liuxp', '刘小平', '$2a$10$wU9uXTBGaa7dqydOKxAjzeN.kKyk8YUvQ.d.KbT4ubGJSkZy.lw1K', 1, '', '', NULL, '', '1986-09-15', NULL, 1, '2018-02-03 20:11:18', 'liuxp', '2020-11-13 14:51:37', '刘小平', 0);
-INSERT INTO `base_user` VALUES (5, 'liuxp2', 'liuxp2', '$2a$10$vfTRsB0a4hFrCvJLSJd/de9.NVQ6tuV.8FAuH7pwOMUnToC0w4tdu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2020-12-12 11:38:17', 'liuxp2', '2020-12-12 11:38:17', 'liuxp2', 0);
-INSERT INTO `base_user` VALUES (6, 'test1', 'test1', '$2a$10$dwsW7RHykqp1hGkVvWUUeO845BF.VGIBIRZAedvRqBpUXHWYGQbOm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2021-01-04 15:29:46', 'test1', '2021-01-04 15:29:46', 'test1', 0);
 
 -- ----------------------------
 -- Table structure for generator_config_datasource
@@ -236,8 +232,6 @@ CREATE TABLE `generator_config_datasource`  (
 -- ----------------------------
 -- Records of generator_config_datasource
 -- ----------------------------
-INSERT INTO `generator_config_datasource` VALUES (1, '云社区测试环境', 'MySQL', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://10.10.231.67:3306/gov_cloud_service_finance?characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true', 'root', 'Viewhigh*132', 3, '刘小平', '2021-01-04 11:39:38', '刘小平', '2021-01-04 11:40:00', '刘小平', 0);
-INSERT INTO `generator_config_datasource` VALUES (2, '火查查公网开发数据库', 'MySQL', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://lxp135.asuscomm.com:3306/disaster_platform_basic?characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai', 'disaster', '123456', 3, '刘小平', '2021-01-08 15:38:53', '刘小平', '2021-01-08 15:38:53', '刘小平', 0);
 
 -- ----------------------------
 -- Table structure for generator_config_group
@@ -263,13 +257,11 @@ CREATE TABLE `generator_config_group`  (
   `update_user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '模板分组' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '模板分组' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of generator_config_group
 -- ----------------------------
-INSERT INTO `generator_config_group` VALUES (2, '财务云社区 - 会计核算', '望海政府事业部微服务架构下的财务云社区会计核算服务。', 7, 'contact@liuxp.me', 'com.vh.gov.cloud.finance', 't', 'id', 'created_by,created_time,last_modified_by,last_modified_time,tenant_id', 'is_deleted', 3, '刘小平', 1, '2021-01-04 14:42:25', '刘小平', '2021-01-15 11:44:26', '刘小平', 0);
-INSERT INTO `generator_config_group` VALUES (3, '财务云社区 - 基础平台', '望海政府事业部微服务架构下的财务云社区基础平台服务。', 7, 'contact@liuxp.me', 'com.vh.gov.cloud.platform', 't', 'id', 'created_by,created_time,last_modified_by,last_modified_time', 'is_deleted', 3, '刘小平', 0, '2021-01-04 15:23:10', '刘小平', '2021-01-28 11:34:45', '刘小平', 0);
 INSERT INTO `generator_config_group` VALUES (4, 'ALICE CODECREATOR', '代码生成器自身模板组', 13, 'contact@liuxp.me', 'alice.code.creator', '', 'id', 'create_user,create_time,update_user,update_time', 'is_delete', 3, '刘小平', 1, '2021-01-04 16:33:06', '刘小平', '2021-01-04 16:33:06', '刘小平', 0);
 INSERT INTO `generator_config_group` VALUES (6, '私人云平台 - 基础平台', '私人云平台，基础数据服务', 15, 'contact@liuxp.me', 'org.liuxp.cloud.platform.basic', 'basic', 'id', 'remark,create_user,create_time,update_user,update_time,ts', 'is_delete', 3, '刘小平', 0, '2021-01-14 17:55:00', '刘小平', '2021-01-15 10:11:01', '刘小平', 0);
 
@@ -359,7 +351,7 @@ CREATE TABLE `generator_config_template`  (
   `update_user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新用户',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志 0：未删除 1：已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成器模板' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成器模板' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of generator_config_template
@@ -407,5 +399,6 @@ INSERT INTO `generator_config_template` VALUES (48, 'serviceTemplate', 'Service�
 INSERT INTO `generator_config_template` VALUES (49, 'serviceImplTemplate', 'Service层服务实现类模板', 'package $!{packagePath}.service.impl;\n\nimport com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;\nimport com.baomidou.mybatisplus.core.metadata.IPage;\nimport $!{packagePath}.common.util.ParamUtil;\nimport $!{packagePath}.mapper.$!{tableClassNameEN}Mapper;\nimport $!{packagePath}.domain.dto.$!{tableClassNameEN}Dto;\nimport $!{packagePath}.domain.entity.$!{tableClassNameEN}Entity;\nimport $!{packagePath}.service.$!{tableClassNameEN}Service;\nimport org.springframework.stereotype.Service;\n\nimport java.util.List;\n\n/**\n * $!{tableNameCH}Service层实现类\n * User: $!{author}\n * DateTime: $!{dateTime}\n **/\n@Service\npublic class $!{tableClassNameEN}ServiceImpl extends AbstractServiceImpl<$!{tableClassNameEN}Mapper, $!{tableClassNameEN}Entity> implements $!{tableClassNameEN}Service {\n\n  @Override\n    public IPage<$!{tableClassNameEN}Entity> page($!{tableClassNameEN}Dto $!{tablePropertyNameEN}Dto) {\n\n        // 组装分页参数\n        IPage<$!{tableClassNameEN}Entity> page = ParamUtil.buildPage($!{tablePropertyNameEN}Dto.getCurrent(),$!{tablePropertyNameEN}Dto.getSize(),$!{tablePropertyNameEN}Dto.getSidx(),$!{tablePropertyNameEN}Dto.getSord());\n        // 组装查询参数\n        QueryWrapper<$!{tableClassNameEN}Entity> queryWrapper = new QueryWrapper<>();\n\n        return super.page(page,queryWrapper);\n    }\n\n    @Override\n    public List<$!{tableClassNameEN}Entity> list($!{tableClassNameEN}Dto $!{tablePropertyNameEN}Dto) {\n        // 组装查询参数\n        QueryWrapper<$!{tableClassNameEN}Entity> queryWrapper = new QueryWrapper<>();\n\n        return super.list(queryWrapper);\n    }\n  \n}', 'service.impl', 'ServiceImpl.java', 3, '财务云社区 - 基础平台', '2021-01-28 11:33:28', '刘小平', '2021-01-28 11:33:28', '刘小平', 0);
 INSERT INTO `generator_config_template` VALUES (50, 'daoTemplate', 'Dao层服务接口类模板', 'package $!{packagePath}.dao;\n\nimport com.baomidou.mybatisplus.core.mapper.BaseMapper;\nimport $!{packagePath}.domain.entity.$!{tableClassNameEN}Entity;\nimport org.apache.ibatis.annotations.Mapper;\n\n/**\n * $!{tableNameCH}Mapper层接口类\n * User: $!{author}\n * DateTime: $!{dateTime}\n **/\n@Mapper\npublic interface $!{tableClassNameEN}Mapper extends BaseMapper<$!{tableClassNameEN}Entity>{\n\n}', 'mapper', 'Mapper.java', 3, '财务云社区 - 基础平台', '2021-01-28 11:34:06', '刘小平', '2021-01-28 11:34:06', '刘小平', 0);
 INSERT INTO `generator_config_template` VALUES (51, 'sqlMapperTemplate', 'SqlMapper模板', '<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"\n	\"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n<!-- $!{tableNameCH}SQL author by $!{author} -->\n<mapper namespace=\"$!{packagePath}.mapper.$!{tableClassNameEN}Mapper\" >\n\n</mapper>', 'mapper', 'Mapper.xml', 3, '财务云社区 - 基础平台', '2021-01-28 11:34:45', '刘小平', '2021-01-28 11:34:45', '刘小平', 0);
+INSERT INTO `generator_config_template` VALUES (52, 'insertSql', '插入语句', '#foreach($med in [1..10])\n#foreach($year in [2018..2021])\n#foreach($month in [1..12])\nINSERT INTO $!{tablePrefix}$!{tableNameEN} ( med_code, med_name, med_short_name, med_type, year_code, month_code, org_code, org_name, med_grade #foreach(${column} in ${columns}) #if($!{column.javaType}==\"BigDecimal\"),$!{column.columnNameEN} #end #end)\nVALUES(\'med_code_${med}\',\'医疗机构_${med}\',\'简称_${med}\',1,${year}, #if($month<10) CONCAT( \'0\', ${month}) #else ${month} #end, #if($med<6) \'org_code_1\',\'卫健委1\' #else \'org_code_2\',\'卫健委2\' #end,${med} #foreach(${column} in ${columns}) #if($!{column.javaType}==\"BigDecimal\") ,floor(rand() * 100) #end #end );\n#end\n#end\n#end', 'sql', '.sql', 7, '龙岗报表数据生成', '2021-03-11 11:54:16', '刘小平', '2021-03-11 16:44:29', '刘小平', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
