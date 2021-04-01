@@ -78,7 +78,7 @@
 
 加微信群交流，公众号后台回复「**加群**」即可。
 
-![公众号图片](*.jpg)
+![公众号图片](https://creator.liuxp.me/img/wechat.png)
 
 ## 许可证
 
