@@ -1,5 +1,12 @@
 package alice.code.creator.service.generator.impl;
 
+import alice.code.creator.common.util.FileZipUtils;
+import alice.code.creator.common.util.StringFormatUtils;
+import alice.code.creator.common.util.VelocityUtils;
+import alice.code.creator.domain.model.generator.*;
+import alice.code.creator.service.generator.GeneratorConfigMappingService;
+import alice.code.creator.service.generator.GeneratorConfigTemplateService;
+import alice.code.creator.service.generator.GeneratorService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
@@ -11,14 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import alice.code.creator.common.util.FileZipUtils;
-import alice.code.creator.common.util.StringFormatUtils;
-import alice.code.creator.common.util.VelocityUtils;
-import alice.code.creator.dao.generator.MysqlGeneratorDao;
-import alice.code.creator.domain.model.generator.*;
-import alice.code.creator.service.generator.GeneratorConfigMappingService;
-import alice.code.creator.service.generator.GeneratorConfigTemplateService;
-import alice.code.creator.service.generator.MysqlGeneratorService;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -36,13 +35,9 @@ import java.util.List;
  * @author contact@liuxp.me
  */
 @Service
-public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
+public class GeneratorServiceImpl implements GeneratorService {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
-    // MYSQL元数据生成代码DAO接口
-    @Resource
-    private MysqlGeneratorDao mysqlGeneratorDao;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // 模板Service
     @Resource
@@ -54,32 +49,6 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
 
     // 代码生成保存路径
     private static final String GENERATOR_PATH = "generator";
-
-    /**
-     * 查询数据库列表
-     * @return 数据库列表
-     */
-    public List<ColumnGenerator> selectDatabase(){
-        return mysqlGeneratorDao.selectList("selectDatabase");
-    }
-
-    /**
-     * 根据数据库名查询所有表
-     * @param columnGenerator 字段信息实体类
-     * @return 表列表
-     */
-    public List<ColumnGenerator> selectTableNames(ColumnGenerator columnGenerator){
-        return mysqlGeneratorDao.selectList("selectTableNames", columnGenerator);
-    }
-
-    /**
-     * 根据数据库名查询所有字段
-     * @param columnGenerator 字段信息实体类
-     * @return 字段列表
-     */
-    public List<ColumnGenerator> selectColumnNames(ColumnGenerator columnGenerator){
-        return mysqlGeneratorDao.selectList("selectColumnNames", columnGenerator);
-    }
 
     /**
      * 生成代码-压缩包下载

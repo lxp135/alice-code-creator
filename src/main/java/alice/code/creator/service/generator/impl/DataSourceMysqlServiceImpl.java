@@ -3,12 +3,9 @@ package alice.code.creator.service.generator.impl;
 import alice.code.creator.common.framework.context.BusinessException;
 import alice.code.creator.domain.model.generator.ColumnGenerator;
 import alice.code.creator.domain.model.generator.GeneratorConfigDatasource;
-import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
-import alice.code.creator.service.generator.JdbcGeneratorService;
-import org.springframework.beans.factory.annotation.Value;
+import alice.code.creator.service.generator.DataSourceService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,37 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
-
-    @Resource
-    private GeneratorConfigDatasourceService generatorConfigDatasourceService;
-
-    @Value("${spring.datasource.driver-class-name}")
-    private String defaultDriverClassName;
-
-    @Value("${spring.datasource.url}")
-    private String defaultUrl;
-
-    @Value("${spring.datasource.username}")
-    private String defaultUsername;
-
-    @Value("${spring.datasource.password}")
-    private String defaultPassword;
+public class DataSourceMysqlServiceImpl implements DataSourceService {
 
     @Override
-    public List<ColumnGenerator> selectDatabase(Long datasourceId) {
-
-        GeneratorConfigDatasource datasource = null;
-
-        if(datasourceId == -1){
-            datasource = new GeneratorConfigDatasource();
-            datasource.setDriverClassName(defaultDriverClassName);
-            datasource.setUrl(defaultUrl);
-            datasource.setUsername(defaultUsername);
-            datasource.setPassword(defaultPassword);
-        }else{
-            datasource = generatorConfigDatasourceService.selectOne(datasourceId);
-        }
+    public List<ColumnGenerator> selectDatabase(GeneratorConfigDatasource datasource) {
 
         if(datasource == null){
             throw new BusinessException("数据源不存在");
@@ -74,19 +44,7 @@ public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
     }
 
     @Override
-    public List<ColumnGenerator> selectTableNames(Long datasourceId,String tableSchema) {
-
-        GeneratorConfigDatasource datasource = null;
-
-        if(datasourceId == -1){
-            datasource = new GeneratorConfigDatasource();
-            datasource.setDriverClassName(defaultDriverClassName);
-            datasource.setUrl(defaultUrl);
-            datasource.setUsername(defaultUsername);
-            datasource.setPassword(defaultPassword);
-        }else{
-            datasource = generatorConfigDatasourceService.selectOne(datasourceId);
-        }
+    public List<ColumnGenerator> selectTableNames(GeneratorConfigDatasource datasource,String tableSchema) {
 
         if(datasource == null){
             throw new BusinessException("数据源不存在");
@@ -97,7 +55,7 @@ public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
                 "FROM information_schema.TABLES " +
                 "WHERE" +
                 "   TABLE_SCHEMA = '"+tableSchema+"'" +
-                "GROUP BY TABLE_NAME";
+                "GROUP BY TABLE_NAME,TABLE_COMMENT";
 
         List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
 
@@ -114,18 +72,7 @@ public class JdbcGeneratorServiceImpl implements JdbcGeneratorService {
     }
 
     @Override
-    public List<ColumnGenerator> selectColumnNames(Long datasourceId,String tableSchema,String tableName) {
-        GeneratorConfigDatasource datasource = null;
-
-        if(datasourceId == -1){
-            datasource = new GeneratorConfigDatasource();
-            datasource.setDriverClassName(defaultDriverClassName);
-            datasource.setUrl(defaultUrl);
-            datasource.setUsername(defaultUsername);
-            datasource.setPassword(defaultPassword);
-        }else{
-            datasource = generatorConfigDatasourceService.selectOne(datasourceId);
-        }
+    public List<ColumnGenerator> selectColumnNames(GeneratorConfigDatasource datasource,String tableSchema,String tableName) {
 
         if(datasource == null){
             throw new BusinessException("数据源不存在");

@@ -2,7 +2,8 @@ package alice.code.creator.controller.generator;
 
 import alice.code.creator.domain.model.generator.GeneratorConfigDatasource;
 import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
-import alice.code.creator.service.generator.JdbcGeneratorService;
+import alice.code.creator.service.generator.DataSourceService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import alice.code.creator.controller.BaseController;
 import alice.code.creator.domain.model.generator.ColumnGenerator;
 import alice.code.creator.domain.model.generator.MysqlGenerator;
-import alice.code.creator.service.generator.MysqlGeneratorService;
+import alice.code.creator.service.generator.GeneratorService;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -27,17 +28,29 @@ import java.util.Map;
 @Controller
 @RequestMapping("/generator")
 @Secured("DEVELOP_GENERATOR")
-public class MysqlGeneratorController extends BaseController {
+public class GeneratorController extends BaseController {
 
     // MySQL代码生成Service
 	@Resource
-	private MysqlGeneratorService mysqlGeneratorService;
+	private GeneratorService generatorService;
 
 	@Resource
-	private JdbcGeneratorService jdbcGeneratorService;
+	private DataSourceService dataSourceService;
 
 	@Resource
 	private GeneratorConfigDatasourceService generatorConfigDatasourceService;
+
+	@Value("${spring.datasource.driver-class-name}")
+	private String defaultDriverClassName;
+
+	@Value("${spring.datasource.url}")
+	private String defaultUrl;
+
+	@Value("${spring.datasource.username}")
+	private String defaultUsername;
+
+	@Value("${spring.datasource.password}")
+	private String defaultPassword;
 
 	/**
 	 * 取得数据源
@@ -67,7 +80,11 @@ public class MysqlGeneratorController extends BaseController {
 	@RequestMapping(value = "/selectDatabase", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<ColumnGenerator> selectDatabase(Long datasourceId) {
-		return jdbcGeneratorService.selectDatabase(datasourceId);
+
+		// 取得数据源信息
+		GeneratorConfigDatasource datasource = getDataSource(datasourceId);
+
+		return dataSourceService.selectDatabase(datasource);
 	}
 
 	/**
@@ -77,7 +94,10 @@ public class MysqlGeneratorController extends BaseController {
 	@ResponseBody
 	public List<ColumnGenerator> selectTableNames(Long datasourceId,String tableSchema) {
 
-		return jdbcGeneratorService.selectTableNames(datasourceId,tableSchema);
+		// 取得数据源信息
+		GeneratorConfigDatasource datasource = getDataSource(datasourceId);
+
+		return dataSourceService.selectTableNames(datasource,tableSchema);
 	}
 
 	/**
@@ -91,7 +111,10 @@ public class MysqlGeneratorController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> selectColumnNames(Long datasourceId,String tableSchema,String tableName) {
 
-		List<ColumnGenerator> columnGeneratorList =  jdbcGeneratorService.selectColumnNames(datasourceId,tableSchema,tableName);
+		// 取得数据源信息
+		GeneratorConfigDatasource datasource = getDataSource(datasourceId);
+
+		List<ColumnGenerator> columnGeneratorList =  dataSourceService.selectColumnNames(datasource,tableSchema,tableName);
 		Map<String, Object> result = new HashMap<>();
 		result.put("root", columnGeneratorList);
 		return result;
@@ -104,7 +127,26 @@ public class MysqlGeneratorController extends BaseController {
 	@ResponseBody
 	public ResponseEntity<byte[]> downLoad(MysqlGenerator mysqlGenerator){
 		HttpHeaders headers = new HttpHeaders();
-		return mysqlGeneratorService.generatorDownLoad(mysqlGenerator, headers);
+		return generatorService.generatorDownLoad(mysqlGenerator, headers);
+	}
+
+	/**
+	 * 取得数据源信息
+	 * @param datasourceId 数据源编号
+	 * @return 数据源信息
+	 */
+	private GeneratorConfigDatasource getDataSource(Long datasourceId){
+		GeneratorConfigDatasource datasource = null;
+		if(datasourceId == -1){
+			datasource = new GeneratorConfigDatasource();
+			datasource.setDriverClassName(defaultDriverClassName);
+			datasource.setUrl(defaultUrl);
+			datasource.setUsername(defaultUsername);
+			datasource.setPassword(defaultPassword);
+		}else{
+			datasource = generatorConfigDatasourceService.selectOne(datasourceId);
+		}
+		return datasource;
 	}
 
 
