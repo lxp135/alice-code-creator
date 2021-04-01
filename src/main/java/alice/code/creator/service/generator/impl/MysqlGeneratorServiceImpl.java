@@ -165,11 +165,10 @@ public class MysqlGeneratorServiceImpl implements MysqlGeneratorService {
         hashMap.put("tableNameENUpperCase", tableNameEN.toUpperCase());                                // 英文表名（大写）
         hashMap.put("tablePrefixLowerCase", StringFormatUtils.getFirstOne(mysqlGenerator.getTableName()).toLowerCase());     // 表名前缀（小写）
         hashMap.put("tablePrefixUpperCase", StringFormatUtils.getFirstOne(mysqlGenerator.getTableName()).toUpperCase());     // 表名前缀（大写）
-        hashMap.put("author", mysqlGenerator.getAuthor());                      // 创建者
-        hashMap.put("dateTime", sdf.format(new Date()));                        // 创建日期
-
         hashMap.put("tableClassNameEN", StringFormatUtils.humpToUpperCaseFirstOne(tableNameEN, "_"));
         hashMap.put("tablePropertyNameEN", StringFormatUtils.humpToLowerCaseFirstOne(tableNameEN, "_"));
+        hashMap.put("author", mysqlGenerator.getAuthor());                      // 创建者
+        hashMap.put("dateTime", sdf.format(new Date()));                        // 创建日期
 
         // 数据类型映射
         HashMap<String, GeneratorConfigMapping> generatorConfigMappingHashMap = new HashMap<>();
