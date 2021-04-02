@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class DataSourceMysqlServiceImpl implements DataSourceService {
+@Service("DataSourceMySQLServiceImpl")
+public class DataSourceMySQLServiceImpl implements DataSourceService {
 
     @Override
     public List<ColumnGenerator> selectDatabase(GeneratorConfigDatasource datasource) {

@@ -1,5 +1,7 @@
 package alice.code.creator.controller.generator;
 
+import alice.code.creator.common.framework.config.BeanConfig;
+import alice.code.creator.domain.enums.DatasourceTypeEnum;
 import alice.code.creator.domain.model.generator.GeneratorConfigDatasource;
 import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
 import alice.code.creator.service.generator.DataSourceService;
@@ -35,10 +37,10 @@ public class GeneratorController extends BaseController {
 	private GeneratorService generatorService;
 
 	@Resource
-	private DataSourceService dataSourceService;
+	private GeneratorConfigDatasourceService generatorConfigDatasourceService;
 
 	@Resource
-	private GeneratorConfigDatasourceService generatorConfigDatasourceService;
+	private BeanConfig beanConfig;
 
 	@Value("${spring.datasource.driver-class-name}")
 	private String defaultDriverClassName;
@@ -84,7 +86,7 @@ public class GeneratorController extends BaseController {
 		// 取得数据源信息
 		GeneratorConfigDatasource datasource = getDataSource(datasourceId);
 
-		return dataSourceService.selectDatabase(datasource);
+		return getDataSourceService(datasource.getDatasourceType()).selectDatabase(datasource);
 	}
 
 	/**
@@ -97,7 +99,7 @@ public class GeneratorController extends BaseController {
 		// 取得数据源信息
 		GeneratorConfigDatasource datasource = getDataSource(datasourceId);
 
-		return dataSourceService.selectTableNames(datasource,tableSchema);
+		return getDataSourceService(datasource.getDatasourceType()).selectTableNames(datasource,tableSchema);
 	}
 
 	/**
@@ -114,7 +116,7 @@ public class GeneratorController extends BaseController {
 		// 取得数据源信息
 		GeneratorConfigDatasource datasource = getDataSource(datasourceId);
 
-		List<ColumnGenerator> columnGeneratorList =  dataSourceService.selectColumnNames(datasource,tableSchema,tableName);
+		List<ColumnGenerator> columnGeneratorList = getDataSourceService(datasource.getDatasourceType()).selectColumnNames(datasource,tableSchema,tableName);
 		Map<String, Object> result = new HashMap<>();
 		result.put("root", columnGeneratorList);
 		return result;
@@ -140,6 +142,7 @@ public class GeneratorController extends BaseController {
 		if(datasourceId == -1){
 			datasource = new GeneratorConfigDatasource();
 			datasource.setDriverClassName(defaultDriverClassName);
+			datasource.setDatasourceType(DatasourceTypeEnum.MySQL.getCode());
 			datasource.setUrl(defaultUrl);
 			datasource.setUsername(defaultUsername);
 			datasource.setPassword(defaultPassword);
@@ -147,6 +150,15 @@ public class GeneratorController extends BaseController {
 			datasource = generatorConfigDatasourceService.selectOne(datasourceId);
 		}
 		return datasource;
+	}
+
+	/**
+	 * 取得数据源实现类
+	 * @param datasourceType 数据源类型
+	 * @return 数据源实现类
+	 */
+	private DataSourceService getDataSourceService(String datasourceType){
+		return beanConfig.getSourceService("DataSource"+datasourceType+"ServiceImpl");
 	}
 
 
