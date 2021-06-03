@@ -5,6 +5,10 @@ import alice.code.creator.domain.model.generator.GeneratorConfigDatasource;
 
 import java.util.List;
 
+/**
+ * 数据库元数据查询
+ * @author contact@liuxp.me
+ */
 public interface DataSourceService {
     /**
      * 查询数据库列表

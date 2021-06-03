@@ -14,11 +14,11 @@ import java.util.Map;
 
 /**
  * 数据库元数据查询
- * MySQL实现类
+ * SQLServer实现类
  * @author contact@liuxp.me
  */
-@Service("DataSourceMySQLServiceImpl")
-public class DataSourceMySQLServiceImpl implements DataSourceService {
+@Service("DataSourceSQLServerServiceImpl")
+public class DataSourceSQLServerServiceImpl implements DataSourceService {
 
     @Override
     public List<ColumnGenerator> selectDatabase(GeneratorConfigDatasource datasource) {
@@ -27,13 +27,12 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
             throw new BusinessException("数据源不存在");
         }
 
-        String sql = "SELECT TABLE_SCHEMA FROM information_schema.COLUMNS" +
+        String sql = "SELECT NAME FROM SYSDATABASES" +
                 "        WHERE" +
-                "            TABLE_SCHEMA <> 'information_schema'" +
-                "            AND TABLE_SCHEMA <> 'performance_schema'" +
-                "            AND TABLE_SCHEMA <> 'mysql'" +
-                "            AND TABLE_SCHEMA <> 'sys'" +
-                "        GROUP BY TABLE_SCHEMA";
+                "            NAME <> 'master'" +
+                "            AND NAME <> 'tempdb'" +
+                "            AND NAME <> 'model'" +
+                "            AND NAME <> 'msdb'";
 
         List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
 
@@ -41,7 +40,7 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
 
         for(Map<String,Object> result : resultList){
             ColumnGenerator columnGenerator = new ColumnGenerator();
-            columnGenerator.setTableSchema(String.valueOf(result.get("TABLE_SCHEMA")));
+            columnGenerator.setTableSchema(String.valueOf(result.get("NAME")));
             columnGeneratorList.add(columnGenerator);
         }
 
@@ -55,12 +54,14 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
             throw new BusinessException("数据源不存在");
         }
 
-        String sql =
-                "SELECT TABLE_NAME,TABLE_COMMENT " +
-                "FROM information_schema.TABLES " +
-                "WHERE" +
-                "   TABLE_SCHEMA = '"+tableSchema+"'" +
-                "GROUP BY TABLE_NAME,TABLE_COMMENT";
+        String sql = "use "+ tableSchema +"; " +
+                "SELECT DISTINCT d.name TABLE_NAME, f.value TABLE_COMMENT " +
+                "FROM syscolumns a " +
+                "LEFT JOIN systypes b ON a.xusertype= b.xusertype " +
+                "INNER JOIN sysobjects d ON a.id= d.id AND d.xtype= 'U' AND d.name<> 'dtproperties' " +
+                "LEFT JOIN syscomments e ON a.cdefault= e.id " +
+                "LEFT JOIN sys.extended_properties g ON a.id= G.major_id AND a.colid= g.minor_id " +
+                "LEFT JOIN sys.extended_properties f ON d.id= f.major_id AND f.minor_id= 0 ";
 
         List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
 
@@ -84,21 +85,26 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
         }
 
         String sql =
-                "SELECT" +
-                "   TABLE_SCHEMA," +
-                "   TABLE_NAME," +
-                "   COLUMN_NAME," +
-                "   DATA_TYPE," +
-                "   COLUMN_KEY," +
-                "   EXTRA," +
-                "   IS_NULLABLE," +
-                "   CHARACTER_MAXIMUM_LENGTH," +
-                "   NUMERIC_PRECISION," +
-                "   COLUMN_COMMENT " +
-                "FROM information_schema.COLUMNS " +
-                "WHERE" +
-                "    TABLE_NAME = '"+tableName+"'" +
-                "AND TABLE_SCHEMA = '"+tableSchema+"'";
+                "USE "+tableSchema+"; " +
+                        "SELECT  " +
+                        "'"+tableSchema+"' AS TABLE_SCHEMA,"+
+                        "D.NAME AS TABLE_NAME, " +
+                        "A.NAME AS COLUMN_NAME, " +
+                        "B.NAME AS DATA_TYPE, " +
+                        "CASE WHEN EXISTS(SELECT 1 FROM SYSOBJECTS WHERE XTYPE='PK' AND PARENT_OBJ=A.ID AND NAME IN ( " +
+                        "SELECT NAME FROM SYSINDEXES WHERE INDID IN( " +
+                        "SELECT INDID FROM SYSINDEXKEYS WHERE ID = A.ID AND COLID=A.COLID))) THEN 'PRI' ELSE '' END AS COLUMN_KEY, " +
+                        // EXTRA
+                        "CASE WHEN A.ISNULLABLE=1 THEN 'YES'ELSE 'NO' END AS IS_NULLABLE, " +
+                        "COLUMNPROPERTY(A.ID,A.NAME,'PRECISION') AS DATA_LENGTH, " +
+                        "ISNULL(G.[VALUE],'')  AS COLUMN_COMMENT " +
+                        "FROM SYSCOLUMNS A  " +
+                        "LEFT JOIN SYSTYPES B ON A.XUSERTYPE=B.XUSERTYPE  " +
+                        "INNER JOIN SYSOBJECTS D ON A.ID=D.ID  AND D.XTYPE='U' AND  D.NAME<>'DTPROPERTIES'  " +
+                        "LEFT JOIN SYSCOMMENTS E ON A.CDEFAULT=E.ID  " +
+                        "LEFT JOIN sys.extended_properties G ON A.ID=G.major_id AND A.COLID=G.minor_id  " +
+                        "WHERE D.NAME = '"+tableName+"'" +
+                        "ORDER BY A.ID,A.COLORDER "  ;
 
         List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
 
@@ -107,18 +113,13 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
         for(Map<String,Object> result : resultList){
             ColumnGenerator columnGenerator = new ColumnGenerator();
             columnGenerator.setTableName(String.valueOf(result.get("TABLE_NAME")));
-            columnGenerator.setTableSchema(String.valueOf(result.get("TABLE_SCHEMA")));
+            columnGenerator.setTableSchema(tableSchema);
             columnGenerator.setColumnName(String.valueOf(result.get("COLUMN_NAME")));
             columnGenerator.setDataType(String.valueOf(result.get("DATA_TYPE")));
             columnGenerator.setColumnKey(String.valueOf(result.get("COLUMN_KEY")));
             columnGenerator.setExtra(String.valueOf(result.get("EXTRA")));
             columnGenerator.setIsNullable(String.valueOf(result.get("IS_NULLABLE")));
-            if(null!=result.get("CHARACTER_MAXIMUM_LENGTH")){
-                columnGenerator.setMaxLength(String.valueOf(result.get("CHARACTER_MAXIMUM_LENGTH")));
-            }
-            if(null!=result.get("NUMERIC_PRECISION")){
-                columnGenerator.setMaxLength(String.valueOf(result.get("NUMERIC_PRECISION")));
-            }
+            columnGenerator.setMaxLength(String.valueOf(result.get("DATA_LENGTH")));
             columnGenerator.setColumnComment(String.valueOf(result.get("COLUMN_COMMENT")));
             columnGeneratorList.add(columnGenerator);
         }
@@ -131,7 +132,7 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
         List<Map<String,Object>> result = new ArrayList<>();
 
         // 第一步：加载驱动
-        try {// 加载 MySql 的驱动类 将驱动注册到 DriverManager 当中
+        try {// 加载 SQLServer 的驱动类 将驱动注册到 DriverManager 当中
             Class.forName(className);
         } catch (ClassNotFoundException e) {
             System.out.println("加载驱动失败！请检查驱动名称");
@@ -190,10 +191,10 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
     }
 
     public static void main(String[] args) {
-        String ClassName = "com.mysql.cj.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/alice_code_creator?characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai";
-        String username = "root";
-        String password = "root";
+        String ClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        String url = "jdbc:sqlserver://10.0.23.60:1433;DatabaseName=master";
+        String username = "sa";
+        String password = "SYviewhigh@123456";
 
         // 第一步：加载驱动
         try {// 加载 MySql 的驱动类 将驱动注册到 DriverManager 当中
@@ -211,7 +212,14 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
             // 第二步：获取连接
             con = DriverManager.getConnection(url, username, password);
             // 第三步：创建 sql
-            sql = "SELECT * FROM base_user";
+            sql = "use hn_gov_assets; " +
+                    "SELECT DISTINCT d.name, f.value " +
+                    "FROM syscolumns a " +
+                    "LEFT JOIN systypes b ON a.xusertype= b.xusertype " +
+                    "INNER JOIN sysobjects d ON a.id= d.id AND d.xtype= 'U' AND d.name<> 'dtproperties' " +
+                    "LEFT JOIN syscomments e ON a.cdefault= e.id " +
+                    "LEFT JOIN sys.extended_properties g ON a.id= G.major_id AND a.colid= g.minor_id " +
+                    "LEFT JOIN sys.extended_properties f ON d.id= f.major_id AND f.minor_id= 0 ";
             // 第四步：获取 statement 类
             statement = con.createStatement();
             // 第五步：获取到执行后的结果集 resultSet
@@ -246,4 +254,5 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
             }
         }
     }
+
 }

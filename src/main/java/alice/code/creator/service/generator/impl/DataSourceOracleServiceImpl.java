@@ -12,6 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 数据库元数据查询
+ * Oracle实现类
+ * @author contact@liuxp.me
+ */
 @Service("DataSourceOracleServiceImpl")
 public class DataSourceOracleServiceImpl implements DataSourceService {
 
