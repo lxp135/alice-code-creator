@@ -131,9 +131,10 @@ $(function(){
         var tableComment = $(this).find('option:selected').attr("tableComment");
         $("#tableComment").val(tableComment);
 
-        // if(tableName.indexOf("_")>0) {
-        //     $("#tablePrefix").val(tableName.substring(0, tableName.indexOf("_")));
-        // }
+        if(null===tableComment||""===tableComment||"null"===tableComment){
+            $("#tableComment").val(tableName);
+        }
+
     });
 
     $("#generator").click(download);
@@ -340,9 +341,8 @@ function download() {
         if(isValid){
             var rows = $("#gridTable").jqGrid('getRowData');
             for(var i = 0; i < rows.length; i++) {
-                if (rows[i].columnComment == "" || rows[i].columnComment == null) {
-                    $.alicej.util.bootbox.alert("字段描述不允许为空！");
-                    return;
+                if (rows[i].columnComment == null || rows[i].columnComment === "" ) {
+                    rows[i].columnComment = rows[i].columnName;
                 }
             }
 
