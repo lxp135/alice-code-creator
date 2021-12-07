@@ -3,8 +3,6 @@ package alice.code.creator.common.dao;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import alice.code.creator.common.util.BeanConvertUtils;
 import alice.code.creator.domain.model.AbstractEntity;
@@ -29,9 +27,6 @@ public abstract class AbstractDao implements IDao, IMapper {
     public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
         this.sqlSessionTemplate = sqlSessionTemplate;
     }
-
-    // 日志
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // SQL 插入数据
     private static final String STATEMENT_INSERT = "insert";
@@ -227,7 +222,7 @@ public abstract class AbstractDao implements IDao, IMapper {
             long timeCost = new Date().getTime()-nowTime;
 
             if(timeCost>500){
-                logger.info(statement+"耗时"+timeCost+"毫秒");
+                System.out.println(statement+"耗时"+timeCost+"毫秒");
             }
 
         }
@@ -271,12 +266,12 @@ public abstract class AbstractDao implements IDao, IMapper {
         List<T> resultList = getSqlSessionTemplate().selectList(statement);
         // 判断结果集是否过大
         if (resultList != null && resultList.size() > MAX_RESULT) {
-            logger.warn("查询结果集过大：当前数量" + resultList.size() + "，建议慎用selectAll方法，改用分页排序查询[SQL:" + statement + "]");
+            System.out.println("查询结果集过大：当前数量" + resultList.size() + "，建议慎用selectAll方法，改用分页排序查询[SQL:" + statement + "]");
         }
         long timeCost = new Date().getTime()-nowTime;
 
         if(timeCost>500){
-            logger.info(statement+"耗时"+timeCost+"毫秒");
+            System.out.println(statement+"耗时"+timeCost+"毫秒");
         }
         // 返回查询结果
         return resultList;
@@ -307,7 +302,7 @@ public abstract class AbstractDao implements IDao, IMapper {
         long timeCost = new Date().getTime()-nowTime;
 
         if(timeCost>500){
-            logger.info(statement+"耗时"+timeCost+"毫秒");
+            System.out.println(statement+"耗时"+timeCost+"毫秒");
         }
         return result;
     }
@@ -376,13 +371,13 @@ public abstract class AbstractDao implements IDao, IMapper {
         // 判断结果集是否过大
         if (resultList != null && resultList.size() > MAX_RESULT) {
             String param = parameterMap.toString();
-            logger.warn("查询结果集过大：当前数量" + resultList.size() + "，建议设置合理的分页排序参数[SQL:" + statement + ";PARAM:" + param + "]");
+            System.out.println("查询结果集过大：当前数量" + resultList.size() + "，建议设置合理的分页排序参数[SQL:" + statement + ";PARAM:" + param + "]");
         }
 
         long timeCost = new Date().getTime()-nowTime;
 
         if(timeCost>500){
-            logger.info(statement+"耗时"+timeCost+"毫秒");
+            System.out.println(statement+"耗时"+timeCost+"毫秒");
         }
 
         // 返回查询结果
@@ -411,7 +406,7 @@ public abstract class AbstractDao implements IDao, IMapper {
         long timeCost = new Date().getTime()-nowTime;
 
         if(timeCost>500){
-            logger.info(statement+"耗时"+timeCost+"毫秒");
+            System.out.println(statement+"耗时"+timeCost+"毫秒");
         }
         // 返回结果
         if (count != null) {
@@ -437,7 +432,7 @@ public abstract class AbstractDao implements IDao, IMapper {
         long timeCost = new Date().getTime()-nowTime;
 
         if(timeCost>500){
-            logger.info(statement+"耗时"+timeCost+"毫秒");
+            System.out.println(statement+"耗时"+timeCost+"毫秒");
         }
         // 返回结果
         if (count != null) {
@@ -598,12 +593,12 @@ public abstract class AbstractDao implements IDao, IMapper {
         // 判断结果集是否过大
         if (resultList != null && resultList.size() > MAX_RESULT) {
             String param = paramMap.toString();
-            logger.warn("查询结果集过大：当前数量" + resultList.size() + "，建议设置合理的分页排序参数[SQL:" + statement + ";PARAM:" + param + "]");
+            System.out.println("查询结果集过大：当前数量" + resultList.size() + "，建议设置合理的分页排序参数[SQL:" + statement + ";PARAM:" + param + "]");
         }
         long timeCost = new Date().getTime()-nowTime;
 
         if(timeCost>500){
-            logger.info(statement+"耗时"+timeCost+"毫秒");
+            System.out.println(statement+"耗时"+timeCost+"毫秒");
         }
         // 返回
         return resultList;
@@ -620,7 +615,7 @@ public abstract class AbstractDao implements IDao, IMapper {
         long timeCost = new Date().getTime()-nowTime;
 
         if(timeCost>500){
-            logger.info(statement+"耗时"+timeCost+"毫秒");
+            System.out.println(statement+"耗时"+timeCost+"毫秒");
         }
         // 返回结果
         if (count != null) {
