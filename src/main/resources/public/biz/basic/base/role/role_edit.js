@@ -11,7 +11,6 @@ $(function () {
             $("#roleName").val(rsp.roleName);
             $("#roleDescription").val(rsp.roleDescription);
             $("#isEnable").val(rsp.isEnable);
-            $("#remark").val(rsp.remark);
 
             // 初始化表单验证
             $('#editForm').validator({
