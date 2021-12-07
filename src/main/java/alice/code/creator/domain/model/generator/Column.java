@@ -1,11 +1,15 @@
 package alice.code.creator.domain.model.generator;
 
 import alice.code.creator.domain.model.AbstractEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 字段信息实体类
  * @author contact@liuxp.me
  */
+@Setter
+@Getter
 public class Column extends AbstractEntity {
 
     /**
@@ -49,83 +53,4 @@ public class Column extends AbstractEntity {
      */
     private String maxLength;
 
-    public String getColumnNameCH() {
-        return columnNameCH;
-    }
-
-    public void setColumnNameCH(String columnNameCH) {
-        this.columnNameCH = columnNameCH;
-    }
-
-    public String getColumnNameEN() {
-        return columnNameEN;
-    }
-
-    public void setColumnNameEN(String columnNameEN) {
-        this.columnNameEN = columnNameEN;
-    }
-
-    public String getColumnPropertyName() {
-        return columnPropertyName;
-    }
-
-    public void setColumnPropertyName(String columnPropertyName) {
-        this.columnPropertyName = columnPropertyName;
-    }
-
-    public String getColumnMethodName() {
-        return columnMethodName;
-    }
-
-    public void setColumnMethodName(String columnMethodName) {
-        this.columnMethodName = columnMethodName;
-    }
-
-    public String getJdbcType() {
-        return jdbcType;
-    }
-
-    public void setJdbcType(String jdbcType) {
-        this.jdbcType = jdbcType;
-    }
-
-    public String getJavaType() {
-        return javaType;
-    }
-
-    public void setJavaType(String javaType) {
-        this.javaType = javaType;
-    }
-
-    public String getAutoFill() {
-        return autoFill;
-    }
-
-    public void setAutoFill(String autoFill) {
-        this.autoFill = autoFill;
-    }
-
-    public Boolean getLikeFlag() {
-        return likeFlag;
-    }
-
-    public void setLikeFlag(Boolean likeFlag) {
-        this.likeFlag = likeFlag;
-    }
-
-    public Boolean getIsNullable() {
-        return this.isNullable;
-    }
-
-    public void setIsNullable(Boolean isNullable) {
-        this.isNullable = isNullable;
-    }
-
-    public String getMaxLength() {
-        return maxLength;
-    }
-
-    public void setMaxLength(String maxLength) {
-        this.maxLength = maxLength;
-    }
 }

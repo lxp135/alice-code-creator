@@ -31,7 +31,7 @@ public abstract class AbstractDao implements IDao, IMapper {
     }
 
     // 日志
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // SQL 插入数据
     private static final String STATEMENT_INSERT = "insert";
