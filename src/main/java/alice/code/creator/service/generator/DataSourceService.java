@@ -10,6 +10,17 @@ import java.util.List;
  * @author contact@liuxp.me
  */
 public interface DataSourceService {
+
+    /**
+     * 测试数据源是否可用
+     * @param driverClassName JDBC驱动
+     * @param url 数据源地址
+     * @param username 用户名
+     * @param password 密码
+     * @return 测试结果
+     */
+    Boolean test(String driverClassName, String url, String username, String password);
+
     /**
      * 查询数据库列表
      * @param datasource 数据源信息

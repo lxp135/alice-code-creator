@@ -21,6 +21,37 @@ import java.util.Map;
 public class DataSourceSQLServerServiceImpl implements DataSourceService {
 
     @Override
+    public Boolean test(String driverClassName, String url, String username, String password) {
+        try {
+            // 加载 MySql 的驱动类 将驱动注册到 DriverManager 当中
+            Class.forName(driverClassName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new BusinessException("加载JDBC驱动失败，请检查驱动名称");
+        }
+
+        Connection con = null;
+        try {
+            // 获取连接
+            con = DriverManager.getConnection(url, username, password);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BusinessException("数据库连接失败！"+e.getMessage());
+        }finally {
+            // 最后关闭连接
+            try {
+                if(null!=con){
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    @Override
     public List<ColumnGenerator> selectDatabase(GeneratorConfigDatasource datasource) {
 
         if(datasource == null){

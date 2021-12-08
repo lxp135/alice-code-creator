@@ -14,7 +14,7 @@
                         <div class="form-group row">
                             <label class="col-12 col-sm-3 col-form-label text-sm-right" for="datasourceType">类型</label>
                             <div class="col-12 col-sm-8 col-lg-6">
-                                <select class="form-control" id="datasourceType" name="datasourceType">
+                                <select class="select2 select2-xs" id="datasourceType" name="datasourceType">
                                     <option value="MySQL" selected="selected">MySQL</option>
                                     <option value="Oracle">Oracle</option>
                                     <option value="SQLServer">SQLServer</option>
@@ -46,16 +46,27 @@
                             </div>
                         </div>
                         <hr class="hr hr-32"/>
-                        <p class="text-center">
-                            <button id="btnSave" class="btn btn-space btn-primary" type="button">
-                                <i class="fa fa-check bigger-110"></i>
-                                保存
-                            </button>
-                            <button id="btnBack" class="btn btn-space btn-secondary" type="button" onclick="history.back(-1);">
-                                <i class="fa fa-undo bigger-110"></i>
-                                返回
-                            </button>
-                        </p>
+
+                        <div class="form-group row">
+                            <div class="col-12 col-sm-3">
+                                <a id="testDatasource" class="btn btn-space btn-success" href="javascript:void(0);" style="float:right;">
+                                    <span id="testDatasourceLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                                    测试链接
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <p class="text-center">
+                                    <button id="btnSave" class="btn btn-space btn-primary" type="button">
+                                        <i class="fa fa-check bigger-110"></i>
+                                        保存
+                                    </button>
+                                    <button id="btnBack" class="btn btn-space btn-secondary" type="button" onclick="history.back(-1);">
+                                        <i class="fa fa-undo bigger-110"></i>
+                                        返回
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -55,6 +55,22 @@ public class GeneratorController extends BaseController {
 	private String defaultPassword;
 
 	/**
+	 * 测试数据源是否可用
+	 * @param datasourceType 类型
+	 * @param driverClassName JDBC驱动
+	 * @param url 数据源地址
+	 * @param username 用户名
+	 * @param password 密码
+	 * @return 测试结果
+	 */
+	@RequestMapping(value = "/testDatasource", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public Boolean testDatasource(String datasourceType,String driverClassName,String url,String username,String password){
+
+		return getDataSourceService(datasourceType).test(driverClassName,url,username,password);
+	}
+
+	/**
 	 * 取得数据源
 	 * @return 默认数据源 + 用户配置的数据源集合
 	 */

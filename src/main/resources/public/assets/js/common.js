@@ -396,11 +396,17 @@
 					// 异步请求
 					ops.error = function(rsp){
 						AliceJ.util.safe.handleError(rsp);
+						if(undefined!==opts.error){
+							opts.error(rsp);
+						}
 					};
 
 					ops.success = function(rsp){
 						if(rsp.success === false){
                             AliceJ.util.safe.handleError(null,AliceJ.util.safe.resultCode[rsp.code]+'，'+rsp.message);
+							if(undefined!==opts.error){
+								opts.error(rsp);
+							}
                             return null;
 						}
 						opts.success(rsp);

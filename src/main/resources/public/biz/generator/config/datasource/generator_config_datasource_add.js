@@ -27,6 +27,19 @@ $(function () {
         }
     });
 
+    $('#datasourceType').change(function (){
+        // 根据数据库类型带出JDBC驱动
+        let datasourceJdbc = {
+            'MySQL' : 'com.mysql.cj.jdbc.Driver',
+            'Oracle' : 'oracle.jdbc.driver.OracleDriver',
+            'SQLServer' : 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+        }
+        $('#driverClassName').val(datasourceJdbc[$(this).val()]);
+    })
+
+    // 默认使用MySQL的JDBC驱动
+    $('#driverClassName').val('com.mysql.cj.jdbc.Driver');
+
     // 保存数据
     $("#btnSave").click(function(){
         $("#addForm").isValid(function(isValid){
@@ -40,6 +53,28 @@ $(function () {
                     jQuery.alicej.util.bootbox.alert("保存成功！",function () {
                         window.location.href = "#biz/generator/config/datasource/generator_config_datasource_list";
                         });
+                    }
+                });
+            }
+        });
+    });
+
+    // 测试链接
+    $("#testDatasource").click(function(){
+        $("#addForm").isValid(function(isValid){
+            if(isValid){
+                $("#testDatasourceLoading").show();
+                jQuery.alicej.util.ajax({
+                    type: "POST",
+                    url: '/generator/testDatasource',
+                    data : jQuery.alicej.util.serialize("#addForm"),
+                    dataType:'json',
+                    success: function(rsp){
+                        layer.msg("链接成功！");
+                        $("#testDatasourceLoading").hide();
+                    },
+                    error: function(rsp){
+                        $("#testDatasourceLoading").hide();
                     }
                 });
             }
