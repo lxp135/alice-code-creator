@@ -43,9 +43,9 @@
     // 初始化
     router.init();
 
-    // 默认跳转首页
+    // 默认跳转代码生成页面
     if (window.location.href.indexOf("#") == -1) {
-        window.location.hash = "#biz/default";
+        window.location.hash = "#biz/generator/generator";
     }
 
 })(jQuery);
