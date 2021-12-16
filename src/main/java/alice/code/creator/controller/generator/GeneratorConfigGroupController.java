@@ -122,7 +122,8 @@ public class GeneratorConfigGroupController extends BaseController{
     public Boolean delete(Long id) {
         // 执行逻辑删除
         int rows = generatorConfigGroupService.delete(id,getAccount().getId(),getAccount().getUserName());
-				return rows > 0;
+
+        return rows > 0;
     }
 
 }
