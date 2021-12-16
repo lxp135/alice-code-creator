@@ -45,6 +45,57 @@ public class GeneratorConfigGroupServiceImpl extends AbstractService implements 
 
     @Override
     @Transactional
+    public GeneratorConfigGroup copy(Long id, Long userId, String userName) {
+
+        // 查询原分组数据
+        GeneratorConfigGroup generatorConfigGroup = super.selectOne(id);
+
+        if(null==generatorConfigGroup){
+            throw new BusinessException("模板分组不存在");
+        }
+
+        // 查询原分组内全部模板
+        GeneratorConfigTemplate generatorConfigTemplateQuery = new GeneratorConfigTemplate();
+        generatorConfigTemplateQuery.setGroupId(id);
+        List<GeneratorConfigTemplate> generatorConfigTemplateList = generatorConfigTemplateService.selectList(generatorConfigTemplateQuery);
+
+        GeneratorConfigGroup newGroup = new GeneratorConfigGroup();
+        newGroup.setGroupName(generatorConfigGroup.getGroupName()+"的拷贝");
+        newGroup.setGroupDesc(generatorConfigGroup.getGroupDesc());
+        newGroup.setTemplateAmount(generatorConfigGroup.getTemplateAmount());
+        newGroup.setDefaultSign(generatorConfigGroup.getDefaultSign());
+        newGroup.setDefaultPackage(generatorConfigGroup.getDefaultPackage());
+        newGroup.setDefaultTablePrefix(generatorConfigGroup.getDefaultTablePrefix());
+        newGroup.setDefaultFieldUnique(generatorConfigGroup.getDefaultFieldUnique());
+        newGroup.setDefaultFieldExt(generatorConfigGroup.getDefaultFieldExt());
+        newGroup.setDefaultFieldEffective(generatorConfigGroup.getDefaultFieldEffective());
+        newGroup.setOwnerUserId(userId);
+        newGroup.setOwnerUserName(userName);
+        newGroup.setIsPublic(0); // 复制的模板默认为私有
+
+        // 插入新的模板分组，取得主键
+        newGroup = super.insert(newGroup,userName);
+
+        if(null!=generatorConfigTemplateList&&generatorConfigTemplateList.size()>0){
+
+            for (GeneratorConfigTemplate generatorConfigTemplate : generatorConfigTemplateList) {
+                generatorConfigTemplate.setId(null); // 主键置空
+                generatorConfigTemplate.setGroupId(newGroup.getId()); // 设置新的模板分组主键
+                generatorConfigTemplate.setGroupName(newGroup.getGroupName()); // 设置新的模板分组名称
+                generatorConfigTemplate.setCreateUser(null);
+                generatorConfigTemplate.setCreateTime(null);
+                generatorConfigTemplate.setUpdateUser(null);
+                generatorConfigTemplate.setUpdateTime(null);
+            }
+            // 插入新的模板
+            generatorConfigTemplateService.insert(generatorConfigTemplateList, userName);
+        }
+
+        return newGroup;
+    }
+
+    @Override
+    @Transactional
     public int delete(Long id, Long userId, String userName) {
 
         GeneratorConfigGroup generatorConfigGroup = super.selectOne(id);

@@ -113,6 +113,18 @@ public class GeneratorConfigGroupController extends BaseController{
     }
 
     /**
+     * 复制分组
+     * @param id 被选中的分组主键
+     * @return 执行结果
+     */
+    @RequestMapping(value = "/copy", method = RequestMethod.POST)
+    @ResponseBody
+    public GeneratorConfigGroup copy(Long id) {
+        // 复制分组
+        return generatorConfigGroupService.copy(id,getAccount().getId(),getAccount().getUserName());
+    }
+
+    /**
      * 逻辑删除数据
      * @param id 自增主键
      * @return 执行结果

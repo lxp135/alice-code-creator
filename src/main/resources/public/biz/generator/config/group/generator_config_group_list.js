@@ -8,7 +8,7 @@ var page = {
         },
         // 根据ID删除数据
         deleteById : function (id) {
-            jQuery.alicej.util.bootbox.showConfirm("是否删除该记录？",function(){
+            jQuery.alicej.util.bootbox.showConfirm("是否删除该模板分组及其全部模板？",function(){
                 jQuery.alicej.util.ajax({
                     type: "POST",
                     url: '/web/generator/config/group/delete',
@@ -20,6 +20,20 @@ var page = {
                         });
                     }
                 });
+            });
+        },
+        // 复制分组
+        copy : function (id){
+            jQuery.alicej.util.ajax({
+                type: "POST",
+                url: '/web/generator/config/group/copy',
+                data : {id:id},
+                dataType:'json',
+                success: function(rsp){
+                    jQuery.alicej.util.bootbox.alert("复制成功！",function (){
+                        page.obj.gridTable.trigger("reloadGrid");
+                    });
+                }
             });
         }
     },
@@ -103,5 +117,17 @@ jQuery(function(){
         searchForm.find("input").val("");
         searchForm.find("select").val("");
     });
+
+    /**
+     * 拷贝一条记录
+     */
+    $("#copy").click(function (){
+        let id = page.obj.gridTable.jqGrid("getGridParam","selrow");
+        if(id == null){
+            jQuery.alicej.util.bootbox.showWarn("请选择一条记录！");
+        }else{
+            page.fn.copy(id);
+        }
+    })
 
 });

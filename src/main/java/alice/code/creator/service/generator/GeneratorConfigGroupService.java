@@ -20,6 +20,15 @@ public interface GeneratorConfigGroupService extends IService{
     int update(GeneratorConfigGroup generatorConfigGroup, Long userId,String userName);
 
     /**
+     * 复制分组
+     * @param id 被选中的分组主键
+     * @param userId 用户编号
+     * @param userName 用户名称
+     * @return 更新的条数
+     */
+    GeneratorConfigGroup copy(Long id, Long userId,String userName);
+
+    /**
      * 删除数据
      * @param id 主键
      * @param userId 用户编号
