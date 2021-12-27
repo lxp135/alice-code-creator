@@ -1,11 +1,13 @@
 package alice.code.creator.controller.generator;
 
 import alice.code.creator.common.framework.config.BeanConfig;
-import alice.code.creator.domain.enums.DatasourceTypeEnum;
+import alice.code.creator.controller.BaseController;
+import alice.code.creator.domain.model.generator.ColumnGenerator;
 import alice.code.creator.domain.model.generator.GeneratorConfigDatasource;
-import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
+import alice.code.creator.domain.model.generator.MysqlGenerator;
 import alice.code.creator.service.generator.DataSourceService;
-import org.springframework.beans.factory.annotation.Value;
+import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
+import alice.code.creator.service.generator.GeneratorService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -13,10 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import alice.code.creator.controller.BaseController;
-import alice.code.creator.domain.model.generator.ColumnGenerator;
-import alice.code.creator.domain.model.generator.MysqlGenerator;
-import alice.code.creator.service.generator.GeneratorService;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -41,18 +39,6 @@ public class GeneratorController extends BaseController {
 
 	@Resource
 	private BeanConfig beanConfig;
-
-	@Value("${spring.datasource.driver-class-name}")
-	private String defaultDriverClassName;
-
-	@Value("${spring.datasource.url}")
-	private String defaultUrl;
-
-	@Value("${spring.datasource.username}")
-	private String defaultUsername;
-
-	@Value("${spring.datasource.password}")
-	private String defaultPassword;
 
 	/**
 	 * 测试数据源是否可用
