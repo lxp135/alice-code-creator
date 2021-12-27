@@ -1,5 +1,11 @@
 $(function () {
 
+    // 初始化数据源类型下拉框
+    $.alicej.cache.renderSimpleDropdowns({
+        selectId : "datasourceType",
+        groupCode :"DATASOURCE_TYPE"
+    });
+
     // Select2
     $(".select2").select2({
         width: '100%',
@@ -20,6 +26,7 @@ $(function () {
             return msgBox;
         },
         fields: {
+            'datasourceType': 'required',
             'dbType': 'required',
             'jdbcType': 'required',
             'javaType': 'required'

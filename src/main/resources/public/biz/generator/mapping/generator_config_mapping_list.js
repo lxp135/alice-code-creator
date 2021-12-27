@@ -29,6 +29,12 @@ var page = {
 
 jQuery(function(){
 
+    // 初始化数据源类型下拉框
+    $.alicej.cache.renderSimpleDropdowns({
+        selectId : "datasourceType",
+        groupCode :"DATASOURCE_TYPE"
+    });
+
     // 初始化jqGrid
     page.obj.gridTable = $("#gridTable");
 
@@ -40,6 +46,7 @@ jQuery(function(){
         height: "auto",
         colModel:[
             {name:'id',label:'自增主键', index:'id', sortable:false, hidden:true},
+            {name:'datasourceType',label:'数据源类型', index:'datasourceType', sortable:true},
             {name:'dbType',label:'数据库类型', index:'dbType', sortable:true},
             {name:'jdbcType',label:'jdbc类型', index:'jdbcType', sortable:true},
             {name:'javaType',label:'java类型', index:'javaType', sortable:true},

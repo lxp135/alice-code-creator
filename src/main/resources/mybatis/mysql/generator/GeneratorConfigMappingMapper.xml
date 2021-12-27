@@ -6,6 +6,7 @@
     <!-- 映射关系 -->
     <resultMap id="resultMap" type="alice.code.creator.domain.model.generator.GeneratorConfigMapping" >
         <id column="id" property="id" jdbcType="BIGINT" />       <!-- 自增主键 -->
+        <result column="datasource_type" property="datasourceType" jdbcType="VARCHAR" />       <!-- 数据源类型（MySQL,Oracle,SQLServer） -->
         <result column="db_type" property="dbType" jdbcType="VARCHAR" />       <!-- 数据库类型 -->
         <result column="jdbc_type" property="jdbcType" jdbcType="VARCHAR" />       <!-- jdbc类型 -->
         <result column="java_type" property="javaType" jdbcType="VARCHAR" />       <!-- java类型 -->
@@ -19,6 +20,7 @@
     <!-- 查询列 -->
     <sql id="queryColumns">
         id,       /* 自增主键 */
+        datasource_type,       /* 数据源类型（MySQL,Oracle,SQLServer） */
         db_type,       /* 数据库类型 */
         jdbc_type,       /* jdbc类型 */
         java_type,       /* java类型 */
@@ -41,6 +43,9 @@
             </if>
             <if test="idMax != null">
                 <![CDATA[ AND id < #{idMax, jdbcType=BIGINT} ]]>	/* 自增主键小于某值 */
+            </if>
+            <if test="datasourceType != null and datasourceType != ''" >
+                AND datasource_type = #{datasourceType,jdbcType=VARCHAR}       /* 数据源类型（MySQL,Oracle,SQLServer） */
             </if>
             <if test="dbType != null and dbType != ''" >
                 AND db_type = #{dbType,jdbcType=VARCHAR}       /* 数据库类型 */
@@ -80,6 +85,13 @@
                 <choose>
                     <when test="item.propertyName != null and item.propertyName == 'id'">
                         id    /* 自增主键 */
+                        <choose>
+                            <when test="item.ascending">ASC</when>
+                            <otherwise>DESC</otherwise>
+                        </choose>
+                    </when>
+                    <when test="item.propertyName != null and item.propertyName == 'datasourceType'">
+                        datasource_type    /* 数据源类型（MySQL,Oracle,SQLServer） */
                         <choose>
                             <when test="item.ascending">ASC</when>
                             <otherwise>DESC</otherwise>
@@ -150,6 +162,7 @@
     <!-- 插入数据 -->
     <insert id="insert" parameterType="alice.code.creator.domain.model.generator.GeneratorConfigMapping" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO generator_config_mapping (
+            datasource_type,                      /* 数据源类型 */
             db_type,                      /* 数据库类型 */
             jdbc_type,                      /* jdbc类型 */
             java_type,                      /* java类型 */
@@ -159,6 +172,7 @@
             update_user,                      /* 更新用户 */
             is_delete       /* 删除标志 0：未删除 1：已删除 */
         )VALUES(
+            #{datasourceType, jdbcType=VARCHAR},                 /* 数据源类型 */
             #{dbType, jdbcType=VARCHAR},                 /* 数据库类型 */
             #{jdbcType, jdbcType=VARCHAR},                 /* jdbc类型 */
             #{javaType, jdbcType=VARCHAR},                 /* java类型 */
@@ -173,6 +187,7 @@
     <!-- 批量插入数据 -->
     <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO generator_config_mapping (
+            datasource_type,                      /* 数据源类型 */
             db_type,                      /* 数据库类型 */
             jdbc_type,                      /* jdbc类型 */
             java_type,                      /* java类型 */
@@ -184,6 +199,7 @@
         )VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (
+                #{item.datasourceType, jdbcType=VARCHAR},                 /* 数据源类型 */
                 #{item.dbType, jdbcType=VARCHAR},                 /* 数据库类型 */
                 #{item.jdbcType, jdbcType=VARCHAR},                 /* jdbc类型 */
                 #{item.javaType, jdbcType=VARCHAR},                 /* java类型 */
@@ -201,6 +217,9 @@
         <if test="_parameter != null">
             UPDATE generator_config_mapping
             <set>
+                <if test="dbType != null">
+                    datasource_type = #{datasourceType, jdbcType=VARCHAR},    /* 数据源类型 */
+                </if>
                 <if test="dbType != null">
                     db_type = #{dbType, jdbcType=VARCHAR},    /* 数据库类型 */
                 </if>

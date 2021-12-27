@@ -14,6 +14,10 @@ import lombok.Setter;
 public class GeneratorConfigMapping extends AbstractEntity{
 
     /**
+     * 数据源类型（MySQL,Oracle,SQLServer）
+     */
+    private String datasourceType;
+    /**
      * 数据库类型
      */
     private String dbType;
@@ -25,17 +29,7 @@ public class GeneratorConfigMapping extends AbstractEntity{
      * java类型
      */
     private String javaType;
-    /**
-     * 是否私有 0:公共,1:私有
-     */
-    private Integer isPrivate;
-    /**
-     * 所有者编号
-     */
-    private Long ownerId;
-    /**
-     * 所有者名称
-     */
-    private String ownerName;
+
+
 
 }
