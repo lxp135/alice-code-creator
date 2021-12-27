@@ -1,4 +1,17 @@
 $(function () {
+
+    // 初始化性别下拉框
+    $.alicej.cache.renderSimpleDropdowns({
+        selectId : "userSex",
+        groupCode :"USER_SEX"
+    });
+
+    // 初始化账户状态下拉框
+    $.alicej.cache.renderSimpleDropdowns({
+        selectId : "isEnable",
+        groupCode :"STATUS"
+    });
+
     // Select2
     $(".select2").select2({
         width: '100%',

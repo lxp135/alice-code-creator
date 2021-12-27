@@ -10,12 +10,24 @@ $(function () {
             $("#id").val(rsp.id);
             $("#userAccount").val(rsp.userAccount);
             $("#userName").val(rsp.userName);
-            $("#userSex").val(rsp.userSex);
             $("#userEmail").val(rsp.userEmail);
             $("#userWechat").val(rsp.userWechat);
             $("#userPhone").val(rsp.userPhone);
-            $("#isEnable").val(rsp.isEnable);
             $("#remark").val(rsp.remark);
+
+            // 性别下拉框
+            $.alicej.cache.renderSimpleDropdowns({
+                selectId : "userSex",
+                groupCode :"USER_SEX",
+                key:rsp.userSex
+            });
+
+            // 账户状态下拉框
+            $.alicej.cache.renderSimpleDropdowns({
+                selectId : "isEnable",
+                groupCode :"STATUS",
+                key:rsp.isEnable
+            });
 
             // Select2
             $(".select2").select2({

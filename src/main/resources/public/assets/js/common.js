@@ -679,7 +679,7 @@
 						dataType:'json',
 						async:false,
 						success: function(rsp){
-							if(null == rsp || rsp.length == 0){
+							if(null == rsp || rsp.length === 0){
 								$.alicej.util.bootbox.showError("系统中不存在"+ groupKey +"字典组数据");
 							}else{
 								$.alicej.cache.dictionary[groupKey] = rsp;
@@ -714,16 +714,18 @@
              * @param args 参数对象selectId、groupCode
              */
             renderSimpleDropdowns : function (args){
-
                 var greaseGroups = $.alicej.cache.getDictionary(args.groupCode);
                 if(greaseGroups!=null){
-
                     var html = "<option value=''>请选择</option>";
                     for(var i in greaseGroups){
-						if(args.key != null && args.key == greaseGroups[i].dictCode){
-							html += "<option value='"+greaseGroups[i].dictCode+"' selected=\"selected\">"+greaseGroups[i].dictName+"</option>";
-						}else{
-							html += "<option value='"+greaseGroups[i].dictCode+"'>"+greaseGroups[i].dictName+"</option>";
+						// 下拉框仅显示有效的数据字典
+						if(greaseGroups[i].isEnable === 1){
+							// 判断数据项是否选中
+							if(args.key != null && args.key == greaseGroups[i].dictCode){
+								html += "<option value='"+greaseGroups[i].dictCode+"' selected=\"selected\">"+greaseGroups[i].dictName+"</option>";
+							}else{
+								html += "<option value='"+greaseGroups[i].dictCode+"'>"+greaseGroups[i].dictName+"</option>";
+							}
 						}
                     }
                 }else{
