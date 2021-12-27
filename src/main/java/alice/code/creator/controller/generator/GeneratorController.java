@@ -154,18 +154,7 @@ public class GeneratorController extends BaseController {
 	 * @return 数据源信息
 	 */
 	private GeneratorConfigDatasource getDataSource(Long datasourceId){
-		GeneratorConfigDatasource datasource = null;
-		if(datasourceId == -1){
-			datasource = new GeneratorConfigDatasource();
-			datasource.setDriverClassName(defaultDriverClassName);
-			datasource.setDatasourceType(DatasourceTypeEnum.MySQL.getCode());
-			datasource.setUrl(defaultUrl);
-			datasource.setUsername(defaultUsername);
-			datasource.setPassword(defaultPassword);
-		}else{
-			datasource = generatorConfigDatasourceService.selectOne(datasourceId);
-		}
-		return datasource;
+		return generatorService.getDataSource(datasourceId);
 	}
 
 	/**

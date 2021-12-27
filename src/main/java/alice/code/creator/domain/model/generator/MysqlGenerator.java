@@ -13,6 +13,10 @@ import lombok.Setter;
 public class MysqlGenerator extends AbstractEntity {
 
     /**
+     * 数据源编号
+     */
+    private Long datasource;
+    /**
      * 数据库名
      */
     private String tableSchema;

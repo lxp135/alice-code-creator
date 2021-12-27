@@ -1,9 +1,12 @@
 package alice.code.creator.service.generator.impl;
 
+import alice.code.creator.common.framework.context.BusinessException;
 import alice.code.creator.common.util.FileZipUtils;
 import alice.code.creator.common.util.StringFormatUtils;
 import alice.code.creator.common.util.VelocityUtils;
+import alice.code.creator.domain.enums.DatasourceTypeEnum;
 import alice.code.creator.domain.model.generator.*;
+import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
 import alice.code.creator.service.generator.GeneratorConfigMappingService;
 import alice.code.creator.service.generator.GeneratorConfigTemplateService;
 import alice.code.creator.service.generator.GeneratorService;
@@ -13,6 +16,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,8 +51,24 @@ public class GeneratorServiceImpl implements GeneratorService {
     @Resource
     private GeneratorConfigMappingService generatorConfigMappingService;
 
+    // 数据源Service
+    @Resource
+    private GeneratorConfigDatasourceService generatorConfigDatasourceService;
+
     // 代码生成保存路径
     private static final String GENERATOR_PATH = "generator";
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String defaultDriverClassName;
+
+    @Value("${spring.datasource.url}")
+    private String defaultUrl;
+
+    @Value("${spring.datasource.username}")
+    private String defaultUsername;
+
+    @Value("${spring.datasource.password}")
+    private String defaultPassword;
 
     /**
      * 生成代码-压缩包下载
@@ -106,6 +126,27 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     /**
+     * 取得数据源信息
+     * @param datasourceId 数据源编号
+     * @return 数据源信息
+     */
+    @Override
+    public GeneratorConfigDatasource getDataSource(Long datasourceId) {
+        GeneratorConfigDatasource datasource = null;
+        if(datasourceId == -1){
+            datasource = new GeneratorConfigDatasource();
+            datasource.setDriverClassName(defaultDriverClassName);
+            datasource.setDatasourceType(DatasourceTypeEnum.MySQL.getCode());
+            datasource.setUrl(defaultUrl);
+            datasource.setUsername(defaultUsername);
+            datasource.setPassword(defaultPassword);
+        }else{
+            datasource = generatorConfigDatasourceService.selectOne(datasourceId);
+        }
+        return datasource;
+    }
+
+    /**
      * 获取模板变量
      * @param mysqlGenerator 字段信息实体类
      * @return HashMap<String,Object> 模板替换变量数据集合
@@ -139,9 +180,18 @@ public class GeneratorServiceImpl implements GeneratorService {
         hashMap.put("author", mysqlGenerator.getAuthor());                      // 创建者
         hashMap.put("dateTime", sdf.format(new Date()));                        // 创建日期
 
-        // 数据类型映射
+        // 取得数据源信息
+        GeneratorConfigDatasource generatorConfigDatasource = getDataSource(mysqlGenerator.getDatasource());
+
+        if(null==generatorConfigDatasource){
+            throw new RuntimeException(mysqlGenerator.getDatasource()+"数据源不存在");
+        }
+
+        // 查询数据类型JDBC映射
         HashMap<String, GeneratorConfigMapping> generatorConfigMappingHashMap = new HashMap<>();
-        List<GeneratorConfigMapping> generatorConfigMappingList = generatorConfigMappingService.selectAll();
+        GeneratorConfigMapping generatorConfigMappingQuery = new GeneratorConfigMapping();
+        generatorConfigMappingQuery.setDatasourceType(generatorConfigDatasource.getDatasourceType()); // 数据源类型（MySQL,Oracle,SQLServer）
+        List<GeneratorConfigMapping> generatorConfigMappingList = generatorConfigMappingService.selectList(generatorConfigMappingQuery);
         for(GeneratorConfigMapping generatorConfigMapping : generatorConfigMappingList){
             generatorConfigMappingHashMap.put(generatorConfigMapping.getDbType(), generatorConfigMapping);
         }
@@ -167,6 +217,9 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         for(ColumnGenerator column : columnGeneratorList){
             GeneratorConfigMapping generatorConfigMapping = generatorConfigMappingHashMap.get(column.getDataType());
+            if(null==generatorConfigMapping){
+                throw new BusinessException(column.getDataType() + "未配置数据类型映射关系。");
+            }
             // 判断是否为过滤字段
             if(StringUtils.isBlank(column.getFilterFlag())) {
                 if(StringUtils.isNotBlank(column.getEffectiveFlag())){
