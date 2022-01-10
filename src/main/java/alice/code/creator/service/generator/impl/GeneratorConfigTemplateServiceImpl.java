@@ -2,12 +2,11 @@ package alice.code.creator.service.generator.impl;
 
 import alice.code.creator.common.framework.context.BusinessException;
 import alice.code.creator.common.service.AbstractService;
+import alice.code.creator.dao.generator.GeneratorConfigGroupDao;
 import alice.code.creator.dao.generator.GeneratorConfigTemplateDao;
 import alice.code.creator.domain.model.generator.GeneratorConfigGroup;
 import alice.code.creator.domain.model.generator.GeneratorConfigTemplate;
-import alice.code.creator.service.generator.GeneratorConfigGroupService;
 import alice.code.creator.service.generator.GeneratorConfigTemplateService;
-
 import cn.hutool.core.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,7 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
     public void setDao(GeneratorConfigTemplateDao dao) {this.iDao = dao;}
 
     @Resource
-    private GeneratorConfigGroupService generatorConfigGroupService;
-
+    private GeneratorConfigGroupDao generatorConfigGroupDao;
 
     @Override
     @Transactional
@@ -38,7 +36,7 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
 
         Assert.notNull(groupId,"groupId不能为空");
 
-        GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupService.selectOne(groupId);
+        GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupDao.selectOne(groupId);
 
         if(null==generatorConfigGroup){
             throw new BusinessException("模板分组不存在");
@@ -51,7 +49,8 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
 
         // 计算该分组内模板数量
         generatorConfigGroup.setTemplateAmount(generatorConfigGroup.getTemplateAmount()+1);
-        generatorConfigGroupService.update(generatorConfigGroup,userName);
+        generatorConfigGroup.setUpdateUser(userName);
+        generatorConfigGroupDao.update(generatorConfigGroup);
 
         // 设置分组名称
         generatorConfigTemplate.setGroupName(generatorConfigGroup.getGroupName());
@@ -66,7 +65,7 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
 
         Assert.notNull(generatorConfigTemplate.getGroupId(),"groupId不能为空");
 
-        GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupService.selectOne(generatorConfigTemplate.getGroupId());
+        GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupDao.selectOne(generatorConfigTemplate.getGroupId());
 
         if(!userId.equals(generatorConfigGroup.getOwnerUserId())){
             // 您不能删除其他用户的模板
@@ -86,7 +85,7 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
             return 0;
         }
 
-        GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupService.selectOne(generatorConfigTemplate.getGroupId());
+        GeneratorConfigGroup generatorConfigGroup = generatorConfigGroupDao.selectOne(generatorConfigTemplate.getGroupId());
 
         if(null==generatorConfigGroup){
             throw new BusinessException("模板分组不存在");
@@ -99,7 +98,8 @@ public class GeneratorConfigTemplateServiceImpl extends AbstractService implemen
 
         // 计算该分组内模板数量
         generatorConfigGroup.setTemplateAmount(generatorConfigGroup.getTemplateAmount()-1);
-        generatorConfigGroupService.update(generatorConfigGroup,userName);
+        generatorConfigGroup.setUpdateUser(userName);
+        generatorConfigGroupDao.update(generatorConfigGroup);
 
         return super.delete(id, userName);
     }

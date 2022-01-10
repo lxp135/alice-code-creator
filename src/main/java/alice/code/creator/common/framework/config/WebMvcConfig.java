@@ -4,6 +4,7 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.util.unit.DataSize;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import alice.code.creator.common.framework.interceptor.AccountExposingHandlerInterceptor;
@@ -31,9 +32,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         //  单个数据大小
-        factory.setMaxFileSize("32MB"); // KB,MB
+        factory.setMaxFileSize(DataSize.parse("32MB")); // KB,MB
         /// 总上传数据大小
-        factory.setMaxRequestSize("128MB");
+        factory.setMaxRequestSize(DataSize.parse("128MB"));
         return factory.createMultipartConfig();
     }
 
