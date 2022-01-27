@@ -20,6 +20,14 @@ public interface GeneratorService {
     ResponseEntity<byte[]> generatorDownLoad(MysqlGenerator mysqlGenerator, HttpHeaders headers);
 
     /**
+     * 多表代码生成 - 压缩包下载
+     * @param mysqlGenerator 入参
+     * @param headers 参数头
+     * @return 压缩包
+     */
+    ResponseEntity<byte[]> generatorDownLoadMulti(MysqlGenerator mysqlGenerator, HttpHeaders headers);
+
+    /**
      * 取得数据源信息
      * @param datasourceId 数据源编号
      * @return 数据源信息

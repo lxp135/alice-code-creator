@@ -1,73 +1,11 @@
-<ol class="breadcrumb" style="margin-bottom: 0;">
-    <li class="breadcrumb-item">开发工具</li>
-    <li class="breadcrumb-item active">代码生成</li>
-</ol>
-
 <div class="main-content container-fluid">
     <form id="generatorForm">
         <div class="col-lg-12">
             <input type="hidden" id="columnJson" name="columnJson">
+            <input type="hidden" id="tableListJson" name="tableListJson">
             <div class="card card-contrast">
                 <div class="card-header card-header-contrast card-header-featured card-header-small">数据查询</div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-xl-3">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="datasource"><span style="color:red;">* </span>数据源</label>
-                                </div>
-                                <select class="form-select2 form-control" id="datasource" name="datasource">
-                                    <option value="">请选择</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 col-xl-3">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="tableSchema"><span style="color:red;">* </span>数据库名称</label>
-                                </div>
-                                <select class="form-select2 form-control" id="tableSchema" name="tableSchema">
-                                    <option value="">请选择</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 col-xl-3">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="tableName"><span style="color:red;">* </span>表名称</label>
-                                </div>
-                                <select class="form-select2 form-control" id="tableName" name="tableName">
-                                    <option value="">请选择</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 col-xl-3">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="tableComment">表描述信息</label>
-                                </div>
-                                <input class="form-control" type="text" id="tableComment" name="tableComment">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="card card-contrast">
-                <div class="card-header card-header-contrast card-header-featured card-header-small">字段列表</div>
-                <div class="card-body">
-                    <table id="gridTable"></table>
-                    <div id="gridPager"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="card card-contrast">
-                <div class="card-header card-header-contrast card-header-featured card-header-small">
-                    代码生成
-                </div>
-                <div class="card-body card-body-bottom">
                     <div class="row">
                         <div class="col-12 col-lg-6 col-xl-3">
                             <div class="input-group input-group-sm mb-3">
@@ -103,12 +41,53 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="datasource"><span style="color:red;">* </span>数据源</label>
+                                </div>
+                                <select class="form-select2 form-control" id="datasource" name="datasource">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="tableSchema"><span style="color:red;">* </span>数据库名称</label>
+                                </div>
+                                <select class="form-select2 form-control" id="tableSchema" name="tableSchema">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-12 col-xl-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="tableName" style="height: 100%">表名</label>
+                                </div>
+                                <select class="select2 select2-xs" id="tableName" name="tableName" multiple="multiple"></select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer card-footer-contrast text-muted card-footer-small">
                     <a id="generator" class="btn btn-space btn-primary" href="javascript:void(0);">
                         <i class="fa fa-plus"></i>
                         <span class="bigger-110">代码生成</span>
                     </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card card-contrast">
+                <div class="card-header card-header-contrast card-header-featured card-header-small">数据表明细信息</div>
+                <div class="card-body">
+                    <div class="tab-container" id="tableList" style="min-height: 300px;">
+                        <ul class="nav nav-tabs" role="tablist" style="min-height: 42px;"></ul>
+                        <div class="tab-content" style="margin-bottom: 0;"></div>
+                    </div>
                 </div>
             </div>
         </div>

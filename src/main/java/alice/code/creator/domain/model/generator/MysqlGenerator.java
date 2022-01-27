@@ -45,6 +45,10 @@ public class MysqlGenerator extends AbstractEntity {
      */
     private String columnJson;
     /**
+     * 表JSON
+     */
+    private String tableListJson;
+    /**
      * 分组编号
      */
     private Long groupId;

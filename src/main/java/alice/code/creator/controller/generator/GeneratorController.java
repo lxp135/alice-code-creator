@@ -131,7 +131,7 @@ public class GeneratorController extends BaseController {
 	@ResponseBody
 	public ResponseEntity<byte[]> downLoad(MysqlGenerator mysqlGenerator){
 		HttpHeaders headers = new HttpHeaders();
-		return generatorService.generatorDownLoad(mysqlGenerator, headers);
+		return generatorService.generatorDownLoadMulti(mysqlGenerator, headers);
 	}
 
 	/**

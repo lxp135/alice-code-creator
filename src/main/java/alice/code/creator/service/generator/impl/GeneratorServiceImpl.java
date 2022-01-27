@@ -10,6 +10,7 @@ import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
 import alice.code.creator.service.generator.GeneratorConfigMappingService;
 import alice.code.creator.service.generator.GeneratorConfigTemplateService;
 import alice.code.creator.service.generator.GeneratorService;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
@@ -117,6 +118,81 @@ public class GeneratorServiceImpl implements GeneratorService {
             InputStream inputStream = new FileInputStream(file);
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             headers.setContentDispositionFormData("attachment", new String((hashMap.get("tableClassNameEN")+"_"+new Date().getTime()+".zip").getBytes("gbk"),"iso-8859-1"));
+
+            return new ResponseEntity<>(IOUtils.toByteArray(inputStream), headers, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public ResponseEntity<byte[]> generatorDownLoadMulti(MysqlGenerator mysqlGenerator, HttpHeaders headers) {
+        try {
+
+            // 取得系统临时文件路径
+            String currentProjectPath =  System.getProperty("java.io.tmpdir");
+
+            // 模板列表
+            GeneratorConfigTemplate generatorConfigTemplateQuery = new GeneratorConfigTemplate();
+            generatorConfigTemplateQuery.setGroupId(mysqlGenerator.getGroupId());
+            List<GeneratorConfigTemplate> generatorConfigTemplateList = generatorConfigTemplateService.selectList(generatorConfigTemplateQuery);
+
+            // 取得所有表名
+            String[] tableNameArray = mysqlGenerator.getTableName().split(",");
+
+            String folderName = StringFormatUtils.humpToUpperCaseFirstOne(tableNameArray[0], "_")+"等"+tableNameArray.length+"张表";
+
+            for (String tableName : tableNameArray) {
+                JSONObject tableListJson = JSONObject.parseObject(mysqlGenerator.getTableListJson());
+                JSONObject tableJson = tableListJson.getJSONObject(tableName);
+                String tableComment = tableJson.getString("tableComment");
+                String columnString = tableJson.getString("rows");
+
+                mysqlGenerator.setTableName(tableName);
+                mysqlGenerator.setTableComment(tableComment);
+                mysqlGenerator.setColumnJson(columnString);
+
+                HashMap<String, Object> hashMap = this.getTemplateVariables(mysqlGenerator);
+
+                for(GeneratorConfigTemplate template : generatorConfigTemplateList){
+                    String importFilePath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator + folderName;
+                    importFilePath =importFilePath + File.separator + hashMap.get("packagePath").toString().replaceAll("\\.","/");
+                    importFilePath =importFilePath + File.separator + template.getFilePath().replaceAll("\\.","/");
+                    importFilePath =importFilePath + File.separator + hashMap.get("tableClassNameEN") + template.getFileName();
+                    if(template.getTemplateCode().equals("sqlMapperTemplate")){
+                        // sqlMapper文件路径与文件名规则
+                        importFilePath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator+folderName; // 路径名称
+                        importFilePath = importFilePath + File.separator + hashMap.get("tableClassNameEN") + template.getFileName(); // 文件名
+                    }
+                    if(template.getFilePath().equals("html")){
+                        // html与js文件路径与文件名规则
+                        importFilePath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator+folderName; // 路径名称
+                        importFilePath = importFilePath + File.separator + "html" + File.separator + hashMap.get("htmlFileName") + template.getFileName(); // 文件名
+                    }
+                    File file = new File(importFilePath);
+                    if (!file.exists()) {
+                        File filePath = new File(file.getParent());
+                        filePath.mkdirs();
+                    }
+                    // 解析并创建文件
+                    VelocityUtils.generatorCode(template.getTemplateContent(), hashMap, importFilePath);
+                }
+
+            }
+
+
+
+
+            // 生成压缩包
+            String folderSrcPath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator + folderName+ File.separator;
+            String forderDesPath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator + folderName+"_"+new Date().getTime()+".zip";
+            FileZipUtils.zip(folderSrcPath, forderDesPath, "");
+            // 下载文件
+            File file = new File(forderDesPath);
+            InputStream inputStream = new FileInputStream(file);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", new String((folderName+"_"+new Date().getTime()+".zip").getBytes("gbk"),"iso-8859-1"));
 
             return new ResponseEntity<>(IOUtils.toByteArray(inputStream), headers, HttpStatus.CREATED);
         } catch (Exception e) {
