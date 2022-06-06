@@ -39,7 +39,7 @@
         <qrgen.version>2.0</qrgen.version>
         <jna.version>4.4.0</jna.version>
         <poi.version>3.9</poi.version>
-        <fastjson.version>1.2.79</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <httpclient.version>4.5.13</httpclient.version>
         <dom4j.version>1.6.1</dom4j.version><!-- 截止2018.6.20最新版为1.6.1 -->
         <jaxen.version>1.1.6</jaxen.version><!-- 截止2018.6.20最新版为1.1.6 -->
@@ -130,7 +130,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.18</version>
+            <version>5.8.1</version>
         </dependency>
         <!--================ ZIP ===========================-->
         <dependency>
@@ -165,8 +165,13 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>1.18.24</version>
             <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
     </dependencies>
 
