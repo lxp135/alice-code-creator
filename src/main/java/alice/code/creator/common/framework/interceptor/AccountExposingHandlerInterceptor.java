@@ -4,9 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import alice.code.creator.domain.Account;
-import alice.code.creator.common.framework.context.AccountContext;
-import alice.code.creator.common.util.AccountUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,15 +13,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AccountExposingHandlerInterceptor implements HandlerInterceptor {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
-		try{
-			Account account = AccountUtils.getCurrentUser();
-			AccountContext.setAccount(account);
-		}catch (Exception e){
-			logger.error("登录用户取得失败",e);
-		}
 
 		return true;
 	}

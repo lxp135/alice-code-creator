@@ -1,12 +1,12 @@
 package alice.code.creator.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import alice.code.creator.common.util.AccountUtils;
 import alice.code.creator.domain.Account;
-import alice.code.creator.common.framework.context.AccountContext;
 import alice.code.creator.domain.model.AbstractEntity;
 import alice.code.creator.domain.model.Page;
 import alice.code.creator.domain.model.Sort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -55,7 +55,7 @@ public abstract class BaseController {
 	 * @return 登录用户信息
 	 */
 	protected Account getAccount(){
-		Account account = AccountContext.getAccount();
+		Account account = AccountUtils.getCurrentUser();
 		if(account == null){
 			throw new RuntimeException("登录用户不存在，请重新登录");
 		}
