@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset techgeeknext:init-data
+-- changeset contact@liuxp.me:20220818_ddl_init_table
 
 INSERT INTO base_dictionary VALUES (1, 'STATUS', '状态', '0', '停用', 1, '2018-06-12 14:49:53', '系统用户', '2018-06-12 16:34:03', '系统用户', 0);
 INSERT INTO base_dictionary VALUES (2, 'STATUS', '状态', '1', '启用', 1, '2018-06-12 15:31:08', '系统用户', '2018-06-12 15:31:08', '系统用户', 0);

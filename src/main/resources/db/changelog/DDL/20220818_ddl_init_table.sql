@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset techgeeknext:create-tables
+-- changeset contact@liuxp.me:20220818_ddl_init_table
 
 DROP TABLE IF EXISTS base_dictionary;
 CREATE TABLE base_dictionary  (
