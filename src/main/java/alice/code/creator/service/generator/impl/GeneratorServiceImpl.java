@@ -1,15 +1,15 @@
 package alice.code.creator.service.generator.impl;
 
+import alice.code.creator.common.framework.config.BeanConfig;
 import alice.code.creator.common.framework.context.BusinessException;
 import alice.code.creator.common.util.FileZipUtils;
 import alice.code.creator.common.util.StringFormatUtils;
+import alice.code.creator.common.util.TableToWordUtils;
 import alice.code.creator.common.util.VelocityUtils;
 import alice.code.creator.domain.enums.DatasourceTypeEnum;
 import alice.code.creator.domain.model.generator.*;
-import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
-import alice.code.creator.service.generator.GeneratorConfigMappingService;
-import alice.code.creator.service.generator.GeneratorConfigTemplateService;
-import alice.code.creator.service.generator.GeneratorService;
+import alice.code.creator.service.generator.*;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,12 +23,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +53,9 @@ public class GeneratorServiceImpl implements GeneratorService {
     // 数据源Service
     @Resource
     private GeneratorConfigDatasourceService generatorConfigDatasourceService;
+
+    @Resource
+    private BeanConfig beanConfig;
 
     // 代码生成保存路径
     private static final String GENERATOR_PATH = "generator";
@@ -181,9 +182,6 @@ public class GeneratorServiceImpl implements GeneratorService {
 
             }
 
-
-
-
             // 生成压缩包
             String folderSrcPath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator + folderName+ File.separator;
             String forderDesPath = currentProjectPath + File.separator + GENERATOR_PATH + File.separator + folderName+"_"+new Date().getTime()+".zip";
@@ -220,6 +218,52 @@ public class GeneratorServiceImpl implements GeneratorService {
             datasource = generatorConfigDatasourceService.selectOne(datasourceId);
         }
         return datasource;
+    }
+
+    @Override
+    public ResponseEntity<byte[]> makeWord(MysqlGenerator mysqlGenerator, HttpHeaders headers) {
+
+        // 取得系统临时文件路径
+        String currentProjectPath =  System.getProperty("java.io.tmpdir");
+
+        // 取得数据源信息
+        GeneratorConfigDatasource datasource = getDataSource(mysqlGenerator.getDatasource());
+
+        DataSourceService dataSourceService = getDataSourceService(datasource.getDatasourceType());
+
+        List<ColumnGenerator> tableList = dataSourceService.selectTableNames(datasource, mysqlGenerator.getTableSchema());
+        List<ColumnGenerator> columnList = dataSourceService.selectColumnNames(datasource, mysqlGenerator.getTableSchema(),null);
+
+        List<DatabaseTable> databaseTableList = new ArrayList<>();
+        for (ColumnGenerator tableGenerator : tableList) {
+            DatabaseTable table = new DatabaseTable();
+            table.setTableName(tableGenerator.getTableName());
+            table.setTableComment(tableGenerator.getTableComment());
+            List<ColumnGenerator> columnGeneratorList = new ArrayList<>();
+            for (ColumnGenerator columnGenerator : columnList) {
+                if(columnGenerator.getTableName().equals(tableGenerator.getTableName())){
+                    columnGeneratorList.add(columnGenerator);
+                }
+            }
+            table.setColumnList(columnGeneratorList);
+            databaseTableList.add(table);
+        }
+
+        TableToWordUtils tableToWordUtils = new TableToWordUtils();
+
+        ByteArrayOutputStream byteArrayOutputStream = tableToWordUtils.toWord(databaseTableList,mysqlGenerator.getTableSchema());
+
+        try{
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", new String((mysqlGenerator.getTableSchema()+"_"+new Date().getTime()+".doc").getBytes("gbk"),"iso-8859-1"));
+
+            return new ResponseEntity<>(byteArrayOutputStream.toByteArray(), headers, HttpStatus.CREATED);
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 
     /**
@@ -350,5 +394,14 @@ public class GeneratorServiceImpl implements GeneratorService {
         hashMap.put("effectiveFlagColumn",effectiveFlagColumn); // 逻辑删除标识字段
         hashMap.put("columns",columns); // 普通字段
         return hashMap;
+    }
+
+    /**
+     * 取得数据源实现类
+     * @param datasourceType 数据源类型
+     * @return 数据源实现类
+     */
+    private DataSourceService getDataSourceService(String datasourceType){
+        return beanConfig.getSourceService("DataSource"+datasourceType+"ServiceImpl");
     }
 }

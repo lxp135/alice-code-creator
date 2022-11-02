@@ -135,6 +135,16 @@ public class GeneratorController extends BaseController {
 	}
 
 	/**
+	 * 生成文档
+	 */
+	@RequestMapping(value = "/makeWord")
+	@ResponseBody
+	public ResponseEntity<byte[]> makeWord(MysqlGenerator mysqlGenerator){
+		HttpHeaders headers = new HttpHeaders();
+		return generatorService.makeWord(mysqlGenerator, headers);
+	}
+
+	/**
 	 * 取得数据源信息
 	 * @param datasourceId 数据源编号
 	 * @return 数据源信息

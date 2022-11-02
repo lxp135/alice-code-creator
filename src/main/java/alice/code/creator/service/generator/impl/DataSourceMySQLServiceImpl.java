@@ -131,6 +131,24 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
                 "    TABLE_NAME = '"+tableName+"'" +
                 "AND TABLE_SCHEMA = '"+tableSchema+"'";
 
+        if(null==tableName){
+            sql =
+                    "SELECT" +
+                            "   TABLE_SCHEMA," +
+                            "   TABLE_NAME," +
+                            "   COLUMN_NAME," +
+                            "   DATA_TYPE," +
+                            "   COLUMN_KEY," +
+                            "   EXTRA," +
+                            "   IS_NULLABLE," +
+                            "   CHARACTER_MAXIMUM_LENGTH," +
+                            "   NUMERIC_PRECISION," +
+                            "   COLUMN_COMMENT " +
+                            "FROM information_schema.COLUMNS " +
+                            "WHERE" +
+                            " TABLE_SCHEMA = '"+tableSchema+"'";
+        }
+
         List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
 
         List<ColumnGenerator> columnGeneratorList = new ArrayList<>();

@@ -34,4 +34,12 @@ public interface GeneratorService {
      */
     GeneratorConfigDatasource getDataSource(Long datasourceId);
 
+    /**
+     * 生成数据库设计文档
+     * @param mysqlGenerator 入参
+     * @param headers 参数头
+     * @return 文档
+     */
+    ResponseEntity<byte[]> makeWord(MysqlGenerator mysqlGenerator, HttpHeaders headers);
+
 }

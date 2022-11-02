@@ -142,6 +142,19 @@ var generator = {
                     m.submit();
                 }
             });
+        },
+        /**
+         * 文档下载
+         */
+        makeWord :function() {
+            if(null==$("#datasource").val()||""==$("#datasource").val()||null==$("#tableSchema").val()||""==$("#tableSchema").val()){
+                $.alicej.util.bootbox.showWarn("数据源、数据库名称不能为空！");
+            }else{
+                var m = $('#generatorForm')[0];
+                m.method = 'POST';
+                m.action = '/generator/makeWord';
+                m.submit();
+            }
         }
     },
     obj:{
@@ -253,6 +266,8 @@ $(function(){
     });
 
     $("#generator").click(generator.fn.download);
+
+    $("#makeWord").click(generator.fn.makeWord);
 
     // 初始化表单验证
     $('#generatorForm').validator({
