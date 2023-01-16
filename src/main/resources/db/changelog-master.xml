@@ -7,5 +7,6 @@
 
     <include file="classpath:db/changelog/DDL/20220818_ddl_init_table.sql" relativeToChangelogFile="false"/>
     <include file="classpath:db/changelog/DML/20220819_dml_init_data.sql" relativeToChangelogFile="false"/>
+    <include file="classpath:db/changelog/DML/20230116_dml_clickhouse_mapping_config.sql" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
