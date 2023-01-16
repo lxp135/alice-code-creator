@@ -1,5 +1,11 @@
 $(function () {
 
+    // 初始化数据源类型下拉框
+    $.alicej.cache.renderSimpleDropdowns({
+        selectId : "datasourceType",
+        groupCode :"DATASOURCE_TYPE"
+    });
+
     // Select2
     $(".select2").select2({
         width: '100%',
@@ -29,12 +35,7 @@ $(function () {
 
     $('#datasourceType').change(function (){
         // 根据数据库类型带出JDBC驱动
-        let datasourceJdbc = {
-            'MySQL' : 'com.mysql.cj.jdbc.Driver',
-            'Oracle' : 'oracle.jdbc.driver.OracleDriver',
-            'SQLServer' : 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
-        }
-        $('#driverClassName').val(datasourceJdbc[$(this).val()]);
+        $('#driverClassName').val($.alicej.constant.jdbc[$(this).val()]);
     })
 
     // 默认使用MySQL的JDBC驱动

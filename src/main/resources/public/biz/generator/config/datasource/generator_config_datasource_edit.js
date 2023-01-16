@@ -9,7 +9,14 @@ $(function () {
         success: function(rsp){
             $("#id").val(rsp.id);
             $("#datasourceName").val(rsp.datasourceName);
-            $("#datasourceType").val(rsp.datasourceType);
+
+            // 初始化数据源类型下拉框
+            $.alicej.cache.renderSimpleDropdowns({
+                selectId : "datasourceType",
+                groupCode :"DATASOURCE_TYPE",
+                key: rsp.datasourceType
+            });
+
             $("#driverClassName").val(rsp.driverClassName);
             $("#url").val(rsp.url);
             $("#username").val(rsp.username);
@@ -46,12 +53,7 @@ $(function () {
 
     $('#datasourceType').change(function (){
         // 根据数据库类型带出JDBC驱动
-        let datasourceJdbc = {
-            'MySQL' : 'com.mysql.cj.jdbc.Driver',
-            'Oracle' : 'oracle.jdbc.driver.OracleDriver',
-            'SQLServer' : 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
-        }
-        $('#driverClassName').val(datasourceJdbc[$(this).val()]);
+        $('#driverClassName').val($.alicej.constant.jdbc[$(this).val()]);
     })
 
     // 保存数据

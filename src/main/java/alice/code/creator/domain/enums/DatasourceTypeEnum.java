@@ -12,19 +12,21 @@ import java.util.Map;
  */
 public enum DatasourceTypeEnum {
 
-    MySQL("MySQL", "MySQL"),
-    Oracle("Oracle", "Oracle"),
-    SQLServer("SQLServer", "SQLServer");
+    MySQL("MySQL", "MySQL","com.mysql.cj.jdbc.Driver"),
+    Oracle("Oracle", "Oracle","oracle.jdbc.driver.OracleDriver"),
+    SQLServer("SQLServer", "SQLServer","com.microsoft.sqlserver.jdbc.SQLServerDriver"),
+    ClickHouse("ClickHouse", "ClickHouse","com.clickhouse.jdbc.ClickHouseDriver");
 
     // 成员变量
     private final String code;
     private final String name;
+    private final String drive;
 
     // 构造方法
-    DatasourceTypeEnum(String code,String name) {
+    DatasourceTypeEnum(String code,String name,String drive) {
         this.code = code;
         this.name = name;
-
+        this.drive = drive;
     }
 
     /**
@@ -41,6 +43,14 @@ public enum DatasourceTypeEnum {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * 获取默认驱动
+     * @return 名称
+     */
+    public String getDrive() {
+        return this.drive;
     }
 
     /**
@@ -68,6 +78,7 @@ public enum DatasourceTypeEnum {
             Map<String, Object> map = new HashMap<>();
             map.put("code", element.getCode());
             map.put("name", element.getName());
+            map.put("drive", element.getDrive());
             list.add(map);
         }
         return list;

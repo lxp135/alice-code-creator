@@ -8,6 +8,15 @@
      */
     var AliceJ = {
 
+		constant:{
+			jdbc:{
+				'MySQL':'com.mysql.cj.jdbc.Driver',
+				'Oracle':'oracle.jdbc.driver.OracleDriver',
+				'SQLServer':'com.microsoft.sqlserver.jdbc.SQLServerDriver',
+				'ClickHouse' : 'com.clickhouse.jdbc.ClickHouseDriver'
+			}
+		},
+
 		param : {
 
 		},

@@ -1,7 +1,9 @@
 package alice.code.creator.controller.generator;
 
 import alice.code.creator.controller.BaseController;
+import alice.code.creator.domain.enums.DatasourceTypeEnum;
 import alice.code.creator.domain.model.Page;
+import alice.code.creator.domain.model.Result;
 import alice.code.creator.domain.model.generator.GeneratorConfigDatasource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import alice.code.creator.service.generator.GeneratorConfigDatasourceService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据源配置Controller
@@ -27,6 +32,24 @@ public class GeneratorConfigDatasourceController extends BaseController{
      */
     @Resource
     private GeneratorConfigDatasourceService generatorConfigDatasourceService;
+
+    /**
+     * 数据源类型
+     * @return 状态
+     */
+    @RequestMapping(value = "/type", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<List<Map<String,Object>>> type() {
+        List<Map<String,Object>> list = new ArrayList<>();
+        for (DatasourceTypeEnum value : DatasourceTypeEnum.values()) {
+            Map<String, Object> one = new HashMap<>();
+            one.put("code", value.getCode());
+            one.put("name", value.getName());
+            one.put("drive", value.getDrive());
+            list.add(one);
+        }
+        return new Result<>(list);
+    }
 
     /**
      * 根据条件分页查询
