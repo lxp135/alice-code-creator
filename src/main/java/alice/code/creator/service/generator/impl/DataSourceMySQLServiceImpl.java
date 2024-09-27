@@ -129,7 +129,8 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
                 "FROM information_schema.COLUMNS " +
                 "WHERE" +
                 "    TABLE_NAME = '"+tableName+"'" +
-                "AND TABLE_SCHEMA = '"+tableSchema+"'";
+                "AND TABLE_SCHEMA = '"+tableSchema+"'"+
+                " ORDER BY ORDINAL_POSITION";
 
         if(null==tableName){
             sql =
@@ -146,7 +147,8 @@ public class DataSourceMySQLServiceImpl implements DataSourceService {
                             "   COLUMN_COMMENT " +
                             "FROM information_schema.COLUMNS " +
                             "WHERE" +
-                            " TABLE_SCHEMA = '"+tableSchema+"'";
+                            " TABLE_SCHEMA = '"+tableSchema+"'" +
+                            " ORDER BY ORDINAL_POSITION";
         }
 
         List<Map<String,Object>> resultList = execute(datasource.getDriverClassName(), datasource.getUrl(), datasource.getUsername(), datasource.getPassword(), sql);
