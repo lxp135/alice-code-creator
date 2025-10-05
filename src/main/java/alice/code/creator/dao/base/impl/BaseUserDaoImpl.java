@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import alice.code.creator.common.dao.AbstractDao;
 import alice.code.creator.dao.base.BaseUserDao;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * 用户基本信息表DAO实现类

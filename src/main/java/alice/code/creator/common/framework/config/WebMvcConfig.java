@@ -1,6 +1,7 @@
 package alice.code.creator.common.framework.config;
 
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import jakarta.servlet.MultipartConfigElement;
+import org.springframework.boot.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -9,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import alice.code.creator.common.framework.interceptor.AccountExposingHandlerInterceptor;
 
-import javax.servlet.MultipartConfigElement;
 import java.util.Date;
 
 /**

@@ -17,7 +17,7 @@ import alice.code.creator.service.base.BaseRoleMenuRelService;
 import alice.code.creator.service.base.BaseRoleService;
 import alice.code.creator.service.base.BaseRoleUserRelService;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

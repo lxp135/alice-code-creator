@@ -8,7 +8,7 @@ import alice.code.creator.domain.Account;
 import alice.code.creator.domain.model.base.*;
 import alice.code.creator.service.base.*;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.*;
 
 /**

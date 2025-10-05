@@ -11,7 +11,7 @@ import alice.code.creator.domain.model.Page;
 import alice.code.creator.domain.model.generator.GeneratorConfigMapping;
 import alice.code.creator.service.generator.GeneratorConfigMappingService;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

@@ -11,7 +11,7 @@ import alice.code.creator.domain.model.Page;
 import alice.code.creator.domain.model.base.BaseDictionary;
 import alice.code.creator.service.base.BaseDictionaryService;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

@@ -13,7 +13,7 @@ import alice.code.creator.domain.model.base.BaseUser;
 import alice.code.creator.service.base.BaseRoleUserRelService;
 import alice.code.creator.service.base.BaseUserService;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

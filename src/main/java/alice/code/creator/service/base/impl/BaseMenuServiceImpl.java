@@ -8,7 +8,7 @@ import alice.code.creator.domain.model.base.BaseRoleMenuRel;
 import alice.code.creator.service.base.BaseMenuService;
 import alice.code.creator.service.base.BaseRoleMenuRelService;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

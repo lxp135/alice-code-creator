@@ -10,8 +10,6 @@ import alice.code.creator.domain.enums.DatasourceTypeEnum;
 import alice.code.creator.domain.model.generator.*;
 import alice.code.creator.service.generator.*;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -23,7 +21,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -318,7 +319,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         List<ColumnGenerator> columnGeneratorList = new ArrayList<>();
         try {
             columnGeneratorList = mapper.readValue(mysqlGenerator.getColumnJson(), new TypeReference<List<ColumnGenerator>>() {});
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             logger.error("JSON字符串转换实体对象失败", e);
         }

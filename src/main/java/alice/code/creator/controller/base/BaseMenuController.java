@@ -11,7 +11,7 @@ import alice.code.creator.domain.model.Page;
 import alice.code.creator.domain.model.base.BaseMenu;
 import alice.code.creator.service.base.BaseMenuService;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**
