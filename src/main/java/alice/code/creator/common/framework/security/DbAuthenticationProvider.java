@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import alice.code.creator.domain.Account;
 
@@ -20,6 +21,9 @@ public class DbAuthenticationProvider implements AuthenticationProvider {
 	// 用户信息与权限读取
 	@Autowired
 	private DbUserDetailsService userDetailService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 	/**
 	 * 鉴权
@@ -41,7 +45,7 @@ public class DbAuthenticationProvider implements AuthenticationProvider {
 		} else {
 			BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 			String passwordEncrypt = bCryptPasswordEncoder.encode(password);
-			if (account.getUserPassword().equals(passwordEncrypt)) {
+            if (passwordEncoder.matches(password, account.getUserPassword())) {
 				// 密码正确
 				return new UsernamePasswordAuthenticationToken(account, authentication.getCredentials(), account.getAuthorities());
 			}

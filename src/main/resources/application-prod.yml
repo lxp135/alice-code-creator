@@ -10,10 +10,11 @@ server:
         mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
 
 ##################################################################
-# 日志引擎
+# 日志
 ##################################################################
 logging:
-    config: classpath:log/log4j2-prod.xml
+    level:
+        root: INFO
 #####################################
 ## Spring配置
 #####################################

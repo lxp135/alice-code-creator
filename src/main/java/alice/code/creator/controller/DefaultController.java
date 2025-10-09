@@ -34,10 +34,10 @@ public class DefaultController {
 	 * 首页
 	 * @return 模型视图
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String homepage() {
-		return "main.html";
-	}
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String homepage() {
+        return "forward:/main.html";
+    }
 
 	/**
 	 * 登录页
@@ -45,13 +45,13 @@ public class DefaultController {
 	 * @param model 模型参数
 	 * @return 模型视图
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(String error, Model model) {
-		if(StringUtils.isNotEmpty(error)){
-			model.addAttribute("error", error);
-		}
-		return "login.html";
-	}
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(String error, Model model) {
+        if(StringUtils.isNotEmpty(error)){
+            model.addAttribute("error", error);
+        }
+        return "forward:/login.html";
+    }
 
 	/**
 	 * 用户注册

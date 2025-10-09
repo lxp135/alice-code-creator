@@ -27,9 +27,6 @@ public class SecurityConfig{
     @Autowired
     private DbUserDetailsService userDetailService;
 
-    @Autowired
-    private DbAuthenticationProvider provider;
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,6 +35,7 @@ public class SecurityConfig{
             .authorizeHttpRequests(auth -> auth
             .requestMatchers(
                 "/login" // 登录
+                ,"/login.html" // 静态登录页
                 ,"/register" // 注册
                 ,"/sendForgotPasswordCaptcha" // 发送找回密码验证码
                 ,"/forgotPassword" // 找回密码
@@ -69,15 +67,17 @@ public class SecurityConfig{
 
     // 配置 AuthenticationManager 和认证提供者
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) {
+    public AuthenticationManager authenticationManager(HttpSecurity http,
+                                                      DbAuthenticationProvider dbAuthenticationProvider,
+                                                      PasswordEncoder passwordEncoder) {
         try {
             AuthenticationManagerBuilder authenticationManagerBuilder =
                     http.getSharedObject(AuthenticationManagerBuilder.class);
 
             authenticationManagerBuilder
-                    .authenticationProvider(provider)
+                    .authenticationProvider(dbAuthenticationProvider)
                     .userDetailsService(userDetailService)
-                    .passwordEncoder(passwordEncoder());
+                    .passwordEncoder(passwordEncoder);
 
             return authenticationManagerBuilder.build();
         } catch (Exception e) {
