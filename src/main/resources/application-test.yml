@@ -28,10 +28,3 @@ spring:
         username: root
         #密码
         password: Viewhigh*132
-
-#####################################
-## MyBatis配置
-#####################################
-mybatis:
-    # 加载全局的配置文件
-    configLocation: classpath:mybatis/mybatis-config.xml

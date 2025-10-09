@@ -8,7 +8,7 @@ import alice.code.creator.domain.Account;
 import alice.code.creator.domain.model.base.*;
 import alice.code.creator.service.base.*;
 
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
 /**
@@ -22,24 +22,24 @@ public class DbUserDetailsService implements UserDetailsService {
 	private final static String KEY_PUBLIC_AUTHORITY = "PUBLIC";
 
 	// 用户信息接口
-	@Resource
-	private BaseUserService baseUserService;
+    @Autowired
+    private BaseUserService baseUserService;
 
 	// 菜单表
-	@Resource
-	private BaseMenuService baseMenuService;
+    @Autowired
+    private BaseMenuService baseMenuService;
 
 	// 角色表
-	@Resource
-	private BaseRoleService baseRoleService;
+    @Autowired
+    private BaseRoleService baseRoleService;
 
 	// 用户与角色关系表
-	@Resource
-	private BaseRoleUserRelService baseRoleUserRelService;
+    @Autowired
+    private BaseRoleUserRelService baseRoleUserRelService;
 
 	// 角色与菜单关系表
-	@Resource
-	private BaseRoleMenuRelService baseRoleMenuRelService;
+    @Autowired
+    private BaseRoleMenuRelService baseRoleMenuRelService;
 
 	/**
 	 * 取得用户信息

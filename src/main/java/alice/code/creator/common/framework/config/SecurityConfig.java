@@ -2,7 +2,7 @@ package alice.code.creator.common.framework.config;
 
 import alice.code.creator.common.framework.security.DbAuthenticationProvider;
 import alice.code.creator.common.framework.security.DbUserDetailsService;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,10 +24,10 @@ public class SecurityConfig{
 
     private final static String KEY = "WEBAPP";
 
-    @Resource
+    @Autowired
     private DbUserDetailsService userDetailService;
 
-    @Resource
+    @Autowired
     private DbAuthenticationProvider provider;
 
 

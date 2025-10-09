@@ -10,10 +10,13 @@ server:
         mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
 
 ##################################################################
-# 日志引擎
+# 日志
 ##################################################################
+#logging:
+#    config: classpath:log/log4j2-dev.xml
 logging:
-    config: classpath:log/log4j2-dev.xml
+    level:
+        root: INFO
 #####################################
 ## Spring配置
 #####################################
@@ -23,15 +26,8 @@ spring:
         #驱动名称
         driver-class-name: com.mysql.cj.jdbc.Driver
         #链接地址
-        url: jdbc:mysql://localhost:3306/alice_code_creator?characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://192.168.50.30:3306/alice_code_creator?characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai
         #用户名
-        username: root
+        username: creator
         #密码
-        password: root
-
-#####################################
-## MyBatis配置
-#####################################
-mybatis:
-    # 加载全局的配置文件
-    configLocation: classpath:mybatis/mybatis-config.xml
+        password: creator@123
