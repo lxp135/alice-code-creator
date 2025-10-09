@@ -49,7 +49,7 @@ public class SecurityConfig{
                 .passwordParameter("j_password")
                 .loginPage("/login") // 自定义登录
                 .failureUrl("/login?error=1")
-                .successForwardUrl("/")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             ).logout(logout -> logout
                 .logoutUrl("/logout") // 注销退出
